@@ -2,9 +2,9 @@
 
 import { Button } from '@/components/ui/button'
 import * as Input from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconLock, IconLockOpen } from '@tabler/icons-react'
+import { IconBrandGoogle, IconLock, IconLockOpen } from '@tabler/icons-react'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
@@ -78,9 +78,16 @@ export function LoginForm() {
               onClick={handleHiddenPassword}
             />
           )}
-
-          {/* TODO: Put label in inputs */}
         </Input.Root>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full gap-2"
+          onClick={() => signIn('google', { callbackUrl: '/' })}
+        >
+          <IconBrandGoogle />
+          Entrar com o Google
+        </Button>
         <Button type="submit" className="w-full">
           Entrar
         </Button>

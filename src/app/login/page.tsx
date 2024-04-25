@@ -17,7 +17,9 @@ export default function LoginPage() {
         <div className="h-full w-[8.33%] animate-pulse bg-gray-900" />
         <div className="h-full w-[8.33%] animate-pulse bg-gray-950" />
       </div>
-      <LoginForm />
+      <div className="grid h-full w-full animate-pulse place-content-center bg-gray-950">
+        <LoginForm />
+      </div>
       <div className="hidden h-screen w-full md:flex">
         <div className="h-full w-[8.33%] animate-pulse bg-gray-950" />
         <div className="h-full w-[8.33%] animate-pulse bg-gray-900" />
