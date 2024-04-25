@@ -45,4 +45,27 @@ const Control = React.forwardRef<HTMLInputElement, InputProps>(
 )
 Control.displayName = 'Control'
 
-export { Root, Control }
+export interface HelperTextProps
+  extends React.ParamHTMLAttributes<HTMLParagraphElement> {
+  isError?: boolean
+}
+
+const HelperText = React.forwardRef<HTMLParagraphElement, HelperTextProps>(
+  ({ className, isError, ...props }, ref) => {
+    return (
+      <p
+        ref={ref}
+        className={cn(
+          'mt-1 text-xs font-semibold text-white transition-transform',
+          className,
+          isError && 'text-red-500',
+        )}
+        {...props}
+      />
+    )
+  },
+)
+
+HelperText.displayName = 'HelperText'
+
+export { Root, Control, HelperText }

@@ -1,6 +1,15 @@
+import { cookies } from 'next/headers'
 import { LoginForm } from './components'
+import { redirect } from 'next/navigation'
 
 export default function LoginPage() {
+  const hasTokenFinance = cookies().has('finance-token')
+  const hasTokenGoogle = cookies().has('next-auth.session-token')
+
+  if (hasTokenFinance || hasTokenGoogle) {
+    redirect('/')
+  }
+
   return (
     <div className="flex h-full items-center justify-center p-4 md:grid-cols-3 md:p-0">
       <div className="hidden h-screen w-full md:flex">

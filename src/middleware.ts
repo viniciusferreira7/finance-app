@@ -2,9 +2,10 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const hasToken = request.cookies.has('finance-token')
+  const hasTokenFinance = request.cookies.has('finance-token')
+  const hasTokenGoogle = request.cookies.has('next-auth.session-token')
 
-  if (hasToken) {
+  if (hasTokenFinance || hasTokenGoogle) {
     return NextResponse.next()
   }
 
