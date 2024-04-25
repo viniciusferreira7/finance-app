@@ -16,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('h-screen bg-gray-950 text-white', inter.className)}>
+      <body
+        className={cn(
+          'h-screen w-full bg-gray-950 text-white',
+          inter.className,
+        )}
+      >
         {children}
       </body>
     </html>
