@@ -1,11 +1,12 @@
 import { ReactNode } from 'react'
-import { Header } from './components'
+import { Footer, Header } from './components'
 
 export default function LayoutAuth({ children }: { children: ReactNode }) {
   return (
-    <div className="h-full w-full">
+    <div className="flex h-screen w-full flex-col ">
       <Header />
-      {children}
+      <main className="h-screen">{children}</main>
+      <Footer />
     </div>
   )
 }

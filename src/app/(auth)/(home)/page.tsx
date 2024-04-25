@@ -1,3 +1,7 @@
 export default function Home() {
-  return <h1>Hello word</h1>
+  return (
+    <div className="relative top-24">
+      <h2>Hello word</h2>
+    </div>
+  )
 }

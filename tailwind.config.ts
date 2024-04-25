@@ -18,6 +18,12 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        'bebas-neue': ['var(--font-bebas-neue)'],
+      },
+      height: {
+        0.25: '0.0063rem',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
