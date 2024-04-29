@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'h-screen w-full bg-gray-950 text-white',
+          'h-screen w-full bg-gray-800 text-white',
           inter.className,
           bebasNeue.variable,
         )}

@@ -21,6 +21,9 @@ const config = {
       fontFamily: {
         'bebas-neue': ['var(--font-bebas-neue)'],
       },
+      boxShadow: {
+        'container-login': '5px 0 50px rgba(76, 29, 149, 1)',
+      },
       height: {
         0.25: '0.0063rem',
       },
