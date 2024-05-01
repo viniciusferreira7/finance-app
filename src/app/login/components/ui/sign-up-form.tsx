@@ -1,14 +1,17 @@
-import { setCookie } from '@/app/utils/cookie/setCookie'
-import { Button } from '@/components/ui/button'
-import * as Input from '@/components/ui/input'
+'use'
+
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandGoogle, IconLock, IconLockOpen } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import * as Input from '@/components/ui/input'
+
+import { useCreateUser } from '../../hooks/mutations'
 
 const SignUpFormSchema = z.object({
   name: z
@@ -24,7 +27,7 @@ type signUpFormSchemaInput = z.infer<typeof SignUpFormSchema>
 
 export function SignUpForm() {
   const [parent] = useAutoAnimate()
-  const router = useRouter()
+  const { mutate, isPending } = useCreateUser()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
 
   const {
@@ -35,14 +38,12 @@ export function SignUpForm() {
     resolver: zodResolver(SignUpFormSchema),
   })
 
-  async function handleLogin(data: signUpFormSchemaInput) {
-    console.log(data)
-    await setCookie(
-      'finance-token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-    )
-
-    router.push('/')
+  function handleLogin(data: signUpFormSchemaInput) {
+    mutate({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    })
   }
 
   function handleHiddenPassword() {
@@ -122,7 +123,11 @@ export function SignUpForm() {
             </Input.HelperText>
           )}
         </div>
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting || isPending}
+        >
           Sign Up
         </Button>
       </div>

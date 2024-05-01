@@ -1,7 +1,12 @@
+import './globals.css'
+
 import type { Metadata } from 'next'
 import { Bebas_Neue, Inter } from 'next/font/google'
-import './globals.css'
+
+import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
+
+import { QueryWrapper } from './contexts/QueryWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +34,10 @@ export default function RootLayout({
           bebasNeue.variable,
         )}
       >
-        {children}
+        <QueryWrapper>
+          {children}
+          <Toaster richColors />
+        </QueryWrapper>
       </body>
     </html>
   )

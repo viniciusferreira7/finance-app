@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
-import { LoginForm } from './components'
 import { redirect } from 'next/navigation'
+
+import { LoginForm } from './components'
 import { LoginProvider } from './contexts'
 
 export default function LoginPage() {
@@ -13,7 +14,7 @@ export default function LoginPage() {
 
   return (
     <LoginProvider>
-      <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-r from-indigo-950 to-gray-950">
+      <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-r from-indigo-950 to-gray-950 p-4">
         <LoginForm />
       </div>
     </LoginProvider>

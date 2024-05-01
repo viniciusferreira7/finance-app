@@ -1,9 +1,11 @@
 'use client'
 
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import { cn } from '@/lib/utils'
+
 import { useLogin } from '../contexts'
 import { SignInForm, SignUpForm, Toggle } from './ui'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 export function LoginForm() {
   const [parent] = useAutoAnimate()

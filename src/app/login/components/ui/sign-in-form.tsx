@@ -1,14 +1,15 @@
-import { setCookie } from '@/app/utils/cookie/setCookie'
-import { Button } from '@/components/ui/button'
-import * as Input from '@/components/ui/input'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandGoogle, IconLock, IconLockOpen } from '@tabler/icons-react'
-import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+
+import { setCookie } from '@/app/utils/cookie/setCookie'
+import { Button } from '@/components/ui/button'
+import * as Input from '@/components/ui/input'
 
 const signInFormSchema = z.object({
   email: z.string().email({ message: 'Invalid e-mail address.' }),
