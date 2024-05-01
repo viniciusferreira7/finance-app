@@ -52,7 +52,7 @@ export function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="absolute left-0 top-0 flex h-full w-6/12 flex-col gap-3 px-10 transition-transform"
+      className="flex flex-col gap-3 px-10"
     >
       <div className="text-center">
         <h1 className="text-3xl font-bold">Sign In</h1>
@@ -61,8 +61,8 @@ export function SignInForm() {
           variant="outline"
           size="xxs"
           className="mb-5 mt-4 p-1"
-          disabled={isSubmitting}
-          onClick={() => signIn('google', { callbackUrl: '/' })}
+          disabled
+          onClick={() => signIn('google', { callbackUrl: ' / ' })}
           title="Sign in with your Google account"
         >
           <IconBrandGoogle className="size-5" /> +

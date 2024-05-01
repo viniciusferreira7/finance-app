@@ -10,16 +10,19 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const createFormSchema = z.object({
+const SignUpFormSchema = z.object({
+  name: z
+    .string()
+    .min(3, { message: 'The name must have at least 3 letters.' }),
   email: z.string().email({ message: 'Invalid e-mail address.' }),
   password: z
     .string()
     .min(6, { message: 'The password must be at least 6 characters long.' }),
 })
 
-type CreateFormSchemaInput = z.infer<typeof createFormSchema>
+type signUpFormSchemaInput = z.infer<typeof SignUpFormSchema>
 
-export function CreateForm() {
+export function SignUpForm() {
   const [parent] = useAutoAnimate()
   const router = useRouter()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
@@ -28,11 +31,11 @@ export function CreateForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateFormSchemaInput>({
-    resolver: zodResolver(createFormSchema),
+  } = useForm<signUpFormSchemaInput>({
+    resolver: zodResolver(SignUpFormSchema),
   })
 
-  async function handleLogin(data: CreateFormSchemaInput) {
+  async function handleLogin(data: signUpFormSchemaInput) {
     console.log(data)
     await setCookie(
       'finance-token',
@@ -52,16 +55,16 @@ export function CreateForm() {
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="absolute top-0 flex h-full w-full flex-col gap-3 px-10 transition-transform"
+      className="flex flex-col gap-3 px-10"
     >
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Creaete Account</h1>
+        <h1 className="text-3xl font-bold">Create Account</h1>
         <Button
           type="button"
           variant="outline"
           size="xxs"
           className="mb-5 mt-4 p-1"
-          disabled={isSubmitting}
+          disabled
           onClick={() => signIn('google', { callbackUrl: '/' })}
           title="Sign in with your Google account"
         >
@@ -73,6 +76,16 @@ export function CreateForm() {
         </h2>
       </div>
       <div className="space-y-3">
+        <div ref={parent}>
+          <Input.Root>
+            <Input.Control placeholder="Name" {...register('name')} />
+          </Input.Root>
+          {!!errors.name && (
+            <Input.HelperText isError={!!errors.name}>
+              {errors.name.message}
+            </Input.HelperText>
+          )}
+        </div>
         <div ref={parent}>
           <Input.Root>
             <Input.Control placeholder="Email" {...register('email')} />

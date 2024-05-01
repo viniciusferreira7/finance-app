@@ -1,4 +1,3 @@
-export { CreateForm } from './create-form'
+export { SignUpForm } from './sign-up-form'
 export { SignInForm } from './sign-in-form'
-export { ToggleLeft } from './toggle-left'
-export { ToggleRight } from './toggle-right'
+export { Toggle } from './toggle'

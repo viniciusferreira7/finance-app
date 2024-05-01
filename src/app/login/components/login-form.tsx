@@ -1,16 +1,30 @@
 'use client'
 
-import { CreateForm, SignInForm, ToggleLeft, ToggleRight } from './ui'
+import { cn } from '@/lib/utils'
+import { useLogin } from '../contexts'
+import { SignInForm, SignUpForm, Toggle } from './ui'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 export function LoginForm() {
-  // TODO: Video stop in 10:41
+  const [parent] = useAutoAnimate()
+  const { activeForm } = useLogin()
+
+  const isSignIn = activeForm === 'sign-in'
+  const isSignUp = activeForm === 'sign-up'
 
   return (
-    <main className="shadow-container-login relative h-[30rem] w-full max-w-3xl overflow-hidden rounded-3xl bg-gray-950">
-      <CreateForm />
-      <SignInForm />
-      <ToggleLeft />
-      <ToggleRight />
+    <main className="relative h-[30rem] w-full max-w-4xl overflow-hidden rounded-3xl bg-gray-950 shadow-container-login">
+      <Toggle />
+      <div
+        ref={parent}
+        className={cn(
+          'absolute left-0 top-0 z-10 grid h-full w-6/12 place-items-center duration-700',
+          isSignUp && 'translate-x-full',
+        )}
+      >
+        {isSignIn && <SignInForm />}
+        {isSignUp && <SignUpForm />}
+      </div>
     </main>
   )
 }
