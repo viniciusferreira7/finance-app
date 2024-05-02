@@ -15,7 +15,7 @@ export function Toggle() {
   return (
     <div
       className={cn(
-        'absolute right-1/2 top-0 z-20 h-full w-6/12 overflow-hidden rounded-r-[9.375rem] bg-[#512da8] text-white duration-700',
+        'absolute right-1/2 top-0 z-20 hidden h-full w-6/12 overflow-hidden rounded-r-[9.375rem] bg-[#512da8] text-white duration-700 md:block',
         isSignIn && 'translate-x-full rounded-l-[9.375rem] rounded-r-none',
       )}
     >

@@ -11,6 +11,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import * as Input from '@/components/ui/input'
 
+import { useLogin } from '../../contexts'
 import { useCreateUser } from '../../hooks/mutations'
 
 const SignUpFormSchema = z.object({
@@ -29,6 +30,7 @@ export function SignUpForm() {
   const [parent] = useAutoAnimate()
   const { mutate, isPending } = useCreateUser()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+  const { onSetActiveForm } = useLogin()
 
   const {
     register,
@@ -56,7 +58,7 @@ export function SignUpForm() {
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="flex flex-col gap-3 px-10"
+      className="flex flex-col gap-3 p-4 md:px-10"
     >
       <div className="text-center">
         <h1 className="text-3xl font-bold">Create Account</h1>
@@ -123,12 +125,23 @@ export function SignUpForm() {
             </Input.HelperText>
           )}
         </div>
+
         <Button
           type="submit"
           className="w-full"
           disabled={isSubmitting || isPending}
         >
           Sign Up
+        </Button>
+      </div>
+      <div className="mt-4 flex w-full justify-center md:hidden">
+        <Button
+          type="button"
+          variant="ghost"
+          size="xxs"
+          onClick={() => onSetActiveForm('sign-in')}
+        >
+          or sing-in
         </Button>
       </div>
     </form>

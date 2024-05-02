@@ -20,8 +20,8 @@ export function LoginForm() {
       <div
         ref={parent}
         className={cn(
-          'absolute left-0 top-0 z-10 grid h-full w-6/12 place-items-center duration-700',
-          isSignUp && 'translate-x-full',
+          'absolute left-0 top-0 z-10 grid h-full w-full place-items-center duration-700 md:w-6/12',
+          isSignUp && 'md:translate-x-full',
         )}
       >
         {isSignIn && <SignInForm />}
