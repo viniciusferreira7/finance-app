@@ -13,6 +13,7 @@ import * as Input from '@/components/ui/input'
 
 import { useLogin } from '../../contexts'
 import { useCreateUser } from '../../hooks/mutations'
+import { useCreateSession } from '../../hooks/mutations/use-create-session'
 
 const SignUpFormSchema = z.object({
   name: z
@@ -29,6 +30,7 @@ type signUpFormSchemaInput = z.infer<typeof SignUpFormSchema>
 export function SignUpForm() {
   const [parent] = useAutoAnimate()
   const { mutate, isPending } = useCreateUser()
+  const { mutate: mutateSession } = useCreateSession()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const { onSetActiveForm } = useLogin()
 
@@ -41,11 +43,21 @@ export function SignUpForm() {
   })
 
   function handleLogin(data: signUpFormSchemaInput) {
-    mutate({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    })
+    mutate(
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      },
+      {
+        onSuccess: () => {
+          mutateSession({
+            email: data.name,
+            password: data.password,
+          })
+        },
+      },
+    )
   }
 
   function handleHiddenPassword() {

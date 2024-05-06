@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import { setCookie } from '@/app/utils/cookie/setCookie'
-import { CreateUserPayload } from '@/services/user'
-import { createSession } from '@/services/user/create-session'
+import { queryFnWrapper } from '@/app/utils/error/queryFnWrapper'
+import {
+  createSession,
+  CreateSessionPayload,
+} from '@/services/user/create-session'
 
 export const useCreateSession = () => {
   const router = useRouter()
@@ -14,10 +17,14 @@ export const useCreateSession = () => {
 
   return useMutation({
     mutationKey: ['create-session'],
-    mutationFn: async (payload: CreateUserPayload) => createSession(payload),
+    mutationFn: async (payload: CreateSessionPayload) =>
+      queryFnWrapper(createSession, payload),
     onSuccess: async (data) => {
       await setCookie('finance-token', data.token)
       router.push('/')
+    },
+    onError: (error) => {
+      toast.error(error.message)
     },
     onSettled: () => {
       query.invalidateQueries()
