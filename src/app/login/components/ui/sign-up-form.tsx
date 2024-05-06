@@ -30,7 +30,8 @@ type signUpFormSchemaInput = z.infer<typeof SignUpFormSchema>
 export function SignUpForm() {
   const [parent] = useAutoAnimate()
   const { mutate, isPending } = useCreateUser()
-  const { mutate: mutateSession } = useCreateSession()
+  const { mutate: mutateSession, isPending: isPendingSession } =
+    useCreateSession()
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const { onSetActiveForm } = useLogin()
 
@@ -141,7 +142,7 @@ export function SignUpForm() {
         <Button
           type="submit"
           className="w-full"
-          disabled={isSubmitting || isPending}
+          disabled={isSubmitting || isPending || isPendingSession}
         >
           Sign Up
         </Button>
