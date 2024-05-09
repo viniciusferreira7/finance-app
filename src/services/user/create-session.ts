@@ -1,6 +1,6 @@
 'use server'
 
-import { getErrorMessage } from '@/app/utils/error/getErrorMessage'
+import { getErrorMessage } from '@/app/utils/error/get-error-message'
 import { api } from '@/lib/axios'
 import { ErrorServerAction } from '@/models/error'
 

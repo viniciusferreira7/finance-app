@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
@@ -13,9 +14,9 @@ const Root = React.forwardRef<HTMLElement, RootProps>(
       <Root
         ref={ref}
         className={cn(
-          'flex items-center rounded-md border border-gray-600 p-2 duration-300 focus-within:border-gray-300',
+          'group flex items-center rounded-md border-2 border-input p-2 px-3 py-1 text-sm shadow-sm transition-colors duration-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring',
           className,
-          isError && 'border-red-600',
+          isError && 'border-destructive',
         )}
         {...props}
       />
@@ -25,16 +26,17 @@ const Root = React.forwardRef<HTMLElement, RootProps>(
 
 Root.displayName = 'Root'
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface ControlProps
+  extends React.InputHTMLAttributes<HTMLInputElement> { }
 
-const Control = React.forwardRef<HTMLInputElement, InputProps>(
+const Control = React.forwardRef<HTMLInputElement, ControlProps>(
   ({ className, type, ...props }, ref) => {
     return (
       <input
         type={type}
         className={cn(
-          'w-full bg-transparent outline-none placeholder:text-gray-500',
+          // 'w-full bg-transparent outline-none placeholder:text-foreground/80',
+          'w-full bg-transparent outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         ref={ref}

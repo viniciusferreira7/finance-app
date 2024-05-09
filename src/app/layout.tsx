@@ -6,7 +6,7 @@ import { Bebas_Neue, Inter } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 
-import { QueryWrapper } from './contexts/QueryWrapper'
+import { QueryWrapper } from './contexts/query-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'h-screen w-full bg-gray-800 text-white',
+          'h-screen w-full bg-background text-foreground',
           inter.className,
           bebasNeue.variable,
         )}

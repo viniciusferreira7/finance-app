@@ -1,1 +1,1 @@
-export { SessionWrapper } from './SessionWrapper'
+export { SessionWrapper } from './session-wrapper'

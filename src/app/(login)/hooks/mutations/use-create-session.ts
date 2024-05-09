@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import { setCookie } from '@/app/utils/cookie/setCookie'
-import { queryFnWrapper } from '@/app/utils/error/queryFnWrapper'
+import { queryFnWrapper } from '@/app/utils/error/query-fn-wrapper'
 import {
   createSession,
   CreateSessionPayload,

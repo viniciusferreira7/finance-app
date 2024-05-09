@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  return NextResponse.redirect(new URL('/login', request.url))
+  return NextResponse.redirect(new URL('/sign-in', request.url))
 }
 
 export const config = {
