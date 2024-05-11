@@ -17,7 +17,10 @@ const bebasNeue = Bebas_Neue({
 })
 
 export const metadata: Metadata = {
-  title: 'Finance App',
+  title: {
+    default: 'finance.app',
+    template: '%s | finance.app',
+  },
 }
 
 export default function RootLayout({
