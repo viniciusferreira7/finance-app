@@ -1,14 +1,28 @@
+import { IconCoins, IconHome, IconIndentIncrease } from '@tabler/icons-react'
+
+import { Separator } from '@/components/ui/separator'
+
+import { NavLink } from './ui/nav-link'
+
 export function Header() {
   return (
-    <header className="rounded-b-lg bg-gray-900 p-4">
-      <div className="flex max-w-32 flex-col items-center gap-0.5">
-        <h1 className="font-bebas-neue text-2xl font-semibold uppercase tracking-widest text-white">
-          Finance APP
-        </h1>
-        <div className="h-1 w-full rounded-lg bg-white" />
-        <div className="h-0.5 w-full max-w-28 rounded-lg bg-white" />
-        <div className="h-0.5 w-full max-w-24 rounded-lg bg-white" />
-      </div>
-    </header>
+    <div className="border-b">
+      <header className="flex h-16 items-center gap-4 px-6">
+        <IconCoins className="size-4" />
+
+        <Separator orientation="vertical" className="h-6" />
+
+        <nav className="flex items-center gap-x-4 lg:gap-x-6">
+          <NavLink href="/">
+            <IconHome className="size-4" />
+            Home
+          </NavLink>
+          <NavLink href="/ordens">
+            <IconIndentIncrease className="size-4" />
+            Incomes
+          </NavLink>
+        </nav>
+      </header>
+    </div>
   )
 }
