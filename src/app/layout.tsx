@@ -2,6 +2,7 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Bebas_Neue, Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
@@ -38,8 +39,16 @@ export default function RootLayout({
         )}
       >
         <QueryWrapper>
-          {children}
-          <Toaster richColors />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="finance-theme"
+          >
+            {children}
+            <Toaster richColors />
+          </ThemeProvider>
         </QueryWrapper>
       </body>
     </html>

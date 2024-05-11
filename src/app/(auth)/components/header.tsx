@@ -1,5 +1,6 @@
 import { IconCoins, IconHome, IconIndentIncrease } from '@tabler/icons-react'
 
+import { ModeToggle } from '@/components/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 
 import { NavLink } from './ui/nav-link'
@@ -17,11 +18,14 @@ export function Header() {
             <IconHome className="size-4" />
             Home
           </NavLink>
-          <NavLink href="/ordens">
+          <NavLink href="/incomes">
             <IconIndentIncrease className="size-4" />
             Incomes
           </NavLink>
         </nav>
+        <div className="ml-auto flex items-center">
+          <ModeToggle />
+        </div>
       </header>
     </div>
   )
