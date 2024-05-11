@@ -17,7 +17,7 @@ export async function createSession(
   payload: CreateSessionPayload,
 ): Promise<CreateSessionResponse | ErrorServerAction> {
   try {
-    const { data } = await api.post<CreateSessionResponse>('/session', payload)
+    const { data } = await api.post<CreateSessionResponse>('/sessions', payload)
 
     return data
   } catch (error: unknown) {

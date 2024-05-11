@@ -1,3 +1,7 @@
+'use client'
+
+import { toast } from 'sonner'
+
 import { ErrorServerAction } from '@/models/error'
 
 export async function queryFnWrapper<T, K>(
@@ -8,6 +12,7 @@ export async function queryFnWrapper<T, K>(
 
   if (data && typeof data === 'object' && 'message' in data) {
     const { message } = data
+    toast.error(message)
 
     throw new Error(message)
   }
