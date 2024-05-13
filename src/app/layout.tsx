@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Bebas_Neue, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 
 import { Toaster } from '@/components/ui/sonner'
@@ -10,12 +10,6 @@ import { cn } from '@/lib/utils'
 import { QueryWrapper } from './contexts/query-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
-
-const bebasNeue = Bebas_Neue({
-  subsets: ['latin'],
-  variable: '--font-bebas-neue',
-  weight: ['400'],
-})
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +29,6 @@ export default function RootLayout({
         className={cn(
           'h-screen w-full bg-background text-foreground',
           inter.className,
-          bebasNeue.variable,
         )}
       >
         <QueryWrapper>
