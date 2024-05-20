@@ -7,7 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 
-import { QueryWrapper } from './contexts/query-wrapper'
+import { ProfileProvider, QueryWrapper } from './contexts'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,7 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="finance-theme"
           >
-            {children}
+            <ProfileProvider>{children}</ProfileProvider>
             <Toaster richColors />
           </ThemeProvider>
         </QueryWrapper>

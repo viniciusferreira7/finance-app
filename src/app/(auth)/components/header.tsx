@@ -3,7 +3,7 @@ import { IconCoins, IconHome, IconIndentIncrease } from '@tabler/icons-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 
-import { NavLink } from './ui/nav-link'
+import { AccountMenu, NavLink } from './ui'
 
 export function Header() {
   return (
@@ -23,8 +23,9 @@ export function Header() {
             Incomes
           </NavLink>
         </nav>
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto flex items-center gap-2">
           <ModeToggle />
+          <AccountMenu />
         </div>
       </header>
     </div>

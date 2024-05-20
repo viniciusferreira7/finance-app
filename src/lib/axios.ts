@@ -24,7 +24,7 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${env.FINANCE_APP_TOKEN}`
   } else {
     const token = cookies().get('finance-token')
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token?.value}`
   }
 
   return config

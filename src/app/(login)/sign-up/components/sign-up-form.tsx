@@ -133,7 +133,7 @@ export function SignUpForm() {
         type="submit"
         disabled={isPending || IsPendingSession}
       >
-        Sign-up
+        {isPending || IsPendingSession ? 'loading...' : 'Sign-up'}
       </Button>
       <div className="flex w-full justify-center pt-8">
         <Link href="/sign-in" className="text-base font-semibold">
