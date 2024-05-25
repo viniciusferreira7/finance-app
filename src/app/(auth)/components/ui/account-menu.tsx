@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { useProfile } from '@/app/contexts'
-import { deleteCookie } from '@/app/utils/cookie/delete-cookie'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { deleteCookie } from '@/utils/cookie/delete-cookie'
 
 export function AccountMenu() {
   const router = useRouter()

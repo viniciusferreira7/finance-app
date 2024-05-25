@@ -4,19 +4,19 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-import { setCookie } from '@/app/utils/cookie/setCookie'
-import { queryFnWrapper } from '@/app/utils/error/query-fn-wrapper'
 import {
   createSession,
   CreateSessionPayload,
 } from '@/services/user/create-session'
+import { setCookie } from '@/utils/cookie/setCookie'
+import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateSession = () => {
   const router = useRouter()
   const query = useQueryClient()
 
   return useMutation({
-    mutationKey: ['create-session'],
+    mutationKey: ['create-session', new Date()],
     mutationFn: async (payload: CreateSessionPayload) =>
       queryFnWrapper(createSession, payload),
     onSuccess: async (data) => {

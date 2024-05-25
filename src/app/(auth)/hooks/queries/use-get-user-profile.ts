@@ -2,8 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 
-import { queryFnWrapper } from '@/app/utils/error/query-fn-wrapper'
 import { getUserProfile } from '@/services/user/get-user-profile'
+import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useGetUserProfile = () => {
   return useQuery({

@@ -1,9 +1,9 @@
 'use server'
 
-import { getErrorMessage } from '@/app/utils/error/get-error-message'
 import { api } from '@/lib/axios'
 import { ErrorServerAction } from '@/models/error'
 import { UserProfile } from '@/models/user-profile'
+import { getErrorMessage } from '@/utils/error/get-error-message'
 
 type GetUserProfileResponse = UserProfile
 
