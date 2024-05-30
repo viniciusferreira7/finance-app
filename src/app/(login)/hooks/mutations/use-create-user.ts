@@ -3,8 +3,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 import { createUser, CreateUserPayload } from '@/services/user'
+import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateUser = () => {
   const query = useQueryClient()

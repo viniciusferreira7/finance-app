@@ -30,6 +30,7 @@ export default function RootLayout({
           'h-screen w-full bg-background text-foreground',
           inter.className,
         )}
+        suppressHydrationWarning={true}
       >
         <QueryWrapper>
           <ThemeProvider

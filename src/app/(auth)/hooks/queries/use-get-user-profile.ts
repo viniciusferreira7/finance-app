@@ -6,8 +6,10 @@ import { getUserProfile } from '@/services/user/get-user-profile'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useGetUserProfile = () => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['get-user-profile'],
     queryFn: async () => queryFnWrapper(getUserProfile, {}),
   })
+
+  return query
 }

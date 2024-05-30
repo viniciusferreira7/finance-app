@@ -16,7 +16,7 @@ export const useCreateSession = () => {
   const query = useQueryClient()
 
   return useMutation({
-    mutationKey: ['create-session', new Date()],
+    mutationKey: ['create-session'],
     mutationFn: async (payload: CreateSessionPayload) =>
       queryFnWrapper(createSession, payload),
     onSuccess: async (data) => {
