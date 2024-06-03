@@ -8,6 +8,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 
 import { QueryWrapper } from './contexts'
+import { ThemeSwitcher, ThemeWrapper } from './contexts/themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,16 +34,19 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <QueryWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="finance-theme"
-          >
-            {children}
-            <Toaster richColors />
-          </ThemeProvider>
+          <ThemeWrapper>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="finance-theme"
+            >
+              {children}
+              <ThemeSwitcher />
+              <Toaster richColors />
+            </ThemeProvider>
+          </ThemeWrapper>
         </QueryWrapper>
       </body>
     </html>

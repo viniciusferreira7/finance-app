@@ -1,9 +1,13 @@
 'use client'
 
+import { Colors } from './colors'
+
 export function SettingsForm() {
   return (
     <div className="rounded-md border p-2">
-      <form></form>
+      <form>
+        <Colors />
+      </form>
     </div>
   )
 }
