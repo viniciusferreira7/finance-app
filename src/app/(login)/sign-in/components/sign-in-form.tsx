@@ -2,7 +2,7 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconEye, IconEyeClosed } from '@tabler/icons-react'
+import { Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -76,15 +76,12 @@ export function SignInForm() {
             {...register('password')}
           />
           {isHiddenPassword ? (
-            <IconEyeClosed
+            <EyeOff
               className="size-4"
               onClick={() => setIsHiddenPassword(false)}
             />
           ) : (
-            <IconEye
-              className="size-4"
-              onClick={() => setIsHiddenPassword(true)}
-            />
+            <Eye className="size-4" onClick={() => setIsHiddenPassword(true)} />
           )}
         </Input.Root>
         {!!errors.password && (

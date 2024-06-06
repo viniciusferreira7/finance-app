@@ -11,7 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@radix-ui/react-tooltip'
-import { IconPaint } from '@tabler/icons-react'
+import { Paintbrush } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
@@ -39,7 +39,7 @@ export function Colors() {
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className="md:hidden">
-            <IconPaint className="mr-2 h-4 w-4" />
+            <Paintbrush className="mr-2 h-4 w-4" />
             Customize
           </Button>
         </DrawerTrigger>
@@ -118,7 +118,7 @@ export function Colors() {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">
-              <IconPaint className="mr-2 h-4 w-4" />
+              <Paintbrush className="mr-2 h-4 w-4" />
               Customize
             </Button>
           </PopoverTrigger>

@@ -1,7 +1,7 @@
 'use client'
 
 import { CheckIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
-import { IconRefreshDot } from '@tabler/icons-react'
+import { RefreshCcwDot } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
@@ -45,7 +45,7 @@ export function Customizer() {
             })
           }}
         >
-          <IconRefreshDot />
+          <RefreshCcwDot />
           <span className="sr-only">Reset</span>
         </Button>
       </div>
