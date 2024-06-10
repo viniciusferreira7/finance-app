@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { IncomesBodyRow } from './ui/incomes-body-row'
+import { IncomesBodyRow } from './ui'
 
 export function IncomesTable() {
   return (
@@ -35,26 +35,14 @@ export function IncomesTable() {
             })}
           </TableBody>
           <TableFooter>
-            <TableRow>
-              <TableCell>Total</TableCell>
+            <TableRow className="p-4">
+              <TableCell className="p-4">Total</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell className="font-medium">R$ 7500,60</TableCell>
+              <TableCell className="p-4 pl-2 font-medium">R$ 7500,60</TableCell>
               <TableCell colSpan={7}></TableCell>
             </TableRow>
           </TableFooter>
-          {/* <TableFooter>
-            <TableRow>
-              <TableCell colSpan={11} className="text-center">
-                Total -
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={11} className="text-center font-medium">
-                R$ 7500,60
-              </TableCell>
-            </TableRow>
-          </TableFooter> */}
         </Table>
       </div>
       {/* <Pagination pageIndex={0} totalCount={100} perPage={10} /> */}

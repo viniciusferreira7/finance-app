@@ -38,13 +38,13 @@ export function IncomesBodyRow() {
       <TableCell>20/04/2024</TableCell>
       <TableCell>
         <Button variant="outline" size="xs">
-          <ArrowRight className="mr-2 size-3" />
+          <ArrowRight className="size-3" />
           Update
         </Button>
       </TableCell>
       <TableCell>
         <Button variant="ghost" size="xs">
-          <X className="mr-2 size-3" />
+          <X className="size-3" />
           Cancel
         </Button>
       </TableCell>
