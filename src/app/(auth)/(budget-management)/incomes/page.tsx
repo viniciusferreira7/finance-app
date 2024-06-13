@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 
-import { IncomesTable } from './components/incomes-table'
-import { IncomesFilters } from './components/ui'
+import { IncomesFilters, IncomesTable } from './components'
 
 export const metadata: Metadata = {
   title: 'Incomes',
