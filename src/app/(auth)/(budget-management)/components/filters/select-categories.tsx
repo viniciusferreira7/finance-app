@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/select'
 
 export function SelectCategories() {
+  // TODO: Transform this in a command
+  // TODO: Create Controller
   return (
     <Select>
       <SelectTrigger className="w-[180px]">

@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eraser, ListFilter } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -10,31 +10,42 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { removeUndefinedValues } from '@/utils/remove-undefined-values'
 
-const FiltersFormSchema = z.object({
+const FiltersRootFormSchema = z.object({
   name: z.string().optional(),
   value: z.string().optional(), // TODO: add validation and transformation to a number
-  createdAt: z.date().optional(),
-  updateAt: z.date().optional(),
-  categories: z.string().optional(),
+  createdAt: z.string().optional(), // TODO: add Date type
+  updateAt: z.string().optional(), // TODO: add Date type
+  category: z.string().optional(),
   sort: z.enum(['asc', 'desc']).optional(),
 })
 
-type FiltersFormSchemaInput = z.input<typeof FiltersFormSchema>
+// TODO: get values from URL state when reload window to insert in fields
 
-interface FiltersProps {
+type FiltersRootFormSchemaInput = z.input<typeof FiltersRootFormSchema>
+
+interface FiltersRootProps {
   children: ReactNode
 }
 
-export function Filters({ children }: FiltersProps) {
+export function FiltersRoot({ children }: FiltersRootProps) {
   const router = useRouter()
-  const methods = useForm<FiltersFormSchemaInput>({
-    resolver: zodResolver(FiltersFormSchema),
+  const pathname = usePathname()
+  const methods = useForm<FiltersRootFormSchemaInput>({
+    resolver: zodResolver(FiltersRootFormSchema),
   })
 
   const { handleSubmit, reset } = methods
 
-  function handleFilter(data: FiltersFormSchemaInput) {
+  function handleReset() {
+    reset()
+    router.push(pathname)
+  }
+
+  function handleFilter(data: FiltersRootFormSchemaInput) {
     const formattedSearchParams = removeUndefinedValues(data)
+    console.log({ formattedSearchParams })
+
+    console.log(data.name?.length)
     const queries = new URLSearchParams(formattedSearchParams)
 
     router.push('?' + queries)
@@ -49,7 +60,7 @@ export function Filters({ children }: FiltersProps) {
           className="flex items-center gap-2"
         >
           {children}
-          <Button variant="outline" onClick={() => reset()}>
+          <Button variant="outline" onClick={handleReset}>
             <Eraser className="size-3" /> Clear
           </Button>
           <Button>
