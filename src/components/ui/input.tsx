@@ -14,7 +14,7 @@ const Root = React.forwardRef<HTMLElement, RootProps>(
       <Root
         ref={ref}
         className={cn(
-          'group flex items-center rounded-md border-2 border-input p-2 px-3 py-1 text-sm shadow-sm transition-colors duration-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring',
+          'group flex items-center rounded-md border border-input p-2 px-3 py-1 text-sm shadow-sm transition-colors duration-300 focus-within:outline-none focus-within:ring-1 focus-within:ring-ring',
           className,
           isError && 'border-destructive',
         )}

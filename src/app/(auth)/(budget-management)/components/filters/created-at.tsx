@@ -25,14 +25,13 @@ export function CreatedAt() {
           ? dayjs(value).format('YYYY-MM-DD')
           : 'Created at'
 
-        console.log({ value: dayjs(value).toDate() })
         return (
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className={cn(
-                  'w-[240px] justify-start text-left font-normal',
+                  'w-full justify-start text-left font-normal sm:w-[240px]',
                   !value && 'text-muted-foreground',
                 )}
               >

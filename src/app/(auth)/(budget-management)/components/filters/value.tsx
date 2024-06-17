@@ -14,8 +14,8 @@ export function Value() {
   } = useFormContext()
 
   return (
-    <div ref={parent}>
-      <Input.Root isError={!!errors.value} className="h-full">
+    <div ref={parent} className="w-full sm:w-auto">
+      <Input.Root isError={!!errors.value} className="h-full w-full">
         <Input.Control placeholder="value" {...register('value')} />
       </Input.Root>
       {!!errors.value && (

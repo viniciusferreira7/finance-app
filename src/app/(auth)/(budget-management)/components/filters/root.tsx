@@ -25,7 +25,8 @@ const filtersRootFormSchema = z.object({
     })
     .refine((value) => (value ? Number(value) >= 0 : true), {
       message: 'Must be a positive number',
-    }),
+    })
+    .transform((value) => value?.match(/\d+/g)),
   createdAt: z
     .date()
     .transform((createdAt) =>
@@ -33,7 +34,7 @@ const filtersRootFormSchema = z.object({
     )
     .nullable()
     .optional(),
-  updateAt: z
+  updatedAt: z
     .date()
     .transform((updateAt) =>
       updateAt ? dayjs(updateAt).format('YYYY-MM-DD') : null,
@@ -69,6 +70,8 @@ export function FiltersRoot({ children }: FiltersRootProps) {
     router.push(pathname)
   }
 
+  console.log(errors)
+
   function handleFilter(data: FiltersRootFormSchemaInput) {
     const formattedSearchParams = removeUndefinedValues(data)
 
@@ -76,8 +79,6 @@ export function FiltersRoot({ children }: FiltersRootProps) {
 
     router.push('?' + queries)
   }
-
-  // TODO: apply responsive in filters
 
   const { getValuesFromSearchParams } = useGetValuesFromSearchParams({
     obj: filtersRootFormSchema.shape,
@@ -97,15 +98,21 @@ export function FiltersRoot({ children }: FiltersRootProps) {
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(handleFilter)}
-          className={cn('flex items-stretch gap-2', !!isError && 'items-start')}
+          className={cn(
+            'flex flex-wrap items-stretch gap-2',
+            !!isError && 'items-start',
+            'flex-col sm:flex-row',
+          )}
         >
           {children}
-          <Button variant="outline" onClick={handleReset}>
-            <Eraser className="size-3" /> Clear
-          </Button>
-          <Button disabled={!!isError}>
-            <ListFilter className="size-3" /> Filter
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleReset}>
+              <Eraser className="size-3" /> Clear
+            </Button>
+            <Button disabled={!!isError}>
+              <ListFilter className="size-3" /> Filter
+            </Button>
+          </div>
         </form>
       </FormProvider>
     </div>

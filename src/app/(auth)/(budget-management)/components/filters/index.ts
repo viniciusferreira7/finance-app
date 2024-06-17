@@ -3,7 +3,7 @@ import { Name } from './name'
 import { FiltersRoot as Root } from './root'
 import { SelectCategory } from './select-category'
 import { SelectSort } from './select-sort'
-import { UpdateAt } from './update-at'
+import { UpdatedAt } from './updated-at'
 import { Value } from './value'
 
 export const Filters = {
@@ -13,5 +13,5 @@ export const Filters = {
   Name,
   Value,
   CreatedAt,
-  UpdateAt,
+  UpdatedAt,
 }

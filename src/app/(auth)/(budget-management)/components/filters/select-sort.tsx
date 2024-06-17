@@ -29,7 +29,7 @@ export function SelectSort() {
               }
             }}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Select a sort" />
             </SelectTrigger>
             <SelectContent>

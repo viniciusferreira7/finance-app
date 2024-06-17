@@ -13,17 +13,17 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 
-export function UpdateAt() {
+export function UpdatedAt() {
   const { control } = useFormContext()
 
   return (
     <Controller
-      name="updateAt"
+      name="updatedAt"
       control={control}
       render={({ field: { value, onChange } }) => {
         const formattedDate = value
           ? dayjs(value).format('YYYY-MM-DD')
-          : 'update at'
+          : 'updated at'
 
         return (
           <Popover>
@@ -31,7 +31,7 @@ export function UpdateAt() {
               <Button
                 variant="outline"
                 className={cn(
-                  'w-[240px] justify-start text-left font-normal',
+                  'w-full justify-start text-left font-normal sm:w-[240px]',
                   !value && 'text-muted-foreground',
                 )}
               >
