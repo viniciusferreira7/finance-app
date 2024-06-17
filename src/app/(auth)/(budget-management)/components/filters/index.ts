@@ -1,14 +1,14 @@
 import { CreatedAt } from './created-at'
 import { Name } from './name'
 import { FiltersRoot as Root } from './root'
-import { SelectCategories } from './select-categories'
+import { SelectCategory } from './select-category'
 import { SelectSort } from './select-sort'
 import { UpdateAt } from './update-at'
 import { Value } from './value'
 
 export const Filters = {
   Root,
-  SelectCategories,
+  SelectCategory,
   SelectSort,
   Name,
   Value,

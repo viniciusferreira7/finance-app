@@ -1,27 +1,50 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import dayjs from 'dayjs'
 import { Eraser, ListFilter } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { removeUndefinedValues } from '@/utils/remove-undefined-values'
 
-const FiltersRootFormSchema = z.object({
-  name: z.string().optional(),
-  value: z.string().optional(), // TODO: add validation and transformation to a number
-  createdAt: z.string().optional(), // TODO: add Date type
-  updateAt: z.string().optional(), // TODO: add Date type
-  category: z.string().optional(),
-  sort: z.enum(['asc', 'desc']).optional(),
+import { useGetValuesFromSearchParams } from '../../hooks/use-get-values-from-search-params'
+
+const filtersRootFormSchema = z.object({
+  name: z.string().nullable().optional(),
+  value: z
+    .string()
+    .nullable()
+    .optional()
+    .refine((value) => (value ? Number(value) : true), {
+      message: 'Must be a number',
+    })
+    .refine((value) => (value ? Number(value) >= 0 : true), {
+      message: 'Must be a positive number',
+    }),
+  createdAt: z
+    .date()
+    .transform((createdAt) =>
+      createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : null,
+    )
+    .nullable()
+    .optional(),
+  updateAt: z
+    .date()
+    .transform((updateAt) =>
+      updateAt ? dayjs(updateAt).format('YYYY-MM-DD') : null,
+    )
+    .nullable()
+    .optional(),
+  category: z.string().nullable().optional(),
+  sort: z.enum(['asc', 'desc', '']).nullable().optional(),
 })
 
-// TODO: get values from URL state when reload window to insert in fields
-
-type FiltersRootFormSchemaInput = z.input<typeof FiltersRootFormSchema>
+type FiltersRootFormSchemaInput = z.input<typeof filtersRootFormSchema>
 
 interface FiltersRootProps {
   children: ReactNode
@@ -31,10 +54,15 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   const router = useRouter()
   const pathname = usePathname()
   const methods = useForm<FiltersRootFormSchemaInput>({
-    resolver: zodResolver(FiltersRootFormSchema),
+    resolver: zodResolver(filtersRootFormSchema),
   })
 
-  const { handleSubmit, reset } = methods
+  const {
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = methods
 
   function handleReset() {
     reset()
@@ -43,13 +71,25 @@ export function FiltersRoot({ children }: FiltersRootProps) {
 
   function handleFilter(data: FiltersRootFormSchemaInput) {
     const formattedSearchParams = removeUndefinedValues(data)
-    console.log({ formattedSearchParams })
 
-    console.log(data.name?.length)
     const queries = new URLSearchParams(formattedSearchParams)
 
     router.push('?' + queries)
   }
+
+  // TODO: apply responsive in filters
+
+  const { getValuesFromSearchParams } = useGetValuesFromSearchParams({
+    obj: filtersRootFormSchema.shape,
+    fn: setValue,
+  })
+
+  useEffect(() => {
+    getValuesFromSearchParams()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const isError = !!Object.keys(errors).length
 
   return (
     <div className="mb-3 space-y-2 ">
@@ -57,13 +97,13 @@ export function FiltersRoot({ children }: FiltersRootProps) {
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(handleFilter)}
-          className="flex items-center gap-2"
+          className={cn('flex items-stretch gap-2', !!isError && 'items-start')}
         >
           {children}
           <Button variant="outline" onClick={handleReset}>
             <Eraser className="size-3" /> Clear
           </Button>
-          <Button>
+          <Button disabled={!!isError}>
             <ListFilter className="size-3" /> Filter
           </Button>
         </form>

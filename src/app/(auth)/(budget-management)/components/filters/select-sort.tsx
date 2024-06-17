@@ -21,7 +21,14 @@ export function SelectSort() {
       control={control}
       render={({ field: { value, onChange } }) => {
         return (
-          <Select value={value} onValueChange={onChange}>
+          <Select
+            value={value ?? ''}
+            onValueChange={(e) => {
+              if (e) {
+                onChange(e)
+              }
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a sort" />
             </SelectTrigger>
