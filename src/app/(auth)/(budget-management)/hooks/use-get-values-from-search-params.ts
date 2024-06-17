@@ -19,10 +19,10 @@ export const useGetValuesFromSearchParams = <T extends object>({
     Object.entries(obj).forEach(([key]) => {
       const value = searchParams.get(key)
 
-      const dateFields = key.includes('edAt')
+      const isDateFields = key.includes('edAt')
       const isValidDate = dayjs(value).isValid()
 
-      if (dateFields && isValidDate) {
+      if (isDateFields && isValidDate) {
         fn(key, dayjs(value).toDate())
       } else {
         fn(key, value)

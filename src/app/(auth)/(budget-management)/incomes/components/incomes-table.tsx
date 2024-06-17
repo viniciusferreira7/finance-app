@@ -1,3 +1,4 @@
+import { PaginationContainer } from '@/components/pagination-container'
 import {
   Table,
   TableBody,
@@ -14,7 +15,7 @@ export function IncomesTable() {
   return (
     <div className="space-y-2.5">
       <div className="rounded-md border">
-        <Table>
+        <Table containerClassName="static">
           <TableHeader>
             <TableRow>
               <TableHead className="w-[64px]"></TableHead>
@@ -25,8 +26,7 @@ export function IncomesTable() {
               <TableHead className="w-[180px]">Category</TableHead>
               <TableHead>Created at</TableHead>
               <TableHead>Update at</TableHead>
-              <TableHead></TableHead>
-              <TableHead></TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -45,7 +45,7 @@ export function IncomesTable() {
           </TableFooter>
         </Table>
       </div>
-      {/* <Pagination pageIndex={0} totalCount={100} perPage={10} /> */}
+      <PaginationContainer currentPage={5} totalPages={20} />
     </div>
   )
 }
