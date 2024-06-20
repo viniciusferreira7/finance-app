@@ -1,5 +1,7 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import {
   Pagination,
   PaginationContent,
@@ -19,28 +21,63 @@ import {
 interface PaginationContainerProps {
   currentPage: number
   totalPages: number
+  perPage: number
+  count: number
 }
 
 export function PaginationContainer({
   currentPage,
   totalPages,
+  perPage,
+  count,
 }: PaginationContainerProps) {
+  const router = useRouter()
+
   const pages = generatePages({
     currentPage,
     totalPages,
   })
 
+  console.log(window.location.search)
+
+  function handleChangePage(page: number) {
+    const queries = window.location.search
+
+    if (queries.includes('page=')) {
+      router.replace(window.location.search.replace(/page=\d/g, `page=${page}`))
+    } else {
+      router.replace(`?page=${page}`)
+    }
+  }
+
+  const hasPreviousPage = currentPage > 1
+  const hasNextPage = currentPage < totalPages
+
+  function getItemsOnCurrentPage() {
+    if (currentPage < totalPages) {
+      return perPage
+    } else {
+      return count % perPage || perPage
+    }
+  }
+
+  const showing = ((currentPage ?? 1) - 1) * perPage + getItemsOnCurrentPage()
+
   return (
     <div className="flex flex-col-reverse gap-4 p-4 md:flex-row md:items-center md:justify-between">
       <div className="flex w-full items-center justify-center gap-2 md:justify-start">
-        <p className="text-sm font-bold">Page: {currentPage}</p>
+        <p className="text-sm font-bold">Showing: {showing}</p>
         <p>of</p>
-        <p className="text-sm font-bold">{totalPages} pages</p>
+        <p className="text-sm font-bold">{count} records</p>
       </div>
       <Pagination className="m-0 mx-auto md:justify-end">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={`?page=${currentPage - 1}`} />
+            <PaginationPrevious
+              disabled={!hasPreviousPage}
+              onClick={() => handleChangePage(currentPage - 1)}
+              className="data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-30"
+            />
           </PaginationItem>
           {pages.map((page) => {
             const isEllipsis = page === ELLIPSIS_LEFT || page === ELLIPSIS_RIGHT
@@ -55,7 +92,7 @@ export function PaginationContainer({
             return (
               <PaginationItem key={page}>
                 <PaginationLink
-                  href={`?page=${page}`}
+                  onClick={() => handleChangePage(page)}
                   isActive={currentPage === page}
                 >
                   {page}
@@ -64,7 +101,11 @@ export function PaginationContainer({
             )
           })}
           <PaginationItem>
-            <PaginationNext href={`?page=${currentPage + 1}`} />
+            <PaginationNext
+              disabled={!hasNextPage}
+              onClick={() => handleChangePage(currentPage + 1)}
+              className="data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-30"
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

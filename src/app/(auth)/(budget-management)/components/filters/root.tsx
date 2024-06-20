@@ -70,14 +70,13 @@ export function FiltersRoot({ children }: FiltersRootProps) {
     router.push(pathname)
   }
 
-  console.log(errors)
-
   function handleFilter(data: FiltersRootFormSchemaInput) {
     const formattedSearchParams = removeUndefinedValues(data)
+    const queries = new URLSearchParams({ ...formattedSearchParams, page: '1' })
 
-    const queries = new URLSearchParams(formattedSearchParams)
-
-    router.push('?' + queries)
+    router.replace('?' + queries, {
+      scroll: false,
+    })
   }
 
   const { getValuesFromSearchParams } = useGetValuesFromSearchParams({
@@ -106,7 +105,7 @@ export function FiltersRoot({ children }: FiltersRootProps) {
         >
           {children}
           <div className="flex gap-2">
-            <Button variant="outline" onClick={handleReset}>
+            <Button type="button" variant="outline" onClick={handleReset}>
               <Eraser className="size-3" /> Clear
             </Button>
             <Button disabled={!!isError}>
