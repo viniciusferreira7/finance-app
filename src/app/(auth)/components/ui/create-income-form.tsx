@@ -16,6 +16,8 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+import { SelectCategory } from './select-category'
+
 const createIncomeFormSchema = z.object({
   name: z
     .string()
@@ -23,8 +25,7 @@ const createIncomeFormSchema = z.object({
     .max(40, 'Must be 40 characters.'),
   value: z
     .string()
-    .nullable()
-    .optional()
+    .min(1, 'Must enter the value')
     .refine((value) => (value ? Number(value) : true), {
       message: 'Must be a number',
     })
@@ -32,6 +33,7 @@ const createIncomeFormSchema = z.object({
       message: 'Must be a positive number',
     })
     .transform((value) => value?.match(/\d+/g)),
+  category: z.string({ required_error: 'Must select a category' }),
   description: z.string().max(220, 'Must be 220 characters.').optional(),
 })
 
@@ -93,6 +95,17 @@ export function CreateIncomeForm() {
               {!!errors.value && (
                 <Input.HelperText isError={!!errors.value}>
                   {errors.value.message}
+                </Input.HelperText>
+              )}
+            </div>
+            <div ref={parent} className="space-y-2">
+              <Label htmlFor="category" isError={!!errors.category}>
+                Select a category
+              </Label>
+              <SelectCategory />
+              {!!errors.category && (
+                <Input.HelperText isError={!!errors.category}>
+                  {errors.category.message}
                 </Input.HelperText>
               )}
             </div>
