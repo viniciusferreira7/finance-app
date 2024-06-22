@@ -18,7 +18,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { SelectCategory } from '.'
 
-const createIncomeFormSchema = z.object({
+const createExpenseFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Mut be at least 1 character')
@@ -37,12 +37,12 @@ const createIncomeFormSchema = z.object({
   description: z.string().max(220, 'Must be 220 characters.').optional(),
 })
 
-type CreateIncomeFormSchema = z.input<typeof createIncomeFormSchema>
+type CreateExpenseFormSchema = z.input<typeof createExpenseFormSchema>
 
-export function CreateIncomeForm() {
+export function CreateExpenseForm() {
   const [parent] = useAutoAnimate()
-  const methods = useForm<CreateIncomeFormSchema>({
-    resolver: zodResolver(createIncomeFormSchema),
+  const methods = useForm<CreateExpenseFormSchema>({
+    resolver: zodResolver(createExpenseFormSchema),
   })
 
   const {
@@ -51,7 +51,7 @@ export function CreateIncomeForm() {
     formState: { errors },
   } = methods
 
-  function handleCreateIncome(data: CreateIncomeFormSchema) {
+  function handleCreateExpense(data: CreateExpenseFormSchema) {
     console.log(data)
   }
 
@@ -59,16 +59,16 @@ export function CreateIncomeForm() {
     <FormProvider {...methods}>
       <DialogContent>
         <AlertDialogHeader>
-          <DialogTitle>Create your income</DialogTitle>
+          <DialogTitle>Create your expense</DialogTitle>
           <DialogDescription>
-            This form will create a record of income. Please provide accurate
-            and complete information to ensure proper documentation of your
-            earnings.
+            This form creates a record of expenses. Please provide accurate and
+            complete information to ensure correct documentation of your
+            expenses.
           </DialogDescription>
         </AlertDialogHeader>
         <form
           ref={parent}
-          onSubmit={handleSubmit(handleCreateIncome)}
+          onSubmit={handleSubmit(handleCreateExpense)}
           className="space-y-5"
         >
           <div className="space-y-4">
@@ -125,7 +125,7 @@ export function CreateIncomeForm() {
               )}
             </div>
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" variant="destructive">
             Create
           </Button>
         </form>
