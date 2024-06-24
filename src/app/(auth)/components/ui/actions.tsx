@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { CreateExpenseForm, CreateIncomeForm } from '.'
+import { CreateCategoryForm, CreateExpenseForm, CreateIncomeForm } from '.'
 
 export function Actions() {
   return (
@@ -48,7 +48,7 @@ export function Actions() {
               <DialogTrigger asChild>
                 <Button variant="ghost">Category</Button>
               </DialogTrigger>
-              {/* <DialogUpdateIncomeForm /> */}
+              <CreateCategoryForm />
             </Dialog>
           </DropdownMenuItem>
         </DropdownMenuContent>
