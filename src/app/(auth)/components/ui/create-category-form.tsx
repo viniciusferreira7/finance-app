@@ -16,14 +16,11 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-import { SelectIcon } from './select-icon'
-
 const createCategoryFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Mut be at least 1 character')
     .max(40, 'Must be 40 characters.'),
-  iconName: z.string().optional(),
   description: z.string().max(220, 'Must be 220 characters.').optional(),
 })
 
@@ -76,17 +73,6 @@ export function CreateCategoryForm() {
               )}
             </div>
             <div ref={parent} className="space-y-2">
-              <Label htmlFor="icon-name" isError={!!errors.iconName}>
-                Select an icon
-              </Label>
-              <SelectIcon />
-              {!!errors.iconName && (
-                <Input.HelperText isError={!!errors.iconName}>
-                  {errors.iconName.message}
-                </Input.HelperText>
-              )}
-            </div>
-            <div ref={parent} className="space-y-2">
               <Label htmlFor="description" isError={!!errors.description}>
                 Description
               </Label>
@@ -102,7 +88,7 @@ export function CreateCategoryForm() {
               )}
             </div>
           </div>
-          <Button type="submit" className="w-full" variant="destructive">
+          <Button type="submit" className="w-full" variant="secondary">
             Create
           </Button>
         </form>
