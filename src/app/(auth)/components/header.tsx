@@ -3,12 +3,12 @@ import { Coins, Home, IndentIncrease } from 'lucide-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 
-import { AccountMenu, NavLink } from './ui'
+import { AccountMenu, Actions, NavLink } from './ui'
 
 export function Header() {
   return (
-    <div className="border-b">
-      <header className="flex h-16 items-center gap-4 px-6">
+    <div>
+      <header className="flex h-16 items-center gap-4 border-b px-6">
         <Coins className="size-4" />
 
         <Separator orientation="vertical" className="h-6" />
@@ -28,6 +28,7 @@ export function Header() {
           <AccountMenu />
         </div>
       </header>
+      <Actions />
     </div>
   )
 }
