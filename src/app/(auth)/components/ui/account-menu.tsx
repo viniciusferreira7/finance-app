@@ -1,6 +1,5 @@
 'use client'
 
-import { useAtom } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { ChevronDown, LogOut, Settings } from 'lucide-react'
 import Link from 'next/link'
@@ -18,14 +17,14 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { deleteCookie } from '@/utils/cookie/delete-cookie'
 
-import { profileAtom } from '../../hooks/atoms/profile'
+import { profileAtom, useProfile } from '../../hooks/atoms/profile'
 import { useGetUserProfile } from '../../hooks/queries/use-get-user-profile'
 
 export function AccountMenu() {
   const { data } = useGetUserProfile()
   useHydrateAtoms([[profileAtom, { profile: null }]])
 
-  const [{ profile }, setter] = useAtom(profileAtom)
+  const [{ profile }, setter] = useProfile()
 
   const router = useRouter()
 
