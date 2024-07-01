@@ -14,7 +14,7 @@ export function generatePages({
   const total = Math.max(page, totalPages)
 
   if (totalPages <= 7) {
-    return Array.from({ length: 7 }).map((_, index) => index + 1)
+    return Array.from({ length: totalPages }).map((_, index) => index + 1)
   }
 
   if (page < 3) return [1, 2, 3, ELLIPSIS_LEFT, total - 1, total]
