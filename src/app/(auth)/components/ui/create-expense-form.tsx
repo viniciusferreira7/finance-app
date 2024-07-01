@@ -16,6 +16,7 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+import { useCreateExpense } from '../../hooks/mutations/use-create-expense'
 import { SelectCategory } from '.'
 
 const createExpenseFormSchema = z.object({
@@ -45,6 +46,8 @@ export function CreateExpenseForm() {
     resolver: zodResolver(createExpenseFormSchema),
   })
 
+  const { mutate } = useCreateExpense()
+
   const {
     handleSubmit,
     register,
@@ -53,6 +56,13 @@ export function CreateExpenseForm() {
 
   function handleCreateExpense(data: CreateExpenseFormSchema) {
     console.log(data)
+
+    mutate({
+      name: data.name,
+      value: Number(data.value),
+      description: data.description,
+      category_id: data.category,
+    })
   }
 
   return (
