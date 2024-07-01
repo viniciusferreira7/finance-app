@@ -4,20 +4,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import {
-  createIncome,
-  CreateIncomePayload,
-} from '@/services/incomes/create-income'
+  createCategory,
+  CreateCategoryPayload,
+} from '@/services/categories/create-category'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
-export const useCreateIncome = () => {
+export const useCreateCategory = () => {
   const query = useQueryClient()
 
   return useMutation({
-    mutationKey: ['create-income'],
-    mutationFn: (payload: CreateIncomePayload) =>
-      queryFnWrapper(createIncome, payload),
+    mutationKey: ['create-Category'],
+    mutationFn: (payload: CreateCategoryPayload) =>
+      queryFnWrapper(createCategory, payload),
     onSuccess: async () => {
-      toast.success('Income was created successfully.')
+      toast.success('Category was created successfully.')
     },
     onSettled: () => {
       query.invalidateQueries()

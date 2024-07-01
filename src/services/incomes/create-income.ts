@@ -7,13 +7,11 @@ import { getErrorMessage } from '@/utils/error/get-error-message'
 export interface CreateIncomePayload {
   name: string
   value: number
-  description?: number
+  description?: string
   category_id: string
 }
 
-export interface CreateIncomeResponse {
-  token: string
-}
+export interface CreateIncomeResponse {}
 
 export async function createIncome(
   payload: CreateIncomePayload,

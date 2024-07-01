@@ -16,6 +16,8 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+import { useCreateCategory } from '../../hooks/mutations'
+
 const createCategoryFormSchema = z.object({
   name: z
     .string()
@@ -32,6 +34,8 @@ export function CreateCategoryForm() {
     resolver: zodResolver(createCategoryFormSchema),
   })
 
+  const { mutate, isPending } = useCreateCategory()
+
   const {
     handleSubmit,
     register,
@@ -40,6 +44,11 @@ export function CreateCategoryForm() {
 
   function handleCreateCategory(data: CreateCategoryFormSchema) {
     console.log(data)
+
+    mutate({
+      name: data.name,
+      description: data.description,
+    })
   }
 
   return (
@@ -88,7 +97,12 @@ export function CreateCategoryForm() {
               )}
             </div>
           </div>
-          <Button type="submit" className="w-full" variant="secondary">
+          <Button
+            type="submit"
+            className="w-full"
+            variant="secondary"
+            disabled={isPending}
+          >
             Create
           </Button>
         </form>

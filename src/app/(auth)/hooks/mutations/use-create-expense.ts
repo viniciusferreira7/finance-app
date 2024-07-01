@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import {
   createExpense,
   CreateExpensePayload,
-} from '@/services/expense/create-expense'
+} from '@/services/expenses/create-expense'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateExpense = () => {

@@ -11,9 +11,7 @@ export interface CreateExpensePayload {
   category_id: string
 }
 
-export interface CreateExpenseResponse {
-  token: string
-}
+export interface CreateExpenseResponse {}
 
 export async function createExpense(
   payload: CreateExpensePayload,

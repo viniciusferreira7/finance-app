@@ -16,6 +16,7 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
+import { useCreateIncome } from '../../hooks/mutations'
 import { SelectCategory } from '.'
 
 const createIncomeFormSchema = z.object({
@@ -45,6 +46,8 @@ export function CreateIncomeForm() {
     resolver: zodResolver(createIncomeFormSchema),
   })
 
+  const { mutate, isPending } = useCreateIncome()
+
   const {
     handleSubmit,
     register,
@@ -53,6 +56,13 @@ export function CreateIncomeForm() {
 
   function handleCreateIncome(data: CreateIncomeFormSchema) {
     console.log(data)
+
+    mutate({
+      name: data.name,
+      value: Number(data.value),
+      description: data.description,
+      category_id: data.category,
+    })
   }
 
   return (
@@ -125,7 +135,7 @@ export function CreateIncomeForm() {
               )}
             </div>
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isPending}>
             Create
           </Button>
         </form>
