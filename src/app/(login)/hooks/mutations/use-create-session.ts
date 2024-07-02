@@ -17,8 +17,11 @@ export const useCreateSession = () => {
 
   return useMutation({
     mutationKey: ['create-session'],
-    mutationFn: async (payload: CreateSessionPayload) =>
-      queryFnWrapper(createSession, payload),
+    mutationFn: async (payload: CreateSessionPayload) => {
+      toast.info('Creating a session for you.')
+
+      return await queryFnWrapper(createSession, payload)
+    },
     onSuccess: async (data) => {
       await setCookie('finance-token', data.token)
       router.push('/')

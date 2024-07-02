@@ -55,8 +55,6 @@ export function CreateIncomeForm() {
   } = methods
 
   function handleCreateIncome(data: CreateIncomeFormSchema) {
-    console.log(data)
-
     mutate({
       name: data.name,
       value: Number(data.value),

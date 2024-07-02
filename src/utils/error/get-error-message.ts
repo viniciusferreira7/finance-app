@@ -11,7 +11,8 @@ export async function getErrorMessage(error: unknown) {
       error?.response?.data?.message ||
       error?.response?.data?.detail ||
       error?.response?.data?.error ||
-      error?.response?.data?.data
+      error?.response?.data?.data ||
+      'There was an error in the request'
 
     message = apiStringError
 
@@ -25,7 +26,8 @@ export async function getErrorMessage(error: unknown) {
   } else if (typeof error === 'string') {
     message = error
   } else {
-    message = 'Algo inesperado ocorreu.'
+    statusCode = 500
+    message = 'There was an error in the request'
   }
 
   return { message, statusCode }

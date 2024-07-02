@@ -13,10 +13,13 @@ export const useCreateCategory = () => {
   const query = useQueryClient()
 
   return useMutation({
-    mutationKey: ['create-Category'],
-    mutationFn: (payload: CreateCategoryPayload) =>
-      queryFnWrapper(createCategory, payload),
-    onSuccess: async () => {
+    mutationKey: ['create-category'],
+    mutationFn: async (payload: CreateCategoryPayload) => {
+      toast.info('Creating a category')
+
+      return await queryFnWrapper(createCategory, payload)
+    },
+    onSuccess: () => {
       toast.success('Category was created successfully.')
     },
     onSettled: () => {

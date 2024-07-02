@@ -14,9 +14,12 @@ export const useCreateExpense = () => {
 
   return useMutation({
     mutationKey: ['create-expense'],
-    mutationFn: (payload: CreateExpensePayload) =>
-      queryFnWrapper(createExpense, payload),
-    onSuccess: async () => {
+    mutationFn: async (payload: CreateExpensePayload) => {
+      toast.info('Creating the expense')
+
+      return await queryFnWrapper(createExpense, payload)
+    },
+    onSuccess: () => {
       toast.success('Expense was created successfully.')
     },
     onSettled: () => {

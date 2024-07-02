@@ -14,9 +14,12 @@ export const useCreateIncome = () => {
 
   return useMutation({
     mutationKey: ['create-income'],
-    mutationFn: (payload: CreateIncomePayload) =>
-      queryFnWrapper(createIncome, payload),
-    onSuccess: async () => {
+    mutationFn: async (payload: CreateIncomePayload) => {
+      toast.info('Creating the income')
+
+      return await queryFnWrapper(createIncome, payload)
+    },
+    onSuccess: () => {
       toast.success('Income was created successfully.')
     },
     onSettled: () => {
