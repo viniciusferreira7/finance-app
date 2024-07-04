@@ -20,30 +20,10 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-]
+import { useFetchCategories } from '../../hooks/queries/use-fetch-categories'
 
 export function SelectCategory() {
+  const { data: categories, isLoading } = useFetchCategories()
   const [open, setOpen] = useState(false)
 
   const {
@@ -59,7 +39,7 @@ export function SelectCategory() {
       control={control}
       render={({ field: { value, onChange } }) => {
         const selectedValue = value
-          ? frameworks.find((framework) => framework.value === value)?.label
+          ? categories?.results?.find((category) => category.id === value)?.name
           : '...'
         return (
           <Popover open={open} onOpenChange={setOpen}>
@@ -67,14 +47,21 @@ export function SelectCategory() {
               <Button
                 variant="outline"
                 role="combobox"
+                disabled={isLoading}
                 aria-expanded={open}
                 className={cn(
                   'w-full justify-between font-normal',
                   isError && 'border-destructive text-destructive',
                 )}
               >
-                {selectedValue}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                {isLoading ? (
+                  'Loading categories...'
+                ) : (
+                  <>
+                    {selectedValue}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </>
+                )}
               </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -86,24 +73,30 @@ export function SelectCategory() {
                 <CommandList>
                   <CommandEmpty>No category found.</CommandEmpty>
                   <CommandGroup>
-                    {frameworks.map((framework) => (
+                    {categories?.results?.map((category) => (
                       <CommandItem
-                        key={framework.value}
-                        value={framework.value}
+                        key={category.id}
+                        value={category.name}
                         onSelect={(currentValue) => {
-                          onChange(currentValue === value ? '' : currentValue)
-                          setOpen(false)
+                          const findCategoryByName = categories.results.find(
+                            (category) => category.name === currentValue,
+                          )
+
+                          if (findCategoryByName) {
+                            onChange(findCategoryByName.id)
+                            setOpen(false)
+                          }
                         }}
                       >
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            value === framework.value
+                            value === category.name
                               ? 'opacity-100'
                               : 'opacity-0',
                           )}
                         />
-                        {framework.label}
+                        {category.name}
                       </CommandItem>
                     ))}
                   </CommandGroup>
