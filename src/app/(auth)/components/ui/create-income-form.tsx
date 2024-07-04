@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
 import { useCreateIncome } from '../../hooks/mutations'
-import { SelectCategory } from '.'
+import { InputValue, SelectCategory } from '.'
 
 const createIncomeFormSchema = z.object({
   name: z
@@ -93,19 +93,7 @@ export function CreateIncomeForm() {
                 </Input.HelperText>
               )}
             </div>
-            <div ref={parent} className="space-y-2">
-              <Label htmlFor="value" isError={!!errors.value}>
-                Value
-              </Label>
-              <Input.Root isError={!!errors.value}>
-                <Input.Control id="value" {...register('value')} />
-              </Input.Root>
-              {!!errors.value && (
-                <Input.HelperText isError={!!errors.value}>
-                  {errors.value.message}
-                </Input.HelperText>
-              )}
-            </div>
+            <InputValue />
             <div ref={parent} className="space-y-2">
               <Label htmlFor="category" isError={!!errors.category}>
                 Select a category

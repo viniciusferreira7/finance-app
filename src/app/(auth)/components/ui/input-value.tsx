@@ -5,8 +5,9 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 
 import * as Input from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
-export function Value() {
+export function InputValue() {
   const [parent] = useAutoAnimate()
 
   const {
@@ -20,8 +21,11 @@ export function Value() {
       control={control}
       render={({ field: { ref, value, onChange, ...inputProps } }) => {
         return (
-          <div ref={parent} className="w-full sm:w-auto">
-            <Input.Root isError={!!errors.value} className="h-full w-full">
+          <div ref={parent} className="space-y-2">
+            <Label htmlFor="value" isError={!!errors.value}>
+              Value
+            </Label>
+            <Input.Root isError={!!errors.value}>
               <NumericFormat
                 id="value"
                 value={value}
@@ -33,7 +37,6 @@ export function Value() {
                 prefix="R$ "
                 decimalScale={2}
                 getInputRef={ref}
-                placeholder="value"
                 customInput={Input.Control}
                 {...inputProps}
               />
