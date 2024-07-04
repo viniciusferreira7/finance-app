@@ -3,10 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import {
-  createExpense,
-  CreateExpensePayload,
-} from '@/services/expenses/create-expense'
+import { createExpense, CreateExpensePayload } from '@/services/expenses'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateExpense = () => {

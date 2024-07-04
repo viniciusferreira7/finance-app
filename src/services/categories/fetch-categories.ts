@@ -6,7 +6,7 @@ import { ErrorServerAction } from '@/models/error'
 import { Pagination } from '@/models/pagination'
 import { getErrorMessage } from '@/utils/error/get-error-message'
 
-interface FetchCategoriesParams {
+export interface FetchCategoriesParams {
   searchParams?: {
     page?: number
     per_page?: number

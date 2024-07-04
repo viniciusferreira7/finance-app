@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchCategories } from '@/services/categories/fetch-categories'
+import { fetchCategories } from '@/services/categories'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useFetchCategories = () => {

@@ -3,10 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import {
-  createCategory,
-  CreateCategoryPayload,
-} from '@/services/categories/create-category'
+import { createCategory, CreateCategoryPayload } from '@/services/categories'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateCategory = () => {

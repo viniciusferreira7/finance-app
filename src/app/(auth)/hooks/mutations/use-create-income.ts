@@ -3,10 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import {
-  createIncome,
-  CreateIncomePayload,
-} from '@/services/incomes/create-income'
+import { createIncome, CreateIncomePayload } from '@/services/incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useCreateIncome = () => {
