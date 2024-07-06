@@ -1,3 +1,8 @@
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+
 import { PaginationContainer } from '@/components/pagination-container'
 import {
   Table,
@@ -8,10 +13,41 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { formatCurrency } from '@/utils/format-currency'
 
+import { useFetchIncomes } from '../hooks/queries/use-fetch-incomes'
 import { IncomesBodyRow } from './ui'
 
 export function IncomesTable() {
+  const searchParams = useSearchParams()
+
+  const { data: incomes, params, setParams } = useFetchIncomes()
+
+  const totalIncome = incomes?.results.reduce<number>(
+    (acc, income) => acc + income.value,
+    0,
+  )
+
+  const pagination = {
+    currentPage: incomes?.page ?? 1,
+    totalPages: incomes?.total_pages ?? 1,
+    perPage: incomes?.per_page ?? 10,
+    count: incomes?.count ?? 1,
+  }
+
+  let page = Number(searchParams.get('page') ?? 1)
+
+  if (incomes?.total_pages && page > incomes?.total_pages) {
+    page = incomes?.total_pages
+  }
+
+  useEffect(() => {
+    setParams({
+      searchParams: { ...params.searchParams, page },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+
   return (
     <div className="space-y-2.5">
       <div className="rounded-md border">
@@ -30,8 +66,8 @@ export function IncomesTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 10 }).map((_, index) => {
-              return <IncomesBodyRow key={index} />
+            {incomes?.results.map((income) => {
+              return <IncomesBodyRow key={income.id} {...income} />
             })}
           </TableBody>
           <TableFooter>
@@ -39,13 +75,15 @@ export function IncomesTable() {
               <TableCell className="p-4">Total</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell className="p-4 pl-2 font-medium">R$ 7500,60</TableCell>
+              <TableCell className="p-4 pl-2 font-medium">
+                {formatCurrency(totalIncome)}
+              </TableCell>
               <TableCell colSpan={7}></TableCell>
             </TableRow>
           </TableFooter>
         </Table>
       </div>
-      <PaginationContainer currentPage={5} totalPages={20} />
+      <PaginationContainer {...pagination} />
     </div>
   )
 }
