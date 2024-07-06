@@ -104,7 +104,7 @@ export function FiltersRoot({ children }: FiltersRootProps) {
           )}
         >
           {children}
-          <div className="flex gap-2">
+          <div className="flex justify-center gap-2 md:justify-normal">
             <Button type="button" variant="outline" onClick={handleReset}>
               <Eraser className="size-3" /> Clear
             </Button>

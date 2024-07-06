@@ -3,6 +3,6 @@ export interface Category {
   name: string
   description: string | null
   created_at: string
-  update_at: string
+  updated_at: string
   user_id: string
 }
