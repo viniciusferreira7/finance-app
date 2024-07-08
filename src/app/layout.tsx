@@ -44,7 +44,7 @@ export default function RootLayout({
             >
               {children}
               <ThemeSwitcher />
-              <Toaster richColors />
+              <Toaster richColors closeButton />
             </ThemeProvider>
           </ThemeWrapper>
         </QueryWrapper>

@@ -24,7 +24,7 @@ const signInFormSchema = z.object({
 type SignInFormInput = z.infer<typeof signInFormSchema>
 
 export function SignInForm() {
-  const { mutate } = useCreateSession()
+  const { mutate, isPending } = useCreateSession()
   const [parent] = useAutoAnimate()
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true)
@@ -90,7 +90,9 @@ export function SignInForm() {
           </Input.HelperText>
         )}
       </div>
-      <Button className="w-full">Sign-in</Button>
+      <Button className="w-full" disabled={isPending}>
+        Sign-in
+      </Button>
       <div className="flex w-full justify-center pt-8">
         <Link href="/sign-up" className="text-base font-semibold">
           or sign-up

@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Skeleton } from '@/components/ui/skeleton'
 import { deleteCookie } from '@/utils/cookie/delete-cookie'
 
 import { profileAtom, useProfile } from '../../hooks/atoms/profile'
@@ -24,7 +25,7 @@ export function AccountMenu() {
   const { data } = useGetUserProfile()
   useHydrateAtoms([[profileAtom, { profile: null }]])
 
-  const [{ profile }, setter] = useProfile()
+  const [user, setUser] = useProfile()
 
   const router = useRouter()
 
@@ -35,9 +36,9 @@ export function AccountMenu() {
 
   useEffect(() => {
     if (data) {
-      setter({ profile: data })
+      setUser({ profile: data })
     }
-  }, [data, setter])
+  }, [data, setUser])
 
   return (
     <DropdownMenu>
@@ -46,12 +47,30 @@ export function AccountMenu() {
           variant="outline"
           className="flex select-none items-center gap-2"
         >
-          {profile?.name} <ChevronDown />
+          {user.profile ? (
+            <>
+              <p className="hidden w-full max-w-20 truncate md:block md:max-w-40">
+                {user.profile?.name}
+              </p>
+              <ChevronDown />
+            </>
+          ) : (
+            <Skeleton className="h-4 w-40" />
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="text-sm font-normal text-muted-foreground">
-          {profile?.email}
+          {user.profile ? (
+            <div className="space-y-2">
+              <p className="block w-full max-w-20 truncate text-foreground md:hidden md:max-w-40">
+                {user.profile?.name}
+              </p>
+              <p>{user.profile?.email}</p>
+            </div>
+          ) : (
+            <Skeleton className="h-4 w-full" />
+          )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
