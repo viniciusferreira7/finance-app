@@ -9,13 +9,13 @@ import { cn } from '@/lib/utils'
 import { Income } from '@/models/income'
 import { formatCurrency } from '@/utils/format-currency'
 
-import { ActionsMenu } from './actions-menu'
+import { IncomeActionsMenu } from './income-actions-menu'
 
 dayjs.extend(relativeTime)
 
-interface IncomesPros extends Income {}
+interface IncomesBodyRowProps extends Income {}
 
-export function IncomesBodyRow(props: IncomesPros) {
+export function IncomesBodyRow(props: IncomesBodyRowProps) {
   return (
     <TableRow>
       <TableCell>
@@ -58,7 +58,7 @@ export function IncomesBodyRow(props: IncomesPros) {
       </TableCell>
       <TableCell>{dayjs().from(props.updated_at)}</TableCell>
       <TableCell>
-        <ActionsMenu />
+        <IncomeActionsMenu {...props} />
       </TableCell>
     </TableRow>
   )

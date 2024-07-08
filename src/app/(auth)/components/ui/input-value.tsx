@@ -32,8 +32,8 @@ export function InputValue() {
                 onChange={(e) =>
                   onChange(e.target.value.replace(/[^0-9]/g, ''))
                 }
-                thousandSeparator=","
-                decimalSeparator="."
+                thousandSeparator="."
+                decimalSeparator=","
                 prefix="R$ "
                 decimalScale={2}
                 getInputRef={ref}

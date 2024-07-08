@@ -25,7 +25,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="scrollbar scrollbar-track-secondary scrollbar-thumb-background"
+    >
       <body
         className={cn(
           'h-screen w-full bg-background text-foreground',

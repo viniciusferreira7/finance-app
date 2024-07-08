@@ -1,3 +1,5 @@
-export { IncomeDetails } from './income-details'
 export { IncomesBodyRow } from './incomes-body-row'
+export { IncomeActionsMenu } from './income-actions-menu'
+export { DialogUpdateIncomeForm } from './dialog-update-income-form'
+export { AlertDeleteIncome } from './alert-delete-income'
 export { SkeletonIncomesBodyRow } from './skeleton-incomes-body-row'

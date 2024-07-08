@@ -1,7 +1,7 @@
 'use client'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils'
 import { useFetchCategories } from '../../hooks/queries/use-fetch-categories'
 
 export function SelectCategory() {
-  const { data: categories, isLoading } = useFetchCategories()
+  const { data: categories, isLoading, setParams } = useFetchCategories()
   const [open, setOpen] = useState(false)
 
   const {
@@ -33,14 +33,31 @@ export function SelectCategory() {
 
   const isError = !!errors.category
 
+  useEffect(() => {
+    setParams((state) => ({
+      ...state,
+      searchParams: { ...state.searchParams, pagination_disabled: true },
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Controller
       name="category"
       control={control}
       render={({ field: { value, onChange } }) => {
         const selectedValue = value
-          ? categories?.results?.find((category) => category.id === value)?.name
+          ? categories?.results?.find((category) => category.id === value)
+              ?.name ?? '...'
           : '...'
+
+        console.log({
+          value,
+          selectedValue,
+          if: value === selectedValue,
+          categories,
+          fn: categories?.results?.find((category) => category.id === value),
+        })
         return (
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
