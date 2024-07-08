@@ -17,6 +17,9 @@ export const useCreateIncome = () => {
       return await queryFnWrapper(createIncome, payload)
     },
     onSuccess: () => {
+      query.resetQueries({
+        queryKey: ['fetch-incomes'],
+      })
       toast.success('Income was created successfully.')
     },
     onSettled: () => {
