@@ -6,8 +6,8 @@ export function IncomesFilters() {
       <Filters.Name />
       <Filters.Value />
       <Filters.CreatedAt />
-      <Filters.UpdateAt />
-      <Filters.SelectCategories />
+      <Filters.UpdatedAt />
+      <Filters.SelectCategory />
       <Filters.SelectSort />
     </Filters.Root>
   )

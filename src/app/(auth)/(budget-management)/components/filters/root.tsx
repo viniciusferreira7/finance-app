@@ -28,19 +28,31 @@ const filtersRootFormSchema = z.object({
     })
     .transform((value) => value?.match(/\d+/g)),
   createdAt: z
-    .date()
-    .transform((createdAt) =>
-      createdAt ? dayjs(createdAt).format('YYYY-MM-DD') : null,
-    )
-    .nullable()
-    .optional(),
+    .object({
+      from: z
+        .date()
+        .transform((from) => (from ? dayjs(from).format('YYYY-MM-DD') : null))
+        .optional(),
+      to: z
+        .date()
+        .transform((to) => (to ? dayjs(to).format('YYYY-MM-DD') : null))
+        .optional(),
+    })
+    .optional()
+    .nullable(),
   updatedAt: z
-    .date()
-    .transform((updateAt) =>
-      updateAt ? dayjs(updateAt).format('YYYY-MM-DD') : null,
-    )
-    .nullable()
-    .optional(),
+    .object({
+      from: z
+        .date()
+        .transform((from) => (from ? dayjs(from).format('YYYY-MM-DD') : null))
+        .optional(),
+      to: z
+        .date()
+        .transform((to) => (to ? dayjs(to).format('YYYY-MM-DD') : null))
+        .optional(),
+    })
+    .optional()
+    .nullable(),
   category: z.string().nullable().optional(),
   sort: z.enum(['asc', 'desc', '']).nullable().optional(),
 })
@@ -71,7 +83,17 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   }
 
   function handleFilter(data: FiltersRootFormSchemaInput) {
-    const formattedSearchParams = removeUndefinedValues(data)
+    const formattedData = {
+      ...data,
+      createdAt: undefined,
+      updatedAt: undefined,
+      createdAtFrom: data.createdAt?.from,
+      createdAtTo: data.createdAt?.to,
+      updatedAtFrom: data.updatedAt?.from,
+      updatedAtTo: data.updatedAt?.to,
+    }
+
+    const formattedSearchParams = removeUndefinedValues(formattedData)
     const queries = new URLSearchParams({ ...formattedSearchParams, page: '1' })
 
     router.replace('?' + queries, {
@@ -80,7 +102,16 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   }
 
   const { getValuesFromSearchParams } = useGetValuesFromSearchParams({
-    obj: filtersRootFormSchema.shape,
+    arr: [
+      'name',
+      'value',
+      'createdAtFrom',
+      'createdAtTo',
+      'updatedAtFrom',
+      'updatedAtTo',
+      'category',
+      'sort',
+    ],
     fn: setValue,
   })
 

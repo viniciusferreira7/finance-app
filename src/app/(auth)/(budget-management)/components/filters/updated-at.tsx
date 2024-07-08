@@ -14,16 +14,27 @@ import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 
 export function UpdatedAt() {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
 
   return (
     <Controller
       name="updatedAt"
       control={control}
       render={({ field: { value, onChange } }) => {
-        const formattedDate = value
-          ? dayjs(value).format('YYYY-MM-DD')
-          : 'updated at'
+        value = watch('updatedAt')
+
+        const formattedDateFrom = value?.from
+          ? dayjs(value.from).format('YYYY-MM-DD')
+          : null
+
+        const formattedDateTo = value?.to
+          ? dayjs(value.to).format('YYYY-MM-DD')
+          : null
+
+        const label =
+          formattedDateFrom && formattedDateTo
+            ? `${formattedDateFrom} to ${formattedDateTo}`
+            : formattedDateFrom || 'update at'
 
         return (
           <Popover>
@@ -36,12 +47,12 @@ export function UpdatedAt() {
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {formattedDate}
+                {label}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                mode="single"
+                mode="range"
                 selected={value}
                 onSelect={onChange}
                 initialFocus
