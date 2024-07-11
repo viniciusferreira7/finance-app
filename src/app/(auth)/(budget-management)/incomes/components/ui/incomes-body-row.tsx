@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { Income } from '@/models/income'
-import { formatCurrency } from '@/utils/format-currency'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 import { IncomeActionsMenu } from './income-actions-menu'
 

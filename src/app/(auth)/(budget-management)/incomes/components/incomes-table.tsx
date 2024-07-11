@@ -4,6 +4,8 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { PaginationContainer } from '@/components/pagination-container'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -13,15 +15,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { formatCurrency } from '@/utils/format-currency'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 import { useFetchIncomes } from '../hooks/queries/use-fetch-incomes'
-import { IncomesBodyRow } from './ui'
+import { IncomesBodyRow, SkeletonIncomesBodyRow } from './ui'
 
 export function IncomesTable() {
   const searchParams = useSearchParams()
 
-  const { data: incomes, params, setParams } = useFetchIncomes()
+  const {
+    data: incomes,
+    isLoading,
+    isError,
+    params,
+    refetch,
+    setParams,
+  } = useFetchIncomes()
 
   const totalIncome = incomes?.results.reduce<number>(
     (acc, income) => acc + income.value,
@@ -29,10 +38,10 @@ export function IncomesTable() {
   )
 
   const pagination = {
-    currentPage: incomes?.page ?? 1,
+    currentPage: incomes?.page ?? 0,
     totalPages: incomes?.total_pages ?? 1,
     perPage: incomes?.per_page ?? 10,
-    count: incomes?.count ?? 1,
+    count: incomes?.count ?? 0,
   }
 
   let page = Number(searchParams.get('page') ?? 1)
@@ -66,9 +75,44 @@ export function IncomesTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {incomes?.results.map((income) => {
-              return <IncomesBodyRow key={income.id} {...income} />
-            })}
+            {isLoading ? (
+              <SkeletonIncomesBodyRow />
+            ) : (
+              <>
+                {incomes?.results.length ? (
+                  incomes?.results.map((income) => {
+                    return <IncomesBodyRow key={income.id} {...income} />
+                  })
+                ) : (
+                  <>
+                    {!!incomes && !incomes.results.length && (
+                      <TableRow>
+                        <TableCell
+                          colSpan={9}
+                          className="py-4 text-center text-lg font-medium"
+                        >
+                          No results found.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+
+            {isError && (
+              <TableRow>
+                <TableCell
+                  colSpan={9}
+                  className="space-y-2 py-4 text-center text-lg font-medium"
+                >
+                  <p>There was a problem with the server </p>
+                  <Button variant="outline" onClick={() => refetch()}>
+                    Please try again
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
           <TableFooter>
             <TableRow className="p-4">
@@ -76,7 +120,11 @@ export function IncomesTable() {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell className="p-4 pl-2 font-medium">
-                {formatCurrency(totalIncome)}
+                {isLoading ? (
+                  <Skeleton className="h-5 w-40" />
+                ) : (
+                  formatCurrency(totalIncome)
+                )}
               </TableCell>
               <TableCell colSpan={7}></TableCell>
             </TableRow>

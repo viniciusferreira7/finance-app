@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { InputValue, SelectCategory } from '@/app/(auth)/components/ui'
-import { useCreateIncome } from '@/app/(auth)/hooks/mutations'
+import { useUpdateIncome } from '@/app/(auth)/hooks/mutations'
 import { Button } from '@/components/ui/button'
 import {
   DialogContent,
@@ -21,12 +21,15 @@ import * as Input from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Income } from '@/models/income'
+import { convertToCurrency } from '@/utils/currency/convert-to-currency'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 const updateFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Mut be at least 1 character')
-    .max(40, 'Must be 40 characters.'),
+    .max(40, 'Must be 40 characters.')
+    .optional(),
   value: z
     .string()
     .min(1, 'Must enter the value')
@@ -36,8 +39,9 @@ const updateFormSchema = z.object({
     .refine((value) => (value ? Number(value) >= 0 : true), {
       message: 'Must be a positive number',
     })
-    .transform((value) => value?.match(/\d+/g)),
-  category: z.string({ required_error: 'Must select a category' }),
+    .transform((value) => value?.match(/\d+/g))
+    .optional(),
+  category: z.string({ required_error: 'Must select a category' }).optional(),
   description: z.string().max(220, 'Must be 220 characters.').optional(),
 })
 
@@ -52,13 +56,15 @@ export function DialogUpdateIncomeForm(props: DialogUpdateIncomeFormProps) {
     resolver: zodResolver(updateFormSchema),
     defaultValues: {
       name: props.name,
-      value: props.value.toString(),
+      value: props.value
+        ? convertToCurrency(props.value).toString()
+        : undefined,
       category: props.category_id,
       description: props.description,
     },
   })
 
-  const { mutate, isPending } = useCreateIncome() // FIXME: Set to update endpoint
+  const { mutate, isPending } = useUpdateIncome()
 
   const {
     handleSubmit,
@@ -66,15 +72,20 @@ export function DialogUpdateIncomeForm(props: DialogUpdateIncomeFormProps) {
     formState: { errors },
   } = methods
 
-  console.log(props)
+  console.log({ table: formatCurrency(props.value), input: props.value })
 
   function handleUpdateIncome(data: UpdateFormSchemaInput) {
     mutate(
       {
-        name: data.name,
-        value: Number(data.value),
-        description: data.description,
-        category_id: data.category,
+        params: {
+          id: props.id,
+        },
+        payload: {
+          name: data.name,
+          value: data.value ? Number(data.value) : undefined,
+          description: data.description,
+          category_id: data.category,
+        },
       },
       {
         onSuccess: () => {

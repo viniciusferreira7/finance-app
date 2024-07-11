@@ -51,13 +51,6 @@ export function SelectCategory() {
               ?.name ?? '...'
           : '...'
 
-        console.log({
-          value,
-          selectedValue,
-          if: value === selectedValue,
-          categories,
-          fn: categories?.results?.find((category) => category.id === value),
-        })
         return (
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
