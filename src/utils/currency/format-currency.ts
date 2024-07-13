@@ -1,10 +1,20 @@
 import { convertToCurrency } from './convert-to-currency'
 
-export function formatCurrency(value: number | undefined = 0) {
-  const currency = convertToCurrency(value).toString()
-  const numValue = parseFloat(
-    currency.replace(/[^0-9,-]+/g, '').replace(',', '.'),
-  )
+interface FormatCurrency {
+  isToConvertToCurrency?: boolean
+}
+
+export function formatCurrency(
+  value: number | undefined = 0,
+  { isToConvertToCurrency = true }: FormatCurrency = {},
+) {
+  let numValue = parseFloat(value.toString())
+
+  if (isToConvertToCurrency) {
+    const currency = convertToCurrency(value)
+    numValue = currency
+  }
+
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',

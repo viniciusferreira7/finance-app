@@ -33,7 +33,7 @@ export function IncomesTable() {
   } = useFetchIncomes()
 
   const totalIncome = incomes?.results.reduce<number>(
-    (acc, income) => acc + income.value,
+    (acc, income) => acc + income.value / 100,
     0,
   )
 
@@ -57,6 +57,8 @@ export function IncomesTable() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
+  console.log(params.searchParams)
+
   return (
     <div className="space-y-2.5">
       <div className="rounded-md border">
@@ -66,7 +68,7 @@ export function IncomesTable() {
               <TableHead className="w-[64px]"></TableHead>
               <TableHead className="w-[180px]">Identifier</TableHead>
               <TableHead className="w-[140px]">Name</TableHead>
-              <TableHead className="w-[180px]">Value</TableHead>
+              <TableHead className="max-w-[180px]">Value</TableHead>
               <TableHead className="w-[280px]">Description</TableHead>
               <TableHead className="w-[180px]">Category</TableHead>
               <TableHead>Created at</TableHead>
@@ -116,17 +118,16 @@ export function IncomesTable() {
           </TableBody>
           <TableFooter>
             <TableRow className="p-4">
-              <TableCell className="p-4">Total</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell className="p-4 pl-2 font-medium">
+              <TableCell className="p-4" colSpan={3}>
+                Total per page
+              </TableCell>
+              <TableCell colSpan={6} className="p-4 pl-2 font-medium">
                 {isLoading ? (
                   <Skeleton className="h-5 w-40" />
                 ) : (
-                  formatCurrency(totalIncome)
+                  formatCurrency(totalIncome, { isToConvertToCurrency: false })
                 )}
               </TableCell>
-              <TableCell colSpan={7}></TableCell>
             </TableRow>
           </TableFooter>
         </Table>
