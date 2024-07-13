@@ -31,7 +31,7 @@ export function AccountMenu() {
 
   async function handleLogOut() {
     await deleteCookie('finance-token')
-    router.push('/sign-in')
+    router.replace('/sign-in')
   }
 
   useEffect(() => {

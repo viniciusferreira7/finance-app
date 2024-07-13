@@ -6,3 +6,6 @@ export type { FetchIncomesParams } from './fetch-incomes'
 
 export { updateIncome } from './update-income'
 export type { UpdateIncomeParams } from './update-income'
+
+export { deleteIncome } from './delete-income'
+export type { DeleteIncomeParams } from './delete-income'

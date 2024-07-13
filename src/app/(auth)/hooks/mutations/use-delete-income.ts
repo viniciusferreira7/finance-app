@@ -3,24 +3,24 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { updateIncome, UpdateIncomeParams } from '@/services/incomes'
+import { deleteIncome, DeleteIncomeParams } from '@/services/incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
-export const useUpdateIncome = () => {
+export const useDeleteIncome = () => {
   const query = useQueryClient()
 
   return useMutation({
-    mutationKey: ['update-income'],
-    mutationFn: async (params: UpdateIncomeParams) => {
-      toast.info('Updating the income')
+    mutationKey: ['delete-income'],
+    mutationFn: async (params: DeleteIncomeParams) => {
+      toast.info('Deleting the income')
 
-      return await queryFnWrapper(updateIncome, params)
+      return await queryFnWrapper(deleteIncome, params)
     },
     onSuccess: () => {
       query.resetQueries({
         queryKey: ['fetch-incomes'],
       })
-      toast.success('Income was updated successfully.')
+      toast.success('Income was deleted successfully.')
     },
     onSettled: () => {
       query.invalidateQueries()
