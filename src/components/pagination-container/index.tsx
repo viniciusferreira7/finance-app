@@ -38,13 +38,13 @@ export function PaginationContainer({
     totalPages,
   })
 
-  console.log(window.location.search)
-
   function handleChangePage(page: number) {
     const queries = window.location.search
 
     if (queries.includes('page=')) {
-      router.replace(window.location.search.replace(/page=\d/g, `page=${page}`))
+      router.replace(
+        window.location.search.replace(/page=\d+/g, `page=${page}`),
+      )
     } else {
       router.replace(`?page=${page}`)
     }

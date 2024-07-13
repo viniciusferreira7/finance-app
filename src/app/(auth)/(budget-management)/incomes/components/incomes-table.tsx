@@ -57,8 +57,6 @@ export function IncomesTable() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
-  console.log(params.searchParams)
-
   return (
     <div className="space-y-2.5">
       <div className="rounded-md border">

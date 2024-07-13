@@ -22,7 +22,6 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Income } from '@/models/income'
 import { convertToCurrency } from '@/utils/currency/convert-to-currency'
-import { formatCurrency } from '@/utils/currency/format-currency'
 
 const updateFormSchema = z.object({
   name: z
@@ -71,8 +70,6 @@ export function DialogUpdateIncomeForm(props: DialogUpdateIncomeFormProps) {
     register,
     formState: { errors },
   } = methods
-
-  console.log({ table: formatCurrency(props.value), input: props.value })
 
   function handleUpdateIncome(data: UpdateFormSchemaInput) {
     mutate(

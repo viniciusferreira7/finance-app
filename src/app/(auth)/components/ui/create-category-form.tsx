@@ -43,8 +43,6 @@ export function CreateCategoryForm() {
   } = methods
 
   function handleCreateCategory(data: CreateCategoryFormSchema) {
-    console.log(data)
-
     mutate({
       name: data.name,
       description: data.description,

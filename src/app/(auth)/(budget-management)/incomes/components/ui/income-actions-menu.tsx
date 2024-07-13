@@ -36,7 +36,7 @@ export function IncomeActionsMenu(props: IncomeActionsMenuProps) {
           <DialogUpdateIncomeForm {...props} />
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <AlertDeleteIncome />
+          <AlertDeleteIncome {...props} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

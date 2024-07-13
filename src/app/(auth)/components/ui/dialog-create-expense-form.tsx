@@ -62,8 +62,6 @@ export function DialogCreateExpenseForm() {
   } = methods
 
   function handleCreateExpense(data: DialogCreateExpenseFormSchema) {
-    console.log(data)
-
     mutate({
       name: data.name,
       value: Number(data.value),

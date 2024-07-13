@@ -27,7 +27,7 @@ export function IncomesBodyRow(props: IncomesBodyRowProps) {
         </Button>
       </TableCell>
       <TableCell className="font-mono text-sm font-medium">
-        {props.name}
+        {props.id}
       </TableCell>
       <TableCell className="truncate text-muted-foreground">
         {props.name}

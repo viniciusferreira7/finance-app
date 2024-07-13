@@ -15,14 +15,14 @@ export interface DeleteIncomeResponse {}
 export async function deleteIncome({
   params,
 }: DeleteIncomeParams): Promise<DeleteIncomeResponse | ErrorServerAction> {
-  console.log(params)
   try {
-    const { data } = await api.put<DeleteIncomeResponse>(
+    const { data } = await api.delete<DeleteIncomeResponse>(
       `/incomes/${params.id}`,
     )
 
     return data
   } catch (error: unknown) {
+    console.log(error)
     return getErrorMessage(error)
   }
 }

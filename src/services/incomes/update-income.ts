@@ -22,7 +22,6 @@ export async function updateIncome({
   payload,
   params,
 }: UpdateIncomeParams): Promise<UpdateIncomeResponse | ErrorServerAction> {
-  console.log(params)
   try {
     const { data } = await api.put<UpdateIncomeResponse>(
       `/incomes/${params.id}`,
