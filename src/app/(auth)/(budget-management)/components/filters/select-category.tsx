@@ -74,7 +74,7 @@ export function SelectCategory() {
                 <CommandInput placeholder="Search categories..." />
                 <CommandList>
                   <CommandEmpty>No category found.</CommandEmpty>
-                  <CommandGroup className="h-64">
+                  <CommandGroup>
                     {frameworks.map((framework) => (
                       <CommandItem
                         key={framework.value}

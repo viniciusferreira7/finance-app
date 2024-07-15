@@ -50,12 +50,47 @@ export function IncomesTable() {
     page = incomes?.total_pages
   }
 
+  const name = searchParams.get('name')
+  const value = searchParams.get('value')
+  const createdAtFrom = searchParams.get('createdAtFrom')
+  const createdAtTo = searchParams.get('createdAtTo')
+  const updatedAtFrom = searchParams.get('updatedAtFrom')
+  const updatedAtTo = searchParams.get('updatedAtTo')
+  const category = searchParams.get('category')
+  const sort = searchParams.get('sort')
+
   useEffect(() => {
     setParams({
-      searchParams: { ...params.searchParams, page },
+      ...params,
+      searchParams: {
+        ...params.searchParams,
+        page,
+        name,
+        value,
+        createdAt: {
+          from: createdAtFrom,
+          to: createdAtTo,
+        },
+        updatedAt: {
+          from: updatedAtFrom,
+          to: updatedAtTo,
+        },
+        category,
+        sort,
+      },
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
+  }, [
+    page,
+    name,
+    value,
+    createdAtFrom,
+    createdAtTo,
+    updatedAtFrom,
+    updatedAtTo,
+    category,
+    sort,
+  ])
 
   return (
     <div className="space-y-2.5">

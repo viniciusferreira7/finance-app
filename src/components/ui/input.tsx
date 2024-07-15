@@ -35,7 +35,6 @@ const Control = React.forwardRef<HTMLInputElement, ControlProps>(
       <input
         type={type}
         className={cn(
-          // 'w-full bg-transparent outline-none placeholder:text-foreground/80',
           'w-full bg-transparent outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
@@ -60,7 +59,7 @@ const HelperText = React.forwardRef<HTMLParagraphElement, HelperTextProps>(
         className={cn(
           'mt-1 text-xs font-semibold text-white transition-transform',
           className,
-          isError && 'text-red-500',
+          isError && 'text-destructive',
         )}
         {...props}
       />
