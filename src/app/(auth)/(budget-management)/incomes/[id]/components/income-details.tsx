@@ -1,15 +1,19 @@
+'use client'
+
+import { useParams } from 'next/navigation'
+
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 import { IncomeHistory } from './ui/income-history'
 
-interface IncomesDetailsProps { }
+export function IncomeDetails() {
+  const { id: incomeId } = useParams<{ id: string }>()
 
-export function IncomeDetails(props: IncomesDetailsProps) {
   return (
     <div>
       <div className="flex flex-col space-y-1.5 text-center sm:text-left">
         <h2 className="text-lg font-semibold leading-none tracking-tight">
-          Identifier: 1845d454vd5s55s
+          Income: Job
         </h2>
         <h3 className="text-sm text-muted-foreground">Income details</h3>
       </div>
@@ -27,6 +31,12 @@ export function IncomeDetails(props: IncomesDetailsProps) {
             <TableRow>
               <TableCell className="text-muted-foreground">Value</TableCell>
               <TableCell className="flex justify-end">R$ 3500,00 </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="text-muted-foreground">
+                Updated at
+              </TableCell>
+              <TableCell className="flex justify-end">20/03/2024</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="text-muted-foreground">
