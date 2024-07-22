@@ -18,7 +18,7 @@ import {
 import { formatCurrency } from '@/utils/currency/format-currency'
 
 import { useFetchIncomes } from '../hooks/queries/use-fetch-incomes'
-import { IncomesBodyRow, SkeletonIncomesBodyRow } from './ui'
+import { IncomeBodyRow, SkeletonIncomeBodyRow } from './ui'
 
 export function IncomesTable() {
   const searchParams = useSearchParams()
@@ -111,12 +111,12 @@ export function IncomesTable() {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              <SkeletonIncomesBodyRow />
+              <SkeletonIncomeBodyRow />
             ) : (
               <>
                 {incomes?.results.length ? (
                   incomes?.results.map((income) => {
-                    return <IncomesBodyRow key={income.id} {...income} />
+                    return <IncomeBodyRow key={income.id} {...income} />
                   })
                 ) : (
                   <>

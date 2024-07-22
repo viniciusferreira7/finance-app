@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { TableCell, TableRow } from '@/components/ui/table'
 
-export function SkeletonIncomesBodyRow() {
+export function SkeletonIncomeBodyRow() {
   return (
     <>
       {Array.from({ length: 15 }).map((_, index) => {

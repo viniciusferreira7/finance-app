@@ -1,23 +1,9 @@
 'use client'
 
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-
+import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-import { formatCurrency } from '@/utils/currency/format-currency'
 
-import { useGetIncome } from '../hooks/queries/use-get-income'
-import { IncomeHistory, SkeletonIncomeDetails } from './ui'
-
-dayjs.extend(relativeTime)
-
-export function IncomeDetails() {
-  const { data: income, isLoading } = useGetIncome()
-
-  if (isLoading) {
-    return <SkeletonIncomeDetails />
-  }
-
+export function SkeletonIncomeDetails() {
   return (
     <div>
       <div className="flex flex-col space-y-1.5 text-center sm:text-left">
@@ -30,18 +16,20 @@ export function IncomeDetails() {
           <TableBody>
             <TableRow>
               <TableCell className="text-muted-foreground">Name</TableCell>
-              <TableCell className="flex justify-end">{income?.name}</TableCell>
+              <TableCell className="flex justify-end">
+                <Skeleton className="h-4 w-80" />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="text-muted-foreground">Category</TableCell>
               <TableCell className="flex justify-end">
-                {income?.category?.name}
+                <Skeleton className="h-4 w-60" />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="text-muted-foreground">Value</TableCell>
               <TableCell className="flex justify-end">
-                {formatCurrency(income?.value)}
+                <Skeleton className="h-4 w-44" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -49,7 +37,7 @@ export function IncomeDetails() {
                 Created at
               </TableCell>
               <TableCell className="flex justify-end">
-                {dayjs(income?.created_at).format('MM/DD/YYYY [ - ] HH:MM:ss')}
+                <Skeleton className="h-4 w-32" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -57,7 +45,7 @@ export function IncomeDetails() {
                 Updated at
               </TableCell>
               <TableCell className="flex justify-end">
-                {dayjs().from(income?.updated_at)}
+                <Skeleton className="h-4 w-36" />
               </TableCell>
             </TableRow>
           </TableBody>
@@ -65,9 +53,14 @@ export function IncomeDetails() {
 
         <div className="space-y-2 p-2">
           <p className="text-sm text-muted-foreground">Description</p>
-          <p className="line-clamp-6 text-sm">{income?.description}</p>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-2/3" />
+            <Skeleton className="h-4 w-1/4" />
+          </div>
         </div>
-        <IncomeHistory />
       </div>
     </div>
   )

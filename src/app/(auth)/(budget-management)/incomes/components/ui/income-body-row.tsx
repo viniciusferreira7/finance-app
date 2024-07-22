@@ -13,9 +13,9 @@ import { IncomeActionsMenu } from './income-actions-menu'
 
 dayjs.extend(relativeTime)
 
-interface IncomesBodyRowProps extends Income {}
+interface IncomeBodyRowProps extends Income {}
 
-export function IncomesBodyRow(props: IncomesBodyRowProps) {
+export function IncomeBodyRow(props: IncomeBodyRowProps) {
   return (
     <TableRow>
       <TableCell>
