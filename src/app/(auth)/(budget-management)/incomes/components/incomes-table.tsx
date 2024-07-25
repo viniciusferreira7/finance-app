@@ -4,7 +4,6 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { PaginationContainer } from '@/components/pagination-container'
-import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -17,6 +16,7 @@ import {
 } from '@/components/ui/table'
 import { formatCurrency } from '@/utils/currency/format-currency'
 
+import { ErrorRow, NotFoundRow } from '../../components'
 import { useFetchIncomes } from '../hooks/queries/use-fetch-incomes'
 import { IncomeBodyRow, SkeletonIncomeBodyRow } from './ui'
 
@@ -119,35 +119,12 @@ export function IncomesTable() {
                     return <IncomeBodyRow key={income.id} {...income} />
                   })
                 ) : (
-                  <>
-                    {!!incomes && !incomes.results.length && (
-                      <TableRow>
-                        <TableCell
-                          colSpan={9}
-                          className="py-4 text-center text-lg font-medium"
-                        >
-                          No results found.
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </>
+                  <>{!!incomes && !incomes.results.length && <NotFoundRow />}</>
                 )}
               </>
             )}
 
-            {isError && (
-              <TableRow>
-                <TableCell
-                  colSpan={9}
-                  className="space-y-2 py-4 text-center text-lg font-medium"
-                >
-                  <p>There was a problem with the server </p>
-                  <Button variant="outline" onClick={() => refetch()}>
-                    Please try again
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )}
+            {isError && <ErrorRow onRefetch={refetch} />}
           </TableBody>
           <TableFooter>
             <TableRow className="p-4">
