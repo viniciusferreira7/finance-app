@@ -4,10 +4,36 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { updateIncome, UpdateIncomeParams } from '@/services/incomes'
+import { FetchIncomesResponse } from '@/services/incomes/fetch-incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useUpdateIncome = () => {
   const query = useQueryClient()
+
+  function updateIncomeCached(
+    incomeId: string,
+    data: UpdateIncomeParams['payload'],
+  ) {
+    const incomeListCache = query.getQueriesData<FetchIncomesResponse>({
+      queryKey: ['fetch-income'],
+    })
+    incomeListCache.forEach(([cacheKey, cacheData]) => {
+      if (!cacheData) {
+        return
+      }
+
+      query.setQueryData<FetchIncomesResponse>(cacheKey, {
+        ...cacheData,
+        results: cacheData?.results.map((income) => {
+          if (income.id === incomeId) {
+            return { ...income, ...data }
+          }
+
+          return income
+        }),
+      })
+    })
+  }
 
   return useMutation({
     mutationKey: ['update-income'],
@@ -16,11 +42,10 @@ export const useUpdateIncome = () => {
 
       return await queryFnWrapper(updateIncome, params)
     },
-    onSuccess: () => {
-      query.resetQueries({
-        queryKey: ['fetch-incomes'],
-      })
+    onSuccess: (_, { params, payload }) => {
       toast.success('Income was updated successfully.')
+
+      updateIncomeCached(params.id, payload)
     },
     onSettled: () => {
       query.invalidateQueries()

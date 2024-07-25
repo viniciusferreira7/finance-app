@@ -26,7 +26,7 @@ export interface FetchIncomesParams {
   }
 }
 
-type FetchIncomesResponse = Pagination<Income>
+export type FetchIncomesResponse = Pagination<Income>
 
 export async function fetchIncomes(
   params?: FetchIncomesParams,
