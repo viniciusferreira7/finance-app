@@ -3,49 +3,49 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { updateIncome, UpdateIncomeParams } from '@/services/incomes'
-import { FetchIncomesResponse } from '@/services/incomes/fetch-incomes'
+import { updateExpense, UpdateExpenseParams } from '@/services/expenses'
+import { FetchExpensesResponse } from '@/services/expenses/fetch-expenses'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
-export const useUpdateIncome = () => {
+export const useUpdateExpense = () => {
   const query = useQueryClient()
 
-  function updateIncomeCached(
-    incomeId: string,
-    data: UpdateIncomeParams['payload'],
+  function updateExpenseCached(
+    expenseId: string,
+    data: UpdateExpenseParams['payload'],
   ) {
-    const incomeListCache = query.getQueriesData<FetchIncomesResponse>({
-      queryKey: ['fetch-income'],
+    const expenseListCache = query.getQueriesData<FetchExpensesResponse>({
+      queryKey: ['fetch-expense'],
     })
-    incomeListCache.forEach(([cacheKey, cacheData]) => {
+    expenseListCache.forEach(([cacheKey, cacheData]) => {
       if (!cacheData) {
         return
       }
 
-      query.setQueryData<FetchIncomesResponse>(cacheKey, {
+      query.setQueryData<FetchExpensesResponse>(cacheKey, {
         ...cacheData,
-        results: cacheData?.results.map((income) => {
-          if (income.id === incomeId) {
-            return { ...income, ...data }
+        results: cacheData?.results.map((expense) => {
+          if (expense.id === expenseId) {
+            return { ...expense, ...data }
           }
 
-          return income
+          return expense
         }),
       })
     })
   }
 
   return useMutation({
-    mutationKey: ['update-income'],
-    mutationFn: async (params: UpdateIncomeParams) => {
-      toast.info('Updating the income')
+    mutationKey: ['update-expense'],
+    mutationFn: async (params: UpdateExpenseParams) => {
+      toast.info('Updating the expense')
 
-      return await queryFnWrapper(updateIncome, params)
+      return await queryFnWrapper(updateExpense, params)
     },
     onSuccess: (_, { params, payload }) => {
-      toast.success('Income was updated successfully.')
+      toast.success('Expense was updated successfully.')
 
-      updateIncomeCached(params.id, payload)
+      updateExpenseCached(params.id, payload)
     },
     onSettled: () => {
       query.invalidateQueries()
