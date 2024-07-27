@@ -75,7 +75,7 @@ export function IncomesTable() {
           from: updatedAtFrom,
           to: updatedAtTo,
         },
-        category,
+        category_id: category,
         sort,
       },
     })

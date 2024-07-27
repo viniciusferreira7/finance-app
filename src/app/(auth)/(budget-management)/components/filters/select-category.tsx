@@ -1,9 +1,10 @@
 'use client'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
+import { useFetchCategories } from '@/app/(auth)/hooks/queries/use-fetch-categories'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -20,33 +21,24 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-]
-
 export function SelectCategory() {
+  const { data: categories, isLoading, setParams } = useFetchCategories()
   const [open, setOpen] = useState(false)
 
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext()
+
+  const isError = !!errors.category
+
+  useEffect(() => {
+    setParams((state) => ({
+      ...state,
+      searchParams: { ...state.searchParams, pagination_disabled: true },
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Controller
@@ -54,45 +46,63 @@ export function SelectCategory() {
       control={control}
       render={({ field: { value, onChange } }) => {
         const selectedValue = value
-          ? frameworks.find((framework) => framework.value === value)?.label
-          : 'Select a category...'
+          ? categories?.results?.find((category) => category.id === value)
+              ?.name ?? 'Select a category'
+          : 'Select a category'
+
         return (
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
+                disabled={isLoading}
                 aria-expanded={open}
-                className="w-full justify-between font-normal sm:w-[200px]"
+                className={cn(
+                  'w-full justify-between truncate font-normal sm:w-[200px]',
+                  isError && 'border-destructive text-destructive',
+                )}
               >
-                {selectedValue}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                {isLoading ? (
+                  'Loading categories...'
+                ) : (
+                  <>
+                    {selectedValue}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </>
+                )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent align="start" className="w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Search categories..." />
                 <CommandList>
                   <CommandEmpty>No category found.</CommandEmpty>
-                  <CommandGroup>
-                    {frameworks.map((framework) => (
+                  <CommandGroup className="h-64">
+                    {categories?.results?.map((category) => (
                       <CommandItem
-                        key={framework.value}
-                        value={framework.value}
+                        key={category.id}
+                        value={category.name}
                         onSelect={(currentValue) => {
-                          onChange(currentValue === value ? '' : currentValue)
-                          setOpen(false)
+                          const findCategoryByName = categories.results.find(
+                            (category) => category.name === currentValue,
+                          )
+
+                          if (findCategoryByName) {
+                            onChange(findCategoryByName.id)
+                            setOpen(false)
+                          }
                         }}
                       >
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            value === framework.value
+                            value === category.name
                               ? 'opacity-100'
                               : 'opacity-0',
                           )}
                         />
-                        {framework.label}
+                        {category.name}
                       </CommandItem>
                     ))}
                   </CommandGroup>

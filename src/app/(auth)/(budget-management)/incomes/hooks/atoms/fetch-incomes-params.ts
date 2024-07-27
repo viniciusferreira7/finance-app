@@ -1,26 +1,8 @@
 import { atom, useAtom } from 'jotai'
 
-interface IncomesParams {
-  searchParams?: {
-    page?: number
-    per_page?: number
-    pagination_disabled?: boolean
-    name?: string | null
-    value?: string | null
-    createdAt?: {
-      from: string | null
-      to: string | null
-    }
-    updatedAt?: {
-      from: string | null
-      to: string | null
-    }
-    category?: string | null
-    sort?: string | null
-  }
-}
+import { FetchIncomesParams } from '@/services/incomes'
 
-export const incomesParams = atom<IncomesParams>({
+export const incomesParams = atom<FetchIncomesParams>({
   searchParams: {
     page: 1,
     per_page: 15,

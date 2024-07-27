@@ -56,6 +56,7 @@ export function UpdatedAt() {
                 selected={value}
                 onSelect={onChange}
                 initialFocus
+                numberOfMonths={2}
               />
             </PopoverContent>
           </Popover>

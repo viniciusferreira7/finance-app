@@ -60,7 +60,7 @@ export function SelectCategory() {
                 disabled={isLoading}
                 aria-expanded={open}
                 className={cn(
-                  'w-full justify-between font-normal',
+                  'w-full justify-between truncate font-normal',
                   isError && 'border-destructive text-destructive',
                 )}
               >

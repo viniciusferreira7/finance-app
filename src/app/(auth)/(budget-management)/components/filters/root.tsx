@@ -78,7 +78,20 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   } = methods
 
   function handleReset() {
-    reset()
+    reset({
+      name: '',
+      value: '',
+      sort: 'desc',
+      category: '',
+      createdAt: {
+        from: undefined,
+        to: undefined,
+      },
+      updatedAt: {
+        from: undefined,
+        to: undefined,
+      },
+    })
     router.push(pathname)
   }
 

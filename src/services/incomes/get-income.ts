@@ -21,7 +21,6 @@ export async function getIncome({
 
     return data
   } catch (error: unknown) {
-    console.log({ error })
     return getErrorMessage(error)
   }
 }

@@ -22,7 +22,6 @@ export async function deleteExpense({
 
     return data
   } catch (error: unknown) {
-    console.log(error)
     return getErrorMessage(error)
   }
 }
