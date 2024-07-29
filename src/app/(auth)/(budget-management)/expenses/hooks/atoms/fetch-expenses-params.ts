@@ -1,26 +1,8 @@
 import { atom, useAtom } from 'jotai'
 
-interface ExpensesParams {
-  searchParams?: {
-    page?: number
-    per_page?: number
-    pagination_disabled?: boolean
-    name?: string | null
-    value?: string | null
-    createdAt?: {
-      from: string | null
-      to: string | null
-    }
-    updatedAt?: {
-      from: string | null
-      to: string | null
-    }
-    category?: string | null
-    sort?: string | null
-  }
-}
+import { FetchExpensesParams } from '@/services/expenses'
 
-export const expensesParams = atom<ExpensesParams>({
+export const expensesParams = atom<FetchExpensesParams>({
   searchParams: {
     page: 1,
     per_page: 15,

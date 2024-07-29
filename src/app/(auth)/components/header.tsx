@@ -1,4 +1,4 @@
-import { Coins, Home, IndentIncrease } from 'lucide-react'
+import { Coins, Home, IndentDecrease, IndentIncrease } from 'lucide-react'
 
 import { ModeToggle } from '@/components/mode-toggle'
 import { Separator } from '@/components/ui/separator'
@@ -21,6 +21,10 @@ export function Header() {
           <NavLink href="/incomes">
             <IndentIncrease className="size-4" />
             Incomes
+          </NavLink>
+          <NavLink href="/expenses">
+            <IndentDecrease className="size-4" />
+            Expenses
           </NavLink>
         </nav>
         <div className="ml-auto flex items-center gap-2">
