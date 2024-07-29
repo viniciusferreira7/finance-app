@@ -4,11 +4,27 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import { deleteIncome, DeleteIncomeParams } from '@/services/incomes'
+import { FetchIncomesResponse } from '@/services/incomes/fetch-incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useDeleteIncome = () => {
   const query = useQueryClient()
 
+  function deleteIncomeCached(incomeId: string) {
+    const incomeListCache = query.getQueriesData<FetchIncomesResponse>({
+      queryKey: ['fetch-incomes'],
+    })
+    incomeListCache.forEach(([cacheKey, cacheData]) => {
+      if (!cacheData) {
+        return
+      }
+
+      query.setQueryData<FetchIncomesResponse>(cacheKey, {
+        ...cacheData,
+        results: cacheData?.results.filter((income) => income.id !== incomeId),
+      })
+    })
+  }
   return useMutation({
     mutationKey: ['delete-income'],
     mutationFn: async (params: DeleteIncomeParams) => {
@@ -16,11 +32,10 @@ export const useDeleteIncome = () => {
 
       return await queryFnWrapper(deleteIncome, params)
     },
-    onSuccess: () => {
-      query.resetQueries({
-        queryKey: ['fetch-incomes'],
-      })
+    onSuccess: (_, { params }) => {
       toast.success('Income was deleted successfully.')
+
+      deleteIncomeCached(params.id)
     },
     onSettled: () => {
       query.invalidateQueries()
