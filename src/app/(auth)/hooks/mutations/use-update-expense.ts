@@ -15,7 +15,7 @@ export const useUpdateExpense = () => {
     data: UpdateExpenseParams['payload'],
   ) {
     const expenseListCache = query.getQueriesData<FetchExpensesResponse>({
-      queryKey: ['fetch-expense'],
+      queryKey: ['fetch-expenses'],
     })
     expenseListCache.forEach(([cacheKey, cacheData]) => {
       if (!cacheData) {

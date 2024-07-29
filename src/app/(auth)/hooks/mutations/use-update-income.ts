@@ -15,7 +15,7 @@ export const useUpdateIncome = () => {
     data: UpdateIncomeParams['payload'],
   ) {
     const incomeListCache = query.getQueriesData<FetchIncomesResponse>({
-      queryKey: ['fetch-income'],
+      queryKey: ['fetch-incomes'],
     })
     incomeListCache.forEach(([cacheKey, cacheData]) => {
       if (!cacheData) {

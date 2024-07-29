@@ -38,7 +38,6 @@ const updateFormSchema = z.object({
     .refine((value) => (value ? Number(value) >= 0 : true), {
       message: 'Must be a positive number',
     })
-    .transform((value) => value?.match(/\d+/g))
     .optional(),
   category: z.string({ required_error: 'Must select a category' }).optional(),
   description: z.string().max(220, 'Must be 220 characters.').optional(),
