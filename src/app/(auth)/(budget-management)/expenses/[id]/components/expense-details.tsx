@@ -67,7 +67,9 @@ export function ExpenseDetails() {
 
         <div className="space-y-2 p-2">
           <p className="text-sm text-muted-foreground">Description</p>
-          <p className="line-clamp-6 text-sm">{expense?.description}</p>
+          <p className="line-clamp-6 text-sm">
+            {expense?.description || 'No information'}
+          </p>
         </div>
         <ExpenseHistory />
       </div>

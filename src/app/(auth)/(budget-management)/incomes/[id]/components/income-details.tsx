@@ -65,7 +65,9 @@ export function IncomeDetails() {
 
         <div className="space-y-2 p-2">
           <p className="text-sm text-muted-foreground">Description</p>
-          <p className="line-clamp-6 text-sm">{income?.description}</p>
+          <p className="line-clamp-6 text-sm">
+            {income?.description || 'No information'}
+          </p>
         </div>
         <IncomeHistory />
       </div>
