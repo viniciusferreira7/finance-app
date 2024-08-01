@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 
-import { getIncome } from '@/services/incomes/get-income'
+import { getIncome } from '@/services/incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
 export const useGetIncome = () => {
