@@ -20,7 +20,7 @@ export function ExpenseBodyRow(props: ExpenseBodyRowProps) {
     <TableRow>
       <TableCell>
         <Button variant="outline" size="xs" asChild>
-          <Link href="/expenses/job">
+          <Link href={`/expenses/${props.id}`}>
             <Search className="size-4" />
             <span className="sr-only">Expenses details</span>
           </Link>
