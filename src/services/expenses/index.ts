@@ -7,6 +7,9 @@ export type {
 export { fetchExpenses } from './fetch-expenses'
 export type { FetchExpensesParams } from './fetch-expenses'
 
+export { getExpense } from './get-expense'
+export type { GetExpenseParams } from './get-expense'
+
 export { updateExpense } from './update-expense'
 export type { UpdateExpenseParams } from './update-expense'
 
