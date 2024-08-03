@@ -3,28 +3,12 @@
 import { api } from '@/lib/axios'
 import { ErrorServerAction } from '@/models/error'
 import { Income } from '@/models/income'
-import { Pagination } from '@/models/pagination'
+import { Pagination, SearchParams } from '@/models/pagination'
 import { convertToCents } from '@/utils/currency/convert-to-cents'
 import { getErrorMessage } from '@/utils/error/get-error-message'
 
 export interface FetchIncomesParams {
-  searchParams?: {
-    page?: number
-    per_page?: number
-    pagination_disabled?: boolean
-    name?: string | null
-    value?: string | null
-    createdAt?: {
-      from: string | null
-      to: string | null
-    }
-    updatedAt?: {
-      from: string | null
-      to: string | null
-    }
-    category_id?: string | null
-    sort?: string | null
-  }
+  searchParams?: SearchParams
 }
 
 export type FetchIncomesResponse = Pagination<Income>

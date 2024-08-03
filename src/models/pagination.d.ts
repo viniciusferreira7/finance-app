@@ -8,3 +8,21 @@ export interface Pagination<T> {
   pagination_disabled: boolean
   results: T[]
 }
+
+export interface SearchParams {
+  page?: number
+  per_page?: number
+  pagination_disabled?: boolean
+  name?: string | null
+  value?: string | null
+  createdAt?: {
+    from: string | null
+    to: string | null
+  }
+  updatedAt?: {
+    from: string | null
+    to: string | null
+  }
+  category_id?: string | null
+  sort?: string | null
+}
