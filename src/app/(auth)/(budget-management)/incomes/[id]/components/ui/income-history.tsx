@@ -1,3 +1,5 @@
+import { Loader2 } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -9,9 +11,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { useFetchIncomeHistories } from '../../hooks/queries/use-fetch-income-histories'
 import { IncomeRow } from './income-row'
 
 export function IncomeHistory() {
+  const { histories, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    useFetchIncomeHistories()
+
   return (
     <div className="space-y-2.5 px-4 py-4">
       <h4 className="text-xl font-semibold">History of incomes</h4>
@@ -29,24 +35,32 @@ export function IncomeHistory() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 10 }).map((_, index) => {
-              return <IncomeRow key={index} />
+            {histories?.map((history, index) => {
+              return <IncomeRow key={index} {...history} />
             })}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={7}>
-                <Button variant="outline" className="w-full">
-                  Load more
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableFooter>
+          {hasNextPage && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    disabled={isFetchingNextPage}
+                    onClick={() => fetchNextPage()}
+                  >
+                    {isFetchingNextPage ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      'Load more'
+                    )}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
-      {/* TODO: Improves the componente */}
-      {/* TODO: Creates pagination components */}
-      {/* <PaginationContainer currentPage={5} totalPages={100} perPage={10} /> */}
     </div>
   )
 }

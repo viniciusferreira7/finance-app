@@ -7,21 +7,27 @@ import { Pagination, SearchParams } from '@/models/pagination'
 import { convertToCents } from '@/utils/currency/convert-to-cents'
 import { getErrorMessage } from '@/utils/error/get-error-message'
 
-export interface FetchIncomesParams {
+export interface FetchIncomeHistoriesParams {
   incomeId: string
   searchParams?: Omit<SearchParams, 'updatedAt'>
 }
 
-export type FetchIncomesResponse = Pagination<Omit<Income, 'updatedAt'>>
+export type FetchIncomeHistoriesResponse = Pagination<
+  Omit<Income, 'updated_at'>
+>
 
-export async function fetchIncomes({
+export async function fetchIncomeHistories({
   incomeId,
   ...params
-}: FetchIncomesParams): Promise<FetchIncomesResponse | ErrorServerAction> {
+}: FetchIncomeHistoriesParams): Promise<
+  FetchIncomeHistoriesResponse | ErrorServerAction
+> {
   const convertedValue = convertToCents(Number(params?.searchParams?.value))
 
+  console.log({ params })
+
   try {
-    const { data } = await api.get<FetchIncomesResponse>(
+    const { data } = await api.get<FetchIncomeHistoriesResponse>(
       `/income-histories/${incomeId}`,
       {
         params: {

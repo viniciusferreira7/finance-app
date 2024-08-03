@@ -20,7 +20,7 @@ export function IncomeBodyRow(props: IncomeBodyRowProps) {
     <TableRow>
       <TableCell>
         <Button variant="outline" size="xs" asChild>
-          <Link href="/incomes/job">
+          <Link href={`/incomes/${props.id}`}>
             <Search className="size-4" />
             <span className="sr-only">Incomes details</span>
           </Link>
