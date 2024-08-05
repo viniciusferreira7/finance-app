@@ -13,10 +13,16 @@ import {
 
 import { useFetchIncomeHistories } from '../../hooks/queries/use-fetch-income-histories'
 import { IncomeRow } from './income-row'
+import { SkeletonIncomeHistory } from './skeleton-income-history'
 
 export function IncomeHistory() {
-  const { histories, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useFetchIncomeHistories()
+  const {
+    histories,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isLoading,
+  } = useFetchIncomeHistories()
 
   return (
     <div className="space-y-2.5 px-4 py-4">
@@ -31,13 +37,19 @@ export function IncomeHistory() {
                 Description
               </TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Updated at</TableHead>
+              <TableHead>Created at</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {histories?.map((history, index) => {
-              return <IncomeRow key={index} {...history} />
-            })}
+            {isLoading ? (
+              <SkeletonIncomeHistory />
+            ) : (
+              <>
+                {histories?.map((history, index) => {
+                  return <IncomeRow key={index} {...history} />
+                })}
+              </>
+            )}
           </TableBody>
           {hasNextPage && (
             <TableFooter>

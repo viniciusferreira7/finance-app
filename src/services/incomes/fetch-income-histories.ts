@@ -24,8 +24,6 @@ export async function fetchIncomeHistories({
 > {
   const convertedValue = convertToCents(Number(params?.searchParams?.value))
 
-  console.log({ params })
-
   try {
     const { data } = await api.get<FetchIncomeHistoriesResponse>(
       `/income-histories/${incomeId}`,

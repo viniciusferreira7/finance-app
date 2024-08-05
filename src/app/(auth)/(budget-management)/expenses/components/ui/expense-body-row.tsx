@@ -54,7 +54,7 @@ export function ExpenseBodyRow(props: ExpenseBodyRowProps) {
         {props.category?.name ?? '---'}
       </TableCell>
       <TableCell>
-        {dayjs(props.created_at).format('MM/DD/YYYY [ - ] HH:MM:ss')}
+        {dayjs(props.created_at).format('MM/DD/YYYY [ - ] HH:MM')}
       </TableCell>
       <TableCell>{dayjs().from(props.updated_at)}</TableCell>
       <TableCell>

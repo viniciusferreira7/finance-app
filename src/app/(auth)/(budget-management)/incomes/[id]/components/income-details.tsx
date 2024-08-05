@@ -49,7 +49,7 @@ export function IncomeDetails() {
                 Created at
               </TableCell>
               <TableCell className="flex justify-end">
-                {dayjs(income?.created_at).format('MM/DD/YYYY [ - ] HH:MM:ss')}
+                {dayjs(income?.created_at).format('MM/DD/YYYY [ - ] HH:MM')}
               </TableCell>
             </TableRow>
             <TableRow>

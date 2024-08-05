@@ -7,6 +7,7 @@ import { formatCurrency } from '@/utils/currency/format-currency'
 interface IncomeRowProps extends Omit<Income, 'updated_at'> {}
 
 export function IncomeRow(props: IncomeRowProps) {
+
   return (
     <TableRow>
       <TableCell className="text-muted-foreground">{props.name}</TableCell>
@@ -18,7 +19,7 @@ export function IncomeRow(props: IncomeRowProps) {
       </TableCell>
       <TableCell className="font-medium">{props.category.name}</TableCell>
       <TableCell>
-        {dayjs(props.created_at).format('YYYY-MM-DD [ - ] HH:MM')}
+        {dayjs(props.created_at).format('YYYY-MM-DD [ - ] HH:mm:ss')}
       </TableCell>
     </TableRow>
   )

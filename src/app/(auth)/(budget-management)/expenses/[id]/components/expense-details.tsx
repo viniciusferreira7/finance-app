@@ -51,7 +51,7 @@ export function ExpenseDetails() {
                 Created at
               </TableCell>
               <TableCell className="flex justify-end">
-                {dayjs(expense?.created_at).format('MM/DD/YYYY [ - ] HH:MM:ss')}
+                {dayjs(expense?.created_at).format('MM/DD/YYYY [ - ] HH:MM')}
               </TableCell>
             </TableRow>
             <TableRow>

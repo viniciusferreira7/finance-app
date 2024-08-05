@@ -16,7 +16,7 @@ export const useFetchIncomeHistories = () => {
         incomeId: id,
         searchParams: {
           page: pageParam,
-          per_page: 10
+          per_page: 10,
         },
       }),
     initialPageParam: 1,
@@ -24,8 +24,6 @@ export const useFetchIncomeHistories = () => {
   })
 
   const { data, ...query } = queryData
-
-  console.log({ data })
 
   const histories = useMemo(() => {
     return data?.pages?.reduce<Omit<Income, 'updated_at'>[]>((acc, page) => {
