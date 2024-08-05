@@ -18,7 +18,7 @@ export function NavLink({ className, children, ...props }: NavLinkProps) {
     <Link
       data-current={pathname === props.href.toString()}
       className={cn(
-        'flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground data-[current=true]:text-foreground',
+        'flex items-center gap-1.5 text-sm font-medium text-muted-foreground data-[current=true]:text-foreground hover:text-foreground',
         className,
       )}
       {...props}
