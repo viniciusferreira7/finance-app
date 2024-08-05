@@ -2,9 +2,9 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { useMemo } from 'react'
 
+import { Expense } from '@/models/expenses'
 import { fetchExpenseHistories } from '@/services/expenses'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
-import { Expense } from '@/models/expenses'
 
 export const useFetchExpenseHistories = () => {
   const { id } = useParams<{ id: string }>()

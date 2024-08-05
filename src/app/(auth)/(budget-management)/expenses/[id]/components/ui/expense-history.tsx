@@ -1,3 +1,5 @@
+import { Loader2 } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -10,8 +12,18 @@ import {
 } from '@/components/ui/table'
 
 import { ExpenseRow } from './expense-row'
+import { SkeletonExpenseHistory } from './skeleton-expense-history'
+import { useFetchExpenseHistories } from '../../hooks/queries/use-fetch-expense-histories'
 
 export function ExpenseHistory() {
+  const {
+    histories,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isLoading,
+  } = useFetchExpenseHistories()
+
   return (
     <div className="space-y-2.5 px-4 py-4">
       <h4 className="text-xl font-semibold">History of expenses</h4>
@@ -25,27 +37,42 @@ export function ExpenseHistory() {
                 Description
               </TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Updated at</TableHead>
+              <TableHead>Created at</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 10 }).map((_, index) => {
-              return <ExpenseRow key={index} />
-            })}
+            {isLoading ? (
+              <SkeletonExpenseHistory />
+            ) : (
+              <>
+                {histories?.map((history, index) => {
+                  return <ExpenseRow key={index} {...history} />
+                })}
+              </>
+            )}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={7}>
-                <Button variant="outline" className="w-full">
-                  Load more
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableFooter>
+          {hasNextPage && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    disabled={isFetchingNextPage}
+                    onClick={() => fetchNextPage()}
+                  >
+                    {isFetchingNextPage ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      'Load more'
+                    )}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
-      {/* TODO: Improves the componente */}
-      {/* TODO: Creates pagination components */}
     </div>
   )
 }
