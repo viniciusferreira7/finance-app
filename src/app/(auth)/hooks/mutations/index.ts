@@ -7,3 +7,5 @@ export { useUpdateExpense } from './use-update-expense'
 export { useDeleteExpense } from './use-delete-expense'
 
 export { useCreateCategory } from './use-create-category'
+export { useUpdateCategory } from './use-update-category'
+export { useDeleteCategory } from './use-delete-category'

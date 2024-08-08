@@ -17,7 +17,7 @@ export function SkeletonCategoriesBodyRow() {
                 <span className="sr-only">Categories details</span>
               </Button>
             </TableCell>
-            {Array.from({ length: 7 }).map((_, index) => {
+            {Array.from({ length: 5 }).map((_, index) => {
               return <LoadingRow key={index} />
             })}
             <TableCell>

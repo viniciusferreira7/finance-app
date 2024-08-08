@@ -9,14 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Income } from '@/models/income'
+import { Category } from '@/models/category'
 
-import { AlertDeleteIncome } from './alert-delete-category'
-import { DialogUpdateIncomeForm } from './dialog-update-income-form'
+import { AlertDeleteCategory } from './alert-delete-category'
+import { DialogUpdateCategoryForm } from './dialog-update-category-form'
 
-interface IncomeActionsMenuProps extends Income {}
+interface CategoryActionsMenuProps extends Category {}
 
-export function IncomeActionsMenu(props: IncomeActionsMenuProps) {
+export function CategoryActionsMenu(props: CategoryActionsMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,14 +29,14 @@ export function IncomeActionsMenu(props: IncomeActionsMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="flex w-56 flex-col ">
         <DropdownMenuLabel className="text-sm font-normal text-muted-foreground">
-          Actions to your income
+          Actions to your category
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <DialogUpdateIncomeForm {...props} />
+          <DialogUpdateCategoryForm {...props} />
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <AlertDeleteIncome {...props} />
+          <AlertDeleteCategory {...props} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

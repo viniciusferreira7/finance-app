@@ -26,17 +26,10 @@ const updateFormSchema = z.object({
     .string()
     .min(1, 'Mut be at least 1 character')
     .max(40, 'Must be 40 characters.')
-    .nullable()
     .optional(),
   description: z
     .string()
-    .min(1, 'Must enter the description')
-    .refine((description) => (description ? Number(description) : true), {
-      message: 'Must be a number',
-    })
-    .refine((description) => (description ? Number(description) >= 0 : true), {
-      message: 'Must be a positive number',
-    })
+    .max(220, 'Must be 220 characters.')
     .nullable()
     .optional(),
 })
@@ -117,21 +110,6 @@ export function DialogUpdateCategoryForm(props: DialogUpdateCategoryFormProps) {
                 {!!errors.name && (
                   <Input.HelperText isError={!!errors.name}>
                     {errors.name.message}
-                  </Input.HelperText>
-                )}
-              </div>
-              <div ref={parent} className="space-y-2">
-                <Label htmlFor="description" isError={!!errors.description}>
-                  Description
-                </Label>
-                <Textarea
-                  isError={!!errors.description}
-                  className="max-h-28 resize-none"
-                  {...register('description')}
-                />
-                {!!errors.description && (
-                  <Input.HelperText isError={!!errors.description}>
-                    {errors.description.message}
                   </Input.HelperText>
                 )}
               </div>

@@ -3,18 +3,16 @@
 import { api } from '@/lib/axios'
 import { Category } from '@/models/category'
 import { ErrorServerAction } from '@/models/error'
-import { Pagination } from '@/models/pagination'
+import { Pagination, SearchParams } from '@/models/pagination'
 import { getErrorMessage } from '@/utils/error/get-error-message'
 
 export interface FetchCategoriesParams {
-  searchParams?: {
-    page?: number
-    per_page?: number
-    pagination_disabled?: boolean
+  searchParams?: Omit<SearchParams, 'value'> & {
+    description?: string
   }
 }
 
-type FetchCategoriesResponse = Pagination<Category>
+export type FetchCategoriesResponse = Pagination<Category>
 
 export async function fetchCategories(
   params?: FetchCategoriesParams,
