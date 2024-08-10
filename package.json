@@ -5,9 +5,11 @@
   "scripts": {
     "start:api": "cd ../finance-api && npm run start:dev",
     "dev": "next dev",
+    "dev:test": "next dev",
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
+    "test:e2e": "playwright test --ui",
     "test:watch": "vitest",
     "lint": "next lint --fix"
   },
@@ -53,6 +55,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.46.0",
     "@rocketseat/eslint-config": "^2.2.2",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
@@ -72,5 +75,10 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.0.5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
