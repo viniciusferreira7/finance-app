@@ -11,9 +11,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { useFetchExpenseHistories } from '../../hooks/queries/use-fetch-expense-histories'
 import { ExpenseRow } from './expense-row'
 import { SkeletonExpenseHistory } from './skeleton-expense-history'
-import { useFetchExpenseHistories } from '../../hooks/queries/use-fetch-expense-histories'
 
 export function ExpenseHistory() {
   const {

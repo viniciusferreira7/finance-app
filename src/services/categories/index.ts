@@ -10,6 +10,9 @@ export type {
   FetchCategoriesResponse,
 } from './fetch-categories'
 
+export { getCategory } from './get-category'
+export type { GetCategoryParams } from './get-category'
+
 export { updateCategory } from './update-category'
 export type { UpdateCategoryParams } from './update-category'
 
