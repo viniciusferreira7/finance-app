@@ -26,7 +26,11 @@ export const useUpdateCategory = () => {
         ...cacheData,
         results: cacheData?.results.map((categories) => {
           if (categories.id === categoriesId) {
-            return { ...categories, ...data }
+            return {
+              ...categories,
+              ...data,
+              updated_at: new Date().toISOString(),
+            }
           }
 
           return categories

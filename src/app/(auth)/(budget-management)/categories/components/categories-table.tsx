@@ -91,7 +91,7 @@ export function CategoriesTable() {
               <TableHead className="w-[240px]">Name</TableHead>
               <TableHead>Description</TableHead>
               <TableHead className="w-44">Created at</TableHead>
-              <TableHead className="w-44">Update at</TableHead>
+              <TableHead className="w-44">Updated at</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>

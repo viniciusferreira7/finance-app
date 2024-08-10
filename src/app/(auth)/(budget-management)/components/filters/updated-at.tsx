@@ -34,7 +34,7 @@ export function UpdatedAt() {
         const label =
           formattedDateFrom && formattedDateTo
             ? `${formattedDateFrom} to ${formattedDateTo}`
-            : formattedDateFrom || 'update at'
+            : formattedDateFrom || 'Updated at'
 
         return (
           <Popover>

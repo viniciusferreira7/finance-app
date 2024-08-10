@@ -44,6 +44,7 @@ export function CategoryBodyRow(props: CategoryBodyRowProps) {
         {dayjs(props.created_at).format('MM/DD/YYYY [ - ] HH:MM')}
       </TableCell>
       <TableCell>{dayjs().from(props.updated_at)}</TableCell>
+      {/* //FIXME: Verificar porque o updated não está funcionando atualizando */}
       <TableCell>
         <CategoryActionsMenu {...props} />
       </TableCell>

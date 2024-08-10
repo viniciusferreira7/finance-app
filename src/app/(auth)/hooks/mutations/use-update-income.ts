@@ -26,7 +26,7 @@ export const useUpdateIncome = () => {
         ...cacheData,
         results: cacheData?.results.map((income) => {
           if (income.id === incomeId) {
-            return { ...income, ...data }
+            return { ...income, ...data, updated_at: new Date().toISOString() }
           }
 
           return income

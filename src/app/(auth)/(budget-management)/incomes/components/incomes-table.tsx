@@ -105,7 +105,7 @@ export function IncomesTable() {
               <TableHead className="w-[380px]">Description</TableHead>
               <TableHead className="w-[180px]">Category</TableHead>
               <TableHead>Created at</TableHead>
-              <TableHead>Update at</TableHead>
+              <TableHead>Updated at</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
