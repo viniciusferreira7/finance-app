@@ -19,9 +19,9 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.NEXT_PUBLIC_CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.NEXT_PUBLIC_CI ? 1 : undefined,
+  workers: process.env.NEXT_PUBLIC_CI ? 1 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  // reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -32,7 +32,7 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'npm run start',
+    command: 'pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.NEXT_PUBLIC_CI,
   },
