@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 
+// TODO: descobrir porque ele rodou o test E2E no github actions: https://github.com/viniciusferreira7/finance-app/actions/runs/10333343598/job/28605579321
 test('should be able to sign in successfully', async ({ page }) => {
   await page.goto('/sign-in', { waitUntil: 'networkidle' })
 
