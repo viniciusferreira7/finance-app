@@ -91,7 +91,7 @@ export function SignInForm() {
         )}
       </div>
       <Button className="w-full" disabled={isPending}>
-        Sign-in
+        {isPending ? 'loading...' : 'Sign-in'}
       </Button>
       <div className="flex w-full justify-center pt-8">
         <Link href="/sign-up" className="text-base font-semibold">
