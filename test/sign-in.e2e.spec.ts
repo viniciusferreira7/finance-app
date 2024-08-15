@@ -9,15 +9,17 @@ test('should be able to sign in successfully', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Sign-in' }).click()
 
+  await page.waitForLoadState('networkidle')
+
   const toast = page.getByText('Creating a session for you.')
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
+
+  await page.waitForLoadState('networkidle')
 
   const user = page.getByRole('button', { name: 'John doe' })
 
-  expect(user).toBeVisible()
-
-  await page.waitForTimeout(3000)
+  await expect(user).toBeVisible()
 })
 
 test('should not be able to sign in with wrong credentials', async ({
@@ -30,7 +32,9 @@ test('should not be able to sign in with wrong credentials', async ({
 
   await page.getByRole('button', { name: 'Sign-in' }).click()
 
+  await page.waitForLoadState('networkidle')
+
   const toast = page.getByText('Invalid credentials.').first()
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
 })

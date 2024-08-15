@@ -22,19 +22,21 @@ test('should be able to create a new account', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Sign-up' }).click()
 
+  await page.waitForLoadState('networkidle')
+
   const toast = page.getByText('User was created successfully.')
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
 
   const sessionInfoToast = page.getByText('Session created for your user.')
 
-  expect(sessionInfoToast).toBeVisible()
+  await expect(sessionInfoToast).toBeVisible()
 
-  await page.waitForTimeout(8000)
+  await page.waitForLoadState('networkidle')
 
   const user = page.getByRole('button', { name: fullName })
 
-  expect(user).toBeVisible()
+  await expect(user).toBeVisible()
 
-  await page.waitForTimeout(3000)
+  await page.waitForLoadState('networkidle')
 })

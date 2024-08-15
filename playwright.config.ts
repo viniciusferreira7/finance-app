@@ -11,9 +11,9 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './test/playwright-e2e',
-  /* Run tests in files in parallel */
-  fullyParallel: true,
+  testDir: './test',
+  testMatch: /.*\.e2e.spec.ts$/,
+  /* Run tests in files in parallel */ fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.NEXT_PUBLIC_CI,
   /* Retry on CI only */
@@ -35,6 +35,8 @@ export default defineConfig({
     command: 'pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.NEXT_PUBLIC_CI,
+    timeout: 120 * 1000,
+    ignoreHTTPSErrors: true,
   },
 
   /* Configure projects for major browsers */
