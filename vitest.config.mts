@@ -7,6 +7,6 @@ export default defineConfig({
   test: {
     setupFiles: ['./test/setup.ts'],
     environment: 'happy-dom',
-    exclude: ['./node_modules/**', './test/playwright-e2e/**'],
+    exclude: ['./node_modules/**', './test/**'],
   },
 })
