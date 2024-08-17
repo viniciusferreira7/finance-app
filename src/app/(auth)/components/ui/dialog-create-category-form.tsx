@@ -18,7 +18,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { useCreateCategory } from '../../hooks/mutations'
 
-const createCategoryFormSchema = z.object({
+const dialogCreateCategoryFormSchema = z.object({
   name: z
     .string()
     .min(1, 'Mut be at least 1 character')
@@ -26,12 +26,14 @@ const createCategoryFormSchema = z.object({
   description: z.string().max(220, 'Must be 220 characters.').optional(),
 })
 
-type CreateCategoryFormSchema = z.input<typeof createCategoryFormSchema>
+type DialogCreateCategoryFormSchema = z.input<
+  typeof dialogCreateCategoryFormSchema
+>
 
-export function CreateCategoryForm() {
+export function DialogCreateCategoryForm() {
   const [parent] = useAutoAnimate()
-  const methods = useForm<CreateCategoryFormSchema>({
-    resolver: zodResolver(createCategoryFormSchema),
+  const methods = useForm<DialogCreateCategoryFormSchema>({
+    resolver: zodResolver(dialogCreateCategoryFormSchema),
   })
 
   const { mutate, isPending } = useCreateCategory()
@@ -42,7 +44,7 @@ export function CreateCategoryForm() {
     formState: { errors },
   } = methods
 
-  function handleCreateCategory(data: CreateCategoryFormSchema) {
+  function handleDialogCreateCategory(data: DialogCreateCategoryFormSchema) {
     mutate({
       name: data.name,
       description: data.description,
@@ -62,7 +64,7 @@ export function CreateCategoryForm() {
         </AlertDialogHeader>
         <form
           ref={parent}
-          onSubmit={handleSubmit(handleCreateCategory)}
+          onSubmit={handleSubmit(handleDialogCreateCategory)}
           className="space-y-5"
         >
           <div className="space-y-4">

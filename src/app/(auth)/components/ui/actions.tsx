@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import {
-  CreateCategoryForm,
+  DialogCreateCategoryForm,
   DialogCreateExpenseForm,
   DialogCreateIncomeForm,
 } from '.'
@@ -42,7 +42,7 @@ export function Actions() {
               <DialogTrigger asChild>
                 <Button variant="ghost">Category</Button>
               </DialogTrigger>
-              <CreateCategoryForm />
+              <DialogCreateCategoryForm />
             </Dialog>
           </DropdownMenuItem>
         </DropdownMenuContent>
