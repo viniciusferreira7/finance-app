@@ -55,6 +55,7 @@ export function SelectCategory() {
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
+                name="category"
                 variant="outline"
                 role="combobox"
                 disabled={isLoading}
