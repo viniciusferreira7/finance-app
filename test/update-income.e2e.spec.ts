@@ -28,11 +28,7 @@ test('should be able to update an income', async ({ page }) => {
 
   await page.getByLabel('Value').fill(incomeValue.toString())
 
-  await page.getByLabel('Select a category').click()
-  await page.waitForLoadState('networkidle')
-
-  await page.getByPlaceholder('Search categories...').fill('a')
-
+  await page.getByTestId('category').click()
   await page.waitForLoadState('networkidle')
 
   await page.getByRole('option', { name: 'a' }).first().click()

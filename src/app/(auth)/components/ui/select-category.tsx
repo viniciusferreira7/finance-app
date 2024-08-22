@@ -46,10 +46,11 @@ export function SelectCategory() {
       name="category"
       control={control}
       render={({ field: { value, onChange } }) => {
-        const selectedValue = value
-          ? categories?.results?.find((category) => category.id === value)
-              ?.name ?? '...'
-          : '...'
+        const categoryName = categories?.results?.find(
+          (category) => category.id === value,
+        )?.name
+
+        const selectedValue = value ? categoryName ?? '...' : '...'
 
         return (
           <Popover open={open} onOpenChange={setOpen}>
@@ -58,6 +59,7 @@ export function SelectCategory() {
                 name="category"
                 variant="outline"
                 role="combobox"
+                data-testId="category"
                 disabled={isLoading}
                 aria-expanded={open}
                 className={cn(
