@@ -40,14 +40,14 @@ export const useUpdateCategory = () => {
   }
 
   return useMutation({
-    mutationKey: ['update-categories'],
+    mutationKey: ['update-category'],
     mutationFn: async (params: UpdateCategoryParams) => {
-      toast.info('Updating the categories')
+      toast.info('Updating the category')
 
       return await queryFnWrapper(updateCategory, params)
     },
     onSuccess: (_, { params, payload }) => {
-      toast.success('Categories was updated successfully.')
+      toast.success('Category was updated successfully.')
 
       updateCategoriesCached(params.id, payload)
     },

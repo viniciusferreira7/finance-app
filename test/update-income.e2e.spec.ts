@@ -8,8 +8,6 @@ test('should be able to update an income', async ({ page }) => {
 
   await page.goto('/incomes', { waitUntil: 'networkidle' })
 
-  await page.waitForTimeout(10000)
-
   await page
     .getByRole('row', { name: 'Incomes details' })
     .getByRole('button')
