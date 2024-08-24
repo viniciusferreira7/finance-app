@@ -5,7 +5,7 @@
   "scripts": {
     "start:api": "cd ../finance-api && npm run start:dev",
     "dev": "next dev",
-    "dev:test": "next dev",
+    "dev:test": "next dev -p 5089",
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
