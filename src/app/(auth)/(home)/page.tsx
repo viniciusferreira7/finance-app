@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 
+import { MetricsCards } from './components/metric-cards'
+
 export const metadata: Metadata = {
   title: 'Home',
 }
@@ -7,8 +9,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="">
-      <h2>Hello word</h2>
-      <h1 className="text-primary">Texto com cor primária</h1>
+      <MetricsCards />
     </div>
   )
 }
