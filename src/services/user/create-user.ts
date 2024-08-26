@@ -14,7 +14,11 @@ export async function createUser(
   payload: CreateUserPayload,
 ): Promise<void | ErrorServerAction> {
   try {
-    const { data } = await api.post('/users', payload)
+    const { data } = await api.post('/users', payload, {
+      headers: {
+        isStaticToken: true,
+      },
+    })
 
     return data
   } catch (error: unknown) {
