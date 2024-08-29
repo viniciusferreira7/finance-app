@@ -15,3 +15,6 @@ export type { UpdateIncomeParams } from './update-income'
 
 export { deleteIncome } from './delete-income'
 export type { DeleteIncomeParams } from './delete-income'
+
+export { getMetricsMonthlyIncomes } from './get-metrics-monthly-incomes'
+export type { GetMetricsMonthlyIncomesResponse } from './get-metrics-monthly-incomes'
