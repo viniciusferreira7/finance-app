@@ -15,9 +15,9 @@ export function formatCurrency(
     numValue = currency
   }
 
-  return numValue.toLocaleString('pt-BR', {
+  return numValue.toLocaleString('en-US', {
     style: 'currency',
-    currency: 'BRL',
+    currency: 'USD',
     maximumFractionDigits: 2,
   })
 }

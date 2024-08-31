@@ -30,7 +30,7 @@ export function Value() {
                 }
                 thousandSeparator=","
                 decimalSeparator="."
-                prefix="R$ "
+                prefix="$ "
                 decimalScale={2}
                 getInputRef={ref}
                 placeholder="value"

@@ -34,7 +34,7 @@ export function InputValue() {
                 }
                 thousandSeparator="."
                 decimalSeparator=","
-                prefix="R$ "
+                prefix="$ "
                 decimalScale={2}
                 getInputRef={ref}
                 customInput={Input.Control}
