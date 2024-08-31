@@ -1,10 +1,12 @@
+'use client'
+
 import { useGetMetricsMonthly } from '../hook/use-get-metrics-monthly'
 import { MonthlyExpense } from './ui/monthly-expense'
 import { MonthlyIncome } from './ui/monthly-income'
 import { SkeletonCard } from './ui/skeleton-card'
 
 export function MetricsCards() {
-  const [incomes] = useGetMetricsMonthly()
+  const [incomes, expenses] = useGetMetricsMonthly()
 
   return (
     <div className="grid gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
@@ -16,7 +18,14 @@ export function MetricsCards() {
           diff_from_last_month={incomes.data?.diff_from_last_month ?? 0}
         />
       )}
-      <MonthlyExpense />
+      {expenses.isLoading ? (
+        <SkeletonCard />
+      ) : (
+        <MonthlyExpense
+          amount={expenses.data?.amount ?? 0}
+          diff_from_last_month={expenses.data?.diff_from_last_month ?? 0}
+        />
+      )}
     </div>
   )
 }

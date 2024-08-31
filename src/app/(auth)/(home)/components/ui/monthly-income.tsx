@@ -2,7 +2,7 @@ import { DollarSign } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { GetMetricsMonthlyIncomesResponse } from '@/services/incomes'
-import { convertToCurrency } from '@/utils/currency/convert-to-currency'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 type MonthlyIncomeProps = GetMetricsMonthlyIncomesResponse
 
@@ -17,11 +17,22 @@ export function MonthlyIncome({
         <DollarSign className="size-4" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{convertToCurrency(amount)}</div>
-        <p className="text-xs font-semibold text-emerald-600">
-          +20.1% from last month
-        </p>
-        {diff_from_last_month}
+        <div className="text-2xl font-bold">{formatCurrency(amount)}</div>
+        {diff_from_last_month > 0 && (
+          <p className="text-sm font-semibold text-emerald-600">
+            +{diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
+        {diff_from_last_month === 0 && (
+          <p className="text-sm font-semibold">
+            {diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
+        {diff_from_last_month < 0 && (
+          <p className="text-sm font-semibold text-rose-600">
+            {diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
       </CardContent>
     </Card>
   )

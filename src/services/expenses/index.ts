@@ -18,3 +18,6 @@ export type { UpdateExpenseParams } from './update-expense'
 
 export { deleteExpense } from './delete-expense'
 export type { DeleteExpenseParams } from './delete-expense'
+
+export { getMetricsMonthlyExpenses } from './get-metrics-monthly-expenses'
+export type { GetMetricsMonthlyExpensesResponse } from './get-metrics-monthly-expenses'

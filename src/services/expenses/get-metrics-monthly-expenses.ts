@@ -4,17 +4,17 @@ import { api } from '@/lib/axios'
 import { ErrorServerAction } from '@/models/error'
 import { getErrorMessage } from '@/utils/error/get-error-message'
 
-export interface GetMetricsMonthlyIncomesResponse {
+export interface GetMetricsMonthlyExpensesResponse {
   amount: number
   diff_from_last_month: number
 }
 
-export async function getMetricsMonthlyIncomes(): Promise<
-  GetMetricsMonthlyIncomesResponse | ErrorServerAction
+export async function getMetricsMonthlyExpenses(): Promise<
+  GetMetricsMonthlyExpensesResponse | ErrorServerAction
 > {
   try {
-    const { data } = await api.get<GetMetricsMonthlyIncomesResponse>(
-      `/incomes/metrics-monthly`,
+    const { data } = await api.get<GetMetricsMonthlyExpensesResponse>(
+      `/expenses/metrics-monthly`,
     )
 
     return data

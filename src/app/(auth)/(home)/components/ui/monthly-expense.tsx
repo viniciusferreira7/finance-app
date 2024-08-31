@@ -1,8 +1,15 @@
 import { DollarSign } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { GetMetricsMonthlyExpensesResponse } from '@/services/expenses'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
-export function MonthlyExpense() {
+type MonthlyExpenseProps = GetMetricsMonthlyExpensesResponse
+
+export function MonthlyExpense({
+  amount,
+  diff_from_last_month,
+}: MonthlyExpenseProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -10,10 +17,22 @@ export function MonthlyExpense() {
         <DollarSign className="size-4" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">$5,231.89</div>
-        <p className="text-xs font-semibold text-rose-600">
-          +20.1% from last month
-        </p>
+        <div className="text-2xl font-bold">{formatCurrency(amount)}</div>
+        {diff_from_last_month < 0 && (
+          <p className="text-sm font-semibold text-emerald-600">
+            +{diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
+        {diff_from_last_month === 0 && (
+          <p className="text-sm font-semibold">
+            {diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
+        {diff_from_last_month > 0 && (
+          <p className="text-sm font-semibold text-rose-600">
+            {diff_from_last_month.toFixed(2)}% from last month
+          </p>
+        )}
       </CardContent>
     </Card>
   )
