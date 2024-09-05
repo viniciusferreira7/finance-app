@@ -13,7 +13,9 @@ export function MonthlyIncome({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+        <CardTitle className="text-sm font-medium">
+          Total Income for the month
+        </CardTitle>
         <DollarSign className="size-4" />
       </CardHeader>
       <CardContent>
