@@ -2,6 +2,7 @@
 
 import { useQueries } from '@tanstack/react-query'
 
+import { getBalance } from '@/services/balance'
 import { getMetricsMonthlyExpenses } from '@/services/expenses'
 import { getMetricsMonthlyIncomes } from '@/services/incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
@@ -16,6 +17,10 @@ export const useGetMetricsMonthly = () => {
       {
         queryKey: ['get-metrics-monthly-expenses'],
         queryFn: async () => queryFnWrapper(getMetricsMonthlyExpenses, {}),
+      },
+      {
+        queryKey: ['get-balance'],
+        queryFn: async () => queryFnWrapper(getBalance, {}),
       },
     ],
   })
