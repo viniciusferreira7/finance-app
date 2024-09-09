@@ -43,7 +43,7 @@ const chartConfig = {
 
 export function IncomesAndExpenses() {
   return (
-    <Card className="col-span-2">
+    <Card className="col-span-2 lg:max-h-[382px]">
       <CardHeader>
         <CardTitle>Tooltip - Custom label</CardTitle>
         <CardDescription>

@@ -55,7 +55,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function CategoriesWithTheMostRecords() {
+export function BiggestExpenses() {
   const totalVisitors = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])

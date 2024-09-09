@@ -42,7 +42,7 @@ const chartConfig = {
 
 export function MonthlyEarningsAndExpensesBarChart() {
   return (
-    <Card className="col-span-2 row-span-2">
+    <Card className="col-span-1 row-span-2 lg:col-span-2 lg:max-h-[780px]">
       <CardHeader>
         <CardTitle>Bar Chart - Multiple</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
