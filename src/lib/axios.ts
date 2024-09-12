@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 const envSchema = z.object({
-  FINANCE_API_URL: z.string(),
+  FINANCE_API_URL: z.string().url(),
   FINANCE_APP_TOKEN: z.string(),
 })
 
