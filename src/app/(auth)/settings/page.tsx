@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 import { SettingsForm } from './components'
+import { CurrencySelector } from './components/currency-selector'
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -12,7 +13,10 @@ export default function SettingsPage() {
       <div className="mb-4 flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
       </div>
-      <SettingsForm />
+      <div className="space-y-4">
+        <SettingsForm />
+        <CurrencySelector />
+      </div>
     </main>
   )
 }
