@@ -7,7 +7,7 @@ import { getErrorMessage } from '@/utils/error/get-error-message'
 
 type GetMetricsResponse = Metrics
 
-interface GetMetricsParams {
+export interface GetMetricsParams {
    endDate?: string
 }
 
