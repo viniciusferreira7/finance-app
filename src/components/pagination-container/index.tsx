@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useQueryState } from 'nuqs'
 
 import {
   Pagination,
@@ -31,7 +31,7 @@ export function PaginationContainer({
   perPage,
   count,
 }: PaginationContainerProps) {
-  const router = useRouter()
+  const [, setPage] = useQueryState('page')
 
   const pages = generatePages({
     currentPage,
@@ -39,15 +39,7 @@ export function PaginationContainer({
   })
 
   function handleChangePage(page: number) {
-    const queries = window.location.search
-
-    if (queries.includes('page=')) {
-      router.replace(
-        window.location.search.replace(/page=\d+/g, `page=${page}`),
-      )
-    } else {
-      router.replace(`?page=${page}`)
-    }
+    setPage(page.toString())
   }
 
   const hasPreviousPage = currentPage > 1

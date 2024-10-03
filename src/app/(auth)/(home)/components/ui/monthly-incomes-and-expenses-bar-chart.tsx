@@ -27,6 +27,12 @@ const chartData = [
   { month: 'April', desktop: 73, mobile: 190 },
   { month: 'May', desktop: 209, mobile: 130 },
   { month: 'June', desktop: 214, mobile: 140 },
+  { month: 'July', desktop: 230, mobile: 150 },
+  { month: 'August', desktop: 245, mobile: 160 },
+  { month: 'September', desktop: 220, mobile: 170 },
+  { month: 'October', desktop: 210, mobile: 180 },
+  { month: 'November', desktop: 190, mobile: 160 },
+  { month: 'December', desktop: 175, mobile: 150 },
 ]
 
 const chartConfig = {
@@ -45,7 +51,7 @@ export function MonthlyEarningsAndExpensesBarChart() {
     <Card className="col-span-1 row-span-2 lg:col-span-2 lg:max-h-[780px]">
       <CardHeader>
         <CardTitle>Bar Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>January - December 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

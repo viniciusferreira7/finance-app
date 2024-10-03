@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { Eraser, ListFilter } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { useQueryState, useQueryStates } from 'nuqs'
 import { ReactNode, useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,18 +16,17 @@ import { removeUndefinedValues } from '@/utils/remove-undefined-values'
 import { useGetValuesFromSearchParams } from '../../hooks/use-get-values-from-search-params'
 
 const filtersRootFormSchema = z.object({
-  name: z.string().nullable().optional(),
+  name: z.string().nullish(),
   value: z
     .string()
-    .nullable()
-    .optional()
+    .nullish()
     .refine((value) => (value ? Number(value) : true), {
       message: 'Must be a number',
     })
     .refine((value) => (value ? Number(value) >= 0 : true), {
       message: 'Must be a positive number',
     })
-    .transform((value) => value?.match(/\d+/g)),
+    .transform((value) => value?.match(/\d+/g)).transform(String),
   createdAt: z
     .object({
       from: z
@@ -38,8 +38,7 @@ const filtersRootFormSchema = z.object({
         .transform((to) => (to ? dayjs(to).format('YYYY-MM-DD') : null))
         .optional(),
     })
-    .optional()
-    .nullable(),
+    .nullish(),
   updatedAt: z
     .object({
       from: z
@@ -51,29 +50,49 @@ const filtersRootFormSchema = z.object({
         .transform((to) => (to ? dayjs(to).format('YYYY-MM-DD') : null))
         .optional(),
     })
-    .optional()
-    .nullable(),
-  category: z.string().nullable().optional(),
-  sort: z.enum(['asc', 'desc', '']).nullable().optional(),
+    .nullish(),
+  category: z.string().nullish(),
+  sort: z.string().nullish(),
 })
 
 type FiltersRootFormSchemaInput = z.input<typeof filtersRootFormSchema>
+type FiltersRootFormSchemaOutput = z.output<typeof filtersRootFormSchema>
 
 interface FiltersRootProps {
   children: ReactNode
 }
 
 export function FiltersRoot({ children }: FiltersRootProps) {
+  const [name, setName] = useQueryState('name')
+  const [value, setValue] = useQueryState('value')
+  const [createdAtFrom, setCreatedAtFrom] = useQueryState('createdAtFrom')
+  const [createdAtTo, setCreatedAtTo] = useQueryState('createdAtTo')
+  const [updatedAtFrom, setUpdatedAtFrom] = useQueryState('updatedAtFrom')
+  const [updatedAtTo, setUpdatedAtTo] = useQueryState('updatedAtTo')
+  const [category, setCategory] = useQueryState('category')
+  const [sort, setSort] = useQueryState('sort')
   const router = useRouter()
-  const pathname = usePathname()
-  const methods = useForm<FiltersRootFormSchemaInput>({
+  const methods = useForm<FiltersRootFormSchemaInput, any, FiltersRootFormSchemaOutput>({
     resolver: zodResolver(filtersRootFormSchema),
+    values: {
+      name,
+      value,
+      createdAt: {
+        from:  createdAtFrom ? dayjs(createdAtFrom).toDate(): undefined,
+        to: createdAtTo ? dayjs(createdAtTo).toDate(): undefined,
+      },
+      updatedAt: {
+        from:  updatedAtFrom ? dayjs(updatedAtFrom).toDate(): undefined,
+        to: updatedAtTo ? dayjs(updatedAtTo).toDate(): undefined,
+      },
+      category,
+      sort,
+    },
   })
 
   const {
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = methods
 
@@ -92,46 +111,27 @@ export function FiltersRoot({ children }: FiltersRootProps) {
         to: undefined,
       },
     })
-    router.push(pathname)
+
+    setName(null)
+    setValue(null)
+    setCreatedAtFrom(null)
+    setCreatedAtTo(null)
+    setUpdatedAtFrom(null)
+    setUpdatedAtTo(null)
+    setCategory(null)
+    setSort(null)
   }
 
-  function handleFilter(data: FiltersRootFormSchemaInput) {
-    const formattedData = {
-      ...data,
-      createdAt: undefined,
-      updatedAt: undefined,
-      createdAtFrom: data.createdAt?.from,
-      createdAtTo: data.createdAt?.to,
-      updatedAtFrom: data.updatedAt?.from,
-      updatedAtTo: data.updatedAt?.to,
+  function handleFilter(data: FiltersRootFormSchemaOutput) {
+    setName(data.name ?? null);
+    setValue(data.value ?? null);
+    setCreatedAtFrom(data.createdAt?.from ?? null);
+    setCreatedAtTo(data.createdAt?.to ?? null);
+    setUpdatedAtFrom(data.updatedAt?.from ?? null);
+    setUpdatedAtTo(data.updatedAt?.to ?? null);
+    setCategory(data.category ?? null);
+    setSort(data.sort ?? null);
     }
-
-    const formattedSearchParams = removeUndefinedValues(formattedData)
-    const queries = new URLSearchParams({ ...formattedSearchParams, page: '1' })
-
-    router.replace('?' + queries, {
-      scroll: false,
-    })
-  }
-
-  const { getValuesFromSearchParams } = useGetValuesFromSearchParams({
-    arr: [
-      'name',
-      'value',
-      'createdAtFrom',
-      'createdAtTo',
-      'updatedAtFrom',
-      'updatedAtTo',
-      'category',
-      'sort',
-    ],
-    fn: setValue,
-  })
-
-  useEffect(() => {
-    getValuesFromSearchParams()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const isError = !!Object.keys(errors).length
 
