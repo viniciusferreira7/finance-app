@@ -7,7 +7,7 @@ import { getMetricsMonthlyExpenses } from '@/services/expenses'
 import { getMetricsMonthlyIncomes } from '@/services/incomes'
 import { queryFnWrapper } from '@/utils/error/query-fn-wrapper'
 
-export const useGetMetricsMonthly = () => {
+export const useGetMetricMonthlyForCards = () => {
   const queries = useQueries({
     queries: [
       {
@@ -17,6 +17,10 @@ export const useGetMetricsMonthly = () => {
       {
         queryKey: ['get-metrics-monthly-expenses'],
         queryFn: async () => queryFnWrapper(getMetricsMonthlyExpenses, {}),
+      },
+      {
+        queryKey: ['get-balance'],
+        queryFn: async () => queryFnWrapper(getBalance, {}),
       },
       {
         queryKey: ['get-balance'],

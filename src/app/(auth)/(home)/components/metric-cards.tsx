@@ -1,13 +1,13 @@
 'use client'
 
-import { useGetMetricsMonthly } from '../hook/use-get-metrics-monthly'
+import { useGetMetricMonthlyForCards } from '../hook/use-get-metrics-monthly-for-cards'
 import { Balance } from './ui/balance'
 import { MonthlyExpense } from './ui/monthly-expense'
 import { MonthlyIncome } from './ui/monthly-income'
 import { SkeletonCard } from './ui/skeleton-card'
 
 export function MetricsCards() {
-  const [incomes, expenses, balance] = useGetMetricsMonthly()
+  const [incomes, expenses, balance] = useGetMetricMonthlyForCards()
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
