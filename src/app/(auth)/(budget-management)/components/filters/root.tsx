@@ -3,17 +3,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { Eraser, ListFilter } from 'lucide-react'
-import { usePathname, useRouter } from 'next/navigation'
-import { useQueryState, useQueryStates } from 'nuqs'
-import { ReactNode, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useQueryState } from 'nuqs'
+import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { removeUndefinedValues } from '@/utils/remove-undefined-values'
 
-import { useGetValuesFromSearchParams } from '../../hooks/use-get-values-from-search-params'
 
 const filtersRootFormSchema = z.object({
   name: z.string().nullish(),
