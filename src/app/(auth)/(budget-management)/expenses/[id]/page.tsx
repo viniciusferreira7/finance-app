@@ -1,3 +1,9 @@
+import { dehydrate } from '@tanstack/query-core'
+import { HydrationBoundary } from '@tanstack/react-query'
+
+import { getQueryClient } from '@/lib/get-query-client'
+import { getExpense } from '@/services/expenses'
+
 import { ExpenseDetails } from './components'
 
 interface IncomesProps {
@@ -6,7 +12,17 @@ interface IncomesProps {
   }
 }
 
-export default function IncomePage({ params }: IncomesProps) {
+export default async function IncomePage({ params }: IncomesProps) {
+  const queryClient = getQueryClient()
+
+  queryClient.prefetchQuery({
+    queryKey: ['get-expense', 'id', params.id],
+    queryFn: () =>
+      getExpense({
+        params,
+      }),
+  })
+
   return (
     <main className="p-4 pt-6">
       <div className="mb-4 flex flex-col gap-4">
@@ -14,7 +30,9 @@ export default function IncomePage({ params }: IncomesProps) {
           Identifier: {params.id}
         </h1>
       </div>
-      <ExpenseDetails />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ExpenseDetails />
+      </HydrationBoundary>
     </main>
   )
 }
