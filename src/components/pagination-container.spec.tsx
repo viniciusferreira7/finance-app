@@ -18,10 +18,11 @@ const onPageChangeCallback = vi.fn()
 
 describe('Pagination container', () => {
   beforeAll(() => {
-    vi.mock('next/navigation', () => ({
-      useRouter: () => ({
-        replace: onPageChangeCallback,
-      }),
+    vi.mock('nuqs', () => ({
+      useQueryState: () => [
+        '1', // valor inicial da página
+        onPageChangeCallback, // função mockada para setPage
+      ],
     }))
   })
 
@@ -64,7 +65,7 @@ describe('Pagination container', () => {
     await user.click(nextPageButton)
 
     expect(onPageChangeCallback).toHaveBeenCalledOnce()
-    expect(onPageChangeCallback).toHaveBeenCalledWith('?page=2')
+    expect(onPageChangeCallback).toHaveBeenCalledWith('2')
   })
 
   it('should be able to navigate to the previous page', async () => {
@@ -84,7 +85,7 @@ describe('Pagination container', () => {
     await user.click(previousPageButton)
 
     expect(onPageChangeCallback).toHaveBeenCalledOnce()
-    expect(onPageChangeCallback).toHaveBeenCalledWith('?page=1')
+    expect(onPageChangeCallback).toHaveBeenCalledWith('1')
   })
 
   it('should be able to navigate to the last page', async () => {
@@ -104,7 +105,7 @@ describe('Pagination container', () => {
     await user.click(lastPageButton)
 
     expect(onPageChangeCallback).toHaveBeenCalledOnce()
-    expect(onPageChangeCallback).toHaveBeenCalledWith('?page=20')
+    expect(onPageChangeCallback).toHaveBeenCalledWith('20')
   })
 
   it('should be able to navigate to the first page', async () => {
@@ -124,6 +125,6 @@ describe('Pagination container', () => {
     await user.click(firstPageButton)
 
     expect(onPageChangeCallback).toHaveBeenCalledOnce()
-    expect(onPageChangeCallback).toHaveBeenCalledWith('?page=1')
+    expect(onPageChangeCallback).toHaveBeenCalledWith('1')
   })
 })
