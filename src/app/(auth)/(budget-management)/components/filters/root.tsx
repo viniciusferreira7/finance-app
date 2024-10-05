@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { Eraser, ListFilter } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useQueryState } from 'nuqs'
 import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -11,7 +10,6 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-
 
 const filtersRootFormSchema = z.object({
   name: z.string().nullish(),
@@ -24,7 +22,8 @@ const filtersRootFormSchema = z.object({
     .refine((value) => (value ? Number(value) >= 0 : true), {
       message: 'Must be a positive number',
     })
-    .transform((value) => value?.match(/\d+/g)).transform(String),
+    .transform((value) => value?.match(/\d+/g))
+    .transform(String),
   createdAt: z
     .object({
       from: z
@@ -69,19 +68,23 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   const [updatedAtTo, setUpdatedAtTo] = useQueryState('updatedAtTo')
   const [category, setCategory] = useQueryState('category')
   const [sort, setSort] = useQueryState('sort')
-  const router = useRouter()
-  const methods = useForm<FiltersRootFormSchemaInput, any, FiltersRootFormSchemaOutput>({
+  const methods = useForm<
+    FiltersRootFormSchemaInput,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    FiltersRootFormSchemaOutput
+  >({
     resolver: zodResolver(filtersRootFormSchema),
     values: {
       name,
       value,
       createdAt: {
-        from:  createdAtFrom ? dayjs(createdAtFrom).toDate(): undefined,
-        to: createdAtTo ? dayjs(createdAtTo).toDate(): undefined,
+        from: createdAtFrom ? dayjs(createdAtFrom).toDate() : undefined,
+        to: createdAtTo ? dayjs(createdAtTo).toDate() : undefined,
       },
       updatedAt: {
-        from:  updatedAtFrom ? dayjs(updatedAtFrom).toDate(): undefined,
-        to: updatedAtTo ? dayjs(updatedAtTo).toDate(): undefined,
+        from: updatedAtFrom ? dayjs(updatedAtFrom).toDate() : undefined,
+        to: updatedAtTo ? dayjs(updatedAtTo).toDate() : undefined,
       },
       category,
       sort,
@@ -121,15 +124,15 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   }
 
   function handleFilter(data: FiltersRootFormSchemaOutput) {
-    setName(data.name ?? null);
-    setValue(data.value ?? null);
-    setCreatedAtFrom(data.createdAt?.from ?? null);
-    setCreatedAtTo(data.createdAt?.to ?? null);
-    setUpdatedAtFrom(data.updatedAt?.from ?? null);
-    setUpdatedAtTo(data.updatedAt?.to ?? null);
-    setCategory(data.category ?? null);
-    setSort(data.sort ?? null);
-    }
+    setName(data.name ?? null)
+    setValue(data.value ?? null)
+    setCreatedAtFrom(data.createdAt?.from ?? null)
+    setCreatedAtTo(data.createdAt?.to ?? null)
+    setUpdatedAtFrom(data.updatedAt?.from ?? null)
+    setUpdatedAtTo(data.updatedAt?.to ?? null)
+    setCategory(data.category ?? null)
+    setSort(data.sort ?? null)
+  }
 
   const isError = !!Object.keys(errors).length
 
