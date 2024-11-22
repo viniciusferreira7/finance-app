@@ -11,15 +11,15 @@ export const useGetMetricMonthlyForCards = () => {
   const queries = useQueries({
     queries: [
       {
-        queryKey: ['get-metrics-monthly-for-cards'],
+        queryKey: ['get-metrics-monthly-for-cards', 'incomes'],
         queryFn: async () => queryFnWrapper(getMetricsMonthlyIncomes, {}),
       },
       {
-        queryKey: ['get-metrics-monthly-for-cards'],
+        queryKey: ['get-metrics-monthly-for-cards', 'expenses'],
         queryFn: async () => queryFnWrapper(getMetricsMonthlyExpenses, {}),
       },
       {
-        queryKey: ['get-metrics-monthly-for-cards'],
+        queryKey: ['get-metrics-monthly-for-cards', 'balance'],
         queryFn: async () => queryFnWrapper(getBalance, {}),
       },
     ],

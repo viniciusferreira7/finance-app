@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import type { MonthlyBalanceOverTime } from '@/models/metrics'
 
 export const description = 'An interactive area chart'
 
@@ -136,7 +137,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function TheBalanceOverTime() {
+interface TheBalanceOverTimeProps {
+  data: MonthlyBalanceOverTime[] | undefined
+}
+
+export function TheBalanceOverTime({ data }: TheBalanceOverTimeProps) {
   const [timeRange, setTimeRange] = React.useState('90d')
 
   const filteredData = chartData.filter((item) => {

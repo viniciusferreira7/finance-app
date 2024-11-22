@@ -1,13 +1,13 @@
 'use client'
 
-import { TrendingUp } from 'lucide-react'
+import dayjs from 'dayjs'
+import { useQueryState } from 'nuqs'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -17,41 +17,52 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import type { MonthlyFinancialSummary } from '@/models/metrics'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 export const description = 'A multiple bar chart'
 
-const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
-  { month: 'July', desktop: 230, mobile: 150 },
-  { month: 'August', desktop: 245, mobile: 160 },
-  { month: 'September', desktop: 220, mobile: 170 },
-  { month: 'October', desktop: 210, mobile: 180 },
-  { month: 'November', desktop: 190, mobile: 160 },
-  { month: 'December', desktop: 175, mobile: 150 },
-]
-
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
+  income: {
+    label: '',
     color: 'hsl(var(--primary))',
   },
-  mobile: {
+  expense: {
     label: 'Mobile',
     color: 'hsl(var(--secondary))',
   },
 } satisfies ChartConfig
 
-export function MonthlyEarningsAndExpensesBarChart() {
+interface MonthlyEarningsAndExpensesBarChartProps {
+  data: MonthlyFinancialSummary[] | undefined
+}
+
+export function MonthlyEarningsAndExpensesBarChart({
+  data,
+}: MonthlyEarningsAndExpensesBarChartProps) {
+  const [endDate] = useQueryState('endDate')
+
+  const currentDate = dayjs().format('YYYY-MM-DD')
+
+  const formattedDate = endDate
+    ? dayjs(endDate).format(`${currentDate} [ to ] YYYY-MM-DD`)
+    : currentDate
+
+  const chartData = data?.map((item) => {
+    return {
+      month: dayjs(item.date).format('MMMM'),
+      incomes: formatCurrency(item.incomes_total, { IsOnlyNumber: true }),
+      expenses: formatCurrency(item.expenses_total, {
+        IsOnlyNumber: true,
+      }),
+    }
+  })
+
   return (
     <Card className="col-span-1 row-span-2 lg:col-span-2 lg:max-h-[780px]">
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
-        <CardDescription>January - December 2024</CardDescription>
+        <CardTitle>Monthly Earnings And Expenses</CardTitle>
+        <CardDescription>{formattedDate}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -68,19 +79,11 @@ export function MonthlyEarningsAndExpensesBarChart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="incomes" fill="var(--color-income)" radius={4} />
+            <Bar dataKey="expenses" fill="var(--color-expense)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   )
 }

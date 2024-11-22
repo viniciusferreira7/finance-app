@@ -15,6 +15,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import type { MonthlyFinancialSummary } from '@/models/metrics'
 
 export const description = 'A stacked bar chart with a legend'
 
@@ -41,7 +42,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function IncomesAndExpenses() {
+interface IncomesAndExpensesProps {
+  data: MonthlyFinancialSummary[] | undefined
+}
+
+export function IncomesAndExpenses({ data }: IncomesAndExpensesProps) {
   return (
     <Card className="col-span-2 lg:max-h-[382px]">
       <CardHeader>

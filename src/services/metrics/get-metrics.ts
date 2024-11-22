@@ -8,15 +8,15 @@ import { getErrorMessage } from '@/utils/error/get-error-message'
 type GetMetricsResponse = Metrics
 
 export interface GetMetricsParams {
-   endDate?: string
+  endDate?: string
 }
 
-export async function getMetrics(params: GetMetricsParams): Promise<
-  GetMetricsResponse | ErrorServerAction
-> {
+export async function getMetrics(
+  params?: GetMetricsParams,
+): Promise<GetMetricsResponse | ErrorServerAction> {
   try {
     const { data } = await api.get<GetMetricsResponse>('/metrics', {
-      params
+      params,
     })
 
     return data

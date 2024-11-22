@@ -18,6 +18,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import type { CategoryWithMostRecords } from '@/models/metrics'
 
 export const description = 'A donut chart with text'
 
@@ -55,7 +56,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function CategoriesWithTheMostRecords() {
+interface CategoriesWithTheMostRecordsProps {
+  data: CategoryWithMostRecords[] | undefined
+}
+
+export function CategoriesWithTheMostRecords({
+  data,
+}: CategoriesWithTheMostRecordsProps) {
   const totalVisitors = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])

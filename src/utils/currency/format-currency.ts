@@ -4,11 +4,12 @@ import { convertToCurrency } from './convert-to-currency'
 
 interface FormatCurrency {
   isToConvertToCurrency?: boolean
+  IsOnlyNumber?: boolean
 }
 
 export function formatCurrency(
   value: number | undefined = 0,
-  { isToConvertToCurrency = true }: FormatCurrency = {},
+  { isToConvertToCurrency = true, IsOnlyNumber = false }: FormatCurrency = {},
 ) {
   let numValue = parseFloat(value.toString())
   const exchangeRates = JSON.parse(
@@ -20,6 +21,10 @@ export function formatCurrency(
   if (isToConvertToCurrency) {
     const currency = convertToCurrency(value * Number(currencyValue))
     numValue = currency
+  }
+
+  if (IsOnlyNumber) {
+    return numValue
   }
 
   return numValue.toLocaleString('en-US', {

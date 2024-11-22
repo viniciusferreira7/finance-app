@@ -13,6 +13,7 @@ import {
 
 import { Charts } from './components/charts'
 import { MetricsCards } from './components/metric-cards'
+import { EndDate } from './components/ui/end-date'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -31,27 +32,34 @@ export default async function Home({ searchParams }: HomeProps) {
     endDate: searchParams.endDate,
   }
 
-  queryClient.prefetchQuery({
-    queryKey: ['get-metrics', params],
-    queryFn: () => getMetrics(params),
-  })
+  Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ['get-metrics', params],
+      queryFn: () => getMetrics(params),
+    }),
 
-  queryClient.prefetchQuery({
-    queryKey: ['get-metrics-monthly-for-cards'],
-    queryFn: () => getMetricsMonthlyIncomes(),
-  })
-  queryClient.prefetchQuery({
-    queryKey: ['get-metrics-monthly-for-cards'],
-    queryFn: () => getMetricsMonthlyExpenses(),
-  })
-  queryClient.prefetchQuery({
-    queryKey: ['get-metrics-monthly-for-cards'],
-    queryFn: () => getBalance(),
-  })
+    queryClient.prefetchQuery({
+      queryKey: ['get-metrics-monthly-for-cards', 'incomes'],
+      queryFn: () => getMetricsMonthlyIncomes(),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['get-metrics-monthly-for-cards', 'expenses'],
+      queryFn: () => getMetricsMonthlyExpenses(),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['get-metrics-monthly-for-cards', 'balance'],
+      queryFn: () => getBalance(),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ['get-metrics'],
+      queryFn: () => getMetrics(),
+    }),
+  ])
 
   return (
     <div className="space-y-10 p-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
+        <EndDate />
         <MetricsCards />
         <Charts />
       </HydrationBoundary>

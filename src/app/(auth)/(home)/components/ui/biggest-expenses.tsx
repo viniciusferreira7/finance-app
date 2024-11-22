@@ -18,6 +18,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import type { Expense } from '@/models/expenses'
 
 export const description = 'A donut chart with text'
 
@@ -55,7 +56,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function BiggestExpenses() {
+interface BiggestExpensesProps {
+  data: Expense[] | undefined
+}
+
+export function BiggestExpenses({ data }: BiggestExpensesProps) {
   const totalVisitors = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])
