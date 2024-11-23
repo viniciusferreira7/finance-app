@@ -16,18 +16,14 @@ export function Charts() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-1 grid-rows-3 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <MonthlyEarningsAndExpensesBarChart
-          data={data?.monthly_financial_summary}
-        />
-        <BiggestExpenses data={data?.biggest_expenses} />
-        <CategoriesWithTheMostRecords
-          data={data?.categories_with_most_records}
-        />
-        <IncomesAndExpenses data={data?.monthly_financial_summary} />
-        <TheBalanceOverTime data={data?.monthly_balance_over_time} />
-      </div>
+    <div className="grid grid-cols-1 grid-rows-3 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <MonthlyEarningsAndExpensesBarChart
+        data={data?.monthly_financial_summary}
+      />
+      <BiggestExpenses data={data?.biggest_expenses} />
+      <CategoriesWithTheMostRecords data={data?.categories_with_most_records} />
+      <IncomesAndExpenses data={data?.monthly_financial_summary} />
+      <TheBalanceOverTime data={data?.monthly_balance_over_time} />
     </div>
   )
 }
