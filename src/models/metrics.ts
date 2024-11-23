@@ -1,23 +1,23 @@
 import { Expense } from './expenses'
 
-interface MonthlyFinancialSummary {
+export interface MonthlyFinancialSummary {
   date: string
   incomes_total: number
   expenses_total: number
 }
 
-interface CategoryWithMostRecords {
+export interface CategoryWithMostRecords {
   name: string
   incomes_quantity: number
   expenses_quantity: number
 }
 
-interface MonthlyBalanceOverTime {
+export interface MonthlyBalanceOverTime {
   date: string
   balance: number
 }
 
-interface Metrics {
+export interface Metrics {
   monthly_financial_summary: MonthlyFinancialSummary[]
   categories_with_most_records: CategoryWithMostRecords[]
   biggest_expenses: Expense[]
