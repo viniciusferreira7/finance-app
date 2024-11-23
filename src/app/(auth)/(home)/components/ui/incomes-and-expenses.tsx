@@ -1,5 +1,7 @@
 'use client'
 
+import dayjs from 'dayjs'
+import { useQueryState } from 'nuqs'
 import { Bar, BarChart, XAxis } from 'recharts'
 
 import {
@@ -16,29 +18,18 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import type { MonthlyFinancialSummary } from '@/models/metrics'
+import { formatCurrency } from '@/utils/currency/format-currency'
 
 export const description = 'A stacked bar chart with a legend'
 
-const chartData = [
-  { date: '2024-07-15', running: 450, swimming: 300 },
-  { date: '2024-07-16', running: 380, swimming: 420 },
-  { date: '2024-07-17', running: 520, swimming: 120 },
-  { date: '2024-07-18', running: 140, swimming: 550 },
-  { date: '2024-07-19', running: 600, swimming: 350 },
-  { date: '2024-07-20', running: 480, swimming: 400 },
-]
-
 const chartConfig = {
-  activities: {
-    label: 'Activities',
+  income: {
+    label: '',
+    color: 'hsl(var(--primary))',
   },
-  running: {
-    label: 'Running',
-    color: 'hsl(var(--chart-1))',
-  },
-  swimming: {
-    label: 'Swimming',
-    color: 'hsl(var(--chart-2))',
+  expense: {
+    label: 'Mobile',
+    color: 'hsl(var(--secondary))',
   },
 } satisfies ChartConfig
 
@@ -47,13 +38,29 @@ interface IncomesAndExpensesProps {
 }
 
 export function IncomesAndExpenses({ data }: IncomesAndExpensesProps) {
+  const [endDate] = useQueryState('endDate')
+
+  const currentDate = dayjs().format('YYYY-MM-DD')
+
+  const formattedDate = endDate
+    ? dayjs(endDate).format(`${currentDate} [ to ] YYYY-MM-DD`)
+    : currentDate
+
+  const chartData = data?.map((item) => {
+    return {
+      date: dayjs(item.date).format('YYYY-MM-DD'),
+      incomes: formatCurrency(item.incomes_total, { IsOnlyNumber: true }),
+      expenses: formatCurrency(item.expenses_total, {
+        IsOnlyNumber: true,
+      }),
+    }
+  })
+
   return (
     <Card className="col-span-2 lg:max-h-[382px]">
       <CardHeader>
-        <CardTitle>Tooltip - Custom label</CardTitle>
-        <CardDescription>
-          Tooltip with custom label from chartConfig.
-        </CardDescription>
+        <CardTitle>Incomes and expenses</CardTitle>
+        <CardDescription>{formattedDate}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -64,22 +71,17 @@ export function IncomesAndExpenses({ data }: IncomesAndExpensesProps) {
               tickMargin={10}
               axisLine={false}
               height={353}
-              tickFormatter={(value) => {
-                return new Date(value).toLocaleDateString('en-US', {
-                  weekday: 'short',
-                })
-              }}
             />
             <Bar
-              dataKey="running"
+              dataKey="incomes"
               stackId="a"
-              fill="var(--color-running)"
+              fill="var(--color-income)"
               radius={[0, 0, 4, 4]}
             />
             <Bar
-              dataKey="swimming"
+              dataKey="expenses"
               stackId="a"
-              fill="var(--color-swimming)"
+              fill="var(--color-expense)"
               radius={[4, 4, 0, 0]}
             />
             <ChartTooltip
