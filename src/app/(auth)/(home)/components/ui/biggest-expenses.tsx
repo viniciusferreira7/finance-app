@@ -22,6 +22,8 @@ import type { Expense } from '@/models/expenses'
 import { createSlug } from '@/utils/create-slug'
 import { formatCurrency } from '@/utils/currency/format-currency'
 
+import { generateRandomNumber } from '../../utils/generate-random-number'
+
 interface BiggestExpensesProps {
   data: Expense[] | undefined
 }
@@ -31,19 +33,18 @@ export function BiggestExpenses({ data }: BiggestExpensesProps) {
 
   const formattedDate = endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
 
-  const chartConfig = data?.reduce<ChartConfig>(
-    (acc, current, currentIndex) => {
-      const slug = createSlug(current.name)
+  const chartConfig = data?.reduce<ChartConfig>((acc, current) => {
+    const slug = createSlug(current.name)
 
-      acc[slug] = {
-        label: current.name,
-        color: `hsl(var(--chart-${(currentIndex + 1) % 35}))`,
-      }
+    const randomNumber = generateRandomNumber()
 
-      return acc
-    },
-    {},
-  )
+    acc[slug] = {
+      label: current.name,
+      color: `hsl(var(--chart-${randomNumber % 35}))`,
+    }
+
+    return acc
+  }, {})
 
   const chartData = data?.map((item) => {
     const slug = createSlug(item.name)
