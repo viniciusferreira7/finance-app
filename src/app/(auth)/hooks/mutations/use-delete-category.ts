@@ -35,6 +35,9 @@ export const useDeleteCategory = () => {
       return await queryFnWrapper(deleteCategory, params)
     },
     onSuccess: (_, { params }) => {
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Category was deleted successfully.')
 
       deleteCategoryCached(params.id)

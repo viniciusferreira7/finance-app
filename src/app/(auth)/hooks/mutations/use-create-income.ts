@@ -18,6 +18,12 @@ export const useCreateIncome = () => {
     },
     onSuccess: () => {
       query.resetQueries({
+        queryKey: ['get-metrics-monthly-for-cards'],
+      })
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
+      query.resetQueries({
         queryKey: ['fetch-incomes'],
       })
       toast.success('Income was created successfully.')

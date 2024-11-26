@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetMetrics } from '../hook/use-get-metrics'
+import { useGetMetrics } from '../hooks/use-get-metrics'
 import { BiggestExpenses } from './ui/biggest-expenses'
 import { CategoriesWithTheMostRecords } from './ui/categories-with-the-most-records'
 import { IncomesAndExpenses } from './ui/incomes-and-expenses'

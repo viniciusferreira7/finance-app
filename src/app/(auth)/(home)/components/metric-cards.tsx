@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetMetricMonthlyForCards } from '../hook/use-get-metrics-monthly-for-cards'
+import { useGetMetricMonthlyForCards } from '../hooks/use-get-metrics-monthly-for-cards'
 import { Balance } from './ui/balance'
 import { MonthlyExpense } from './ui/monthly-expense'
 import { MonthlyIncome } from './ui/monthly-income'

@@ -33,6 +33,12 @@ export const useDeleteIncome = () => {
       return await queryFnWrapper(deleteIncome, params)
     },
     onSuccess: (_, { params }) => {
+      query.resetQueries({
+        queryKey: ['get-metrics-monthly-for-cards'],
+      })
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Income was deleted successfully.')
 
       deleteIncomeCached(params.id)

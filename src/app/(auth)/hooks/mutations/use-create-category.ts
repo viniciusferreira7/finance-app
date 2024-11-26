@@ -17,6 +17,9 @@ export const useCreateCategory = () => {
       return await queryFnWrapper(createCategory, payload)
     },
     onSuccess: () => {
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Category was created successfully.')
     },
     onSettled: () => {

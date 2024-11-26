@@ -43,6 +43,12 @@ export const useUpdateIncome = () => {
       return await queryFnWrapper(updateIncome, params)
     },
     onSuccess: (_, { params, payload }) => {
+      query.resetQueries({
+        queryKey: ['get-metrics-monthly-for-cards'],
+      })
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Income was updated successfully.')
 
       updateIncomeCached(params.id, payload)

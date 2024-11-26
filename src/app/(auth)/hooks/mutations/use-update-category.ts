@@ -47,6 +47,9 @@ export const useUpdateCategory = () => {
       return await queryFnWrapper(updateCategory, params)
     },
     onSuccess: (_, { params, payload }) => {
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Category was updated successfully.')
 
       updateCategoriesCached(params.id, payload)

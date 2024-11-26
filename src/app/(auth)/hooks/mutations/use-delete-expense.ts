@@ -35,6 +35,12 @@ export const useDeleteExpense = () => {
       return await queryFnWrapper(deleteExpense, params)
     },
     onSuccess: (_, { params }) => {
+      query.resetQueries({
+        queryKey: ['get-metrics-monthly-for-cards'],
+      })
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
       toast.success('Expense was deleted successfully.')
 
       deleteExpenseCached(params.id)

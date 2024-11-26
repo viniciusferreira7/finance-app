@@ -17,6 +17,15 @@ export const useCreateExpense = () => {
       return await queryFnWrapper(createExpense, payload)
     },
     onSuccess: () => {
+      query.resetQueries({
+        queryKey: ['get-metrics-monthly-for-cards'],
+      })
+      query.resetQueries({
+        queryKey: ['get-metrics'],
+      })
+      query.resetQueries({
+        queryKey: ['fetch-expenses'],
+      })
       toast.success('Expense was created successfully.')
     },
     onSettled: () => {
