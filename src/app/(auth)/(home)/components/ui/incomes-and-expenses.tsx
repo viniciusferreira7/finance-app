@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { cn } from '@/lib/utils'
 import type { MonthlyFinancialSummary } from '@/models/metrics'
 import { formatCurrency } from '@/utils/currency/format-currency'
 
@@ -56,43 +57,59 @@ export function IncomesAndExpenses({ data }: IncomesAndExpensesProps) {
     }
   })
 
+  const hasIncomesAndExpensesData =
+    data?.length &&
+    data?.every((item) => {
+      return item.expenses_total !== 0 && item.incomes_total !== 0
+    })
+
   return (
     <Card className="col-span-2 lg:max-h-[382px]">
       <CardHeader>
         <CardTitle>Incomes and expenses</CardTitle>
         <CardDescription>{formattedDate}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              height={353}
-            />
-            <Bar
-              dataKey="incomes"
-              stackId="a"
-              fill="var(--color-income)"
-              radius={[0, 0, 4, 4]}
-            />
-            <Bar
-              dataKey="expenses"
-              stackId="a"
-              fill="var(--color-expense)"
-              radius={[4, 4, 0, 0]}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent labelKey="activities" indicator="line" />
-              }
-              cursor={false}
-              defaultIndex={1}
-            />
-          </BarChart>
-        </ChartContainer>
+      <CardContent
+        className={cn(
+          !hasIncomesAndExpensesData && 'grid h-full place-items-center',
+        )}
+      >
+        {hasIncomesAndExpensesData ? (
+          <ChartContainer config={chartConfig}>
+            <BarChart accessibilityLayer data={chartData}>
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                height={353}
+              />
+              <Bar
+                dataKey="incomes"
+                stackId="a"
+                fill="var(--color-income)"
+                radius={[0, 0, 4, 4]}
+              />
+              <Bar
+                dataKey="expenses"
+                stackId="a"
+                fill="var(--color-expense)"
+                radius={[4, 4, 0, 0]}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent labelKey="activities" indicator="line" />
+                }
+                cursor={false}
+                defaultIndex={1}
+              />
+            </BarChart>
+          </ChartContainer>
+        ) : (
+          <CardDescription className="text-lg font-semibold text-muted-foreground">
+            No data
+          </CardDescription>
+        )}
       </CardContent>
     </Card>
   )

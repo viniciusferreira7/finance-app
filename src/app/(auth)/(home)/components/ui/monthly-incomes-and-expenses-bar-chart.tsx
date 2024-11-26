@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { cn } from '@/lib/utils'
 import type { MonthlyFinancialSummary } from '@/models/metrics'
 import { formatCurrency } from '@/utils/currency/format-currency'
 
@@ -58,31 +59,48 @@ export function MonthlyEarningsAndExpensesBarChart({
     }
   })
 
+  const hasMonthlyEarningsAndExpensesData =
+    data?.length &&
+    data?.every((item) => {
+      return item.expenses_total !== 0 && item.incomes_total !== 0
+    })
+
   return (
     <Card className="col-span-1 row-span-2 lg:col-span-2 lg:max-h-[780px]">
       <CardHeader>
         <CardTitle>Monthly Earnings And Expenses</CardTitle>
         <CardDescription>{formattedDate}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="incomes" fill="var(--color-income)" radius={4} />
-            <Bar dataKey="expenses" fill="var(--color-expense)" radius={4} />
-          </BarChart>
-        </ChartContainer>
+      <CardContent
+        className={cn(
+          !hasMonthlyEarningsAndExpensesData &&
+            'grid h-full place-items-center',
+        )}
+      >
+        {hasMonthlyEarningsAndExpensesData ? (
+          <ChartContainer config={chartConfig}>
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dashed" />}
+              />
+              <Bar dataKey="incomes" fill="var(--color-income)" radius={4} />
+              <Bar dataKey="expenses" fill="var(--color-expense)" radius={4} />
+            </BarChart>
+          </ChartContainer>
+        ) : (
+          <CardDescription className="text-lg font-semibold text-muted-foreground">
+            No data
+          </CardDescription>
+        )}
       </CardContent>
     </Card>
   )

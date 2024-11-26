@@ -18,6 +18,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { cn } from '@/lib/utils'
 import type { CategoryWithMostRecords } from '@/models/metrics'
 import { createSlug } from '@/utils/create-slug'
 
@@ -52,7 +53,7 @@ export function CategoriesWithTheMostRecords({
 
     return {
       name: item.name,
-      value: item.expenses_quantity - item.incomes_quantity,
+      value: Math.abs(item.expenses_quantity - item.incomes_quantity),
       fill: `var(--color-${slug})`,
     }
   })
@@ -69,61 +70,75 @@ export function CategoriesWithTheMostRecords({
     return
   }
 
+  const hasCategoriesWithTheMostRecordsData = data?.length
+
   return (
     <Card className="col-span-1 flex flex-col lg:max-h-[382px]">
       <CardHeader className="items-center pb-0">
         <CardTitle>Categories with the most records</CardTitle>
         <CardDescription>{formattedDate}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[230px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              innerRadius={60}
-              strokeWidth={5}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
+      <CardContent
+        className={cn(
+          'flex-1 pb-0',
+          !hasCategoriesWithTheMostRecordsData &&
+            'grid h-full place-items-center',
+        )}
+      >
+        {hasCategoriesWithTheMostRecordsData ? (
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[230px]"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                innerRadius={60}
+                strokeWidth={5}
+              >
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                      return (
+                        <text
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-lg font-bold"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
                         >
-                          {totalVisitors.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Value
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-foreground text-lg font-bold"
+                          >
+                            {totalVisitors.toLocaleString()}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Value
+                          </tspan>
+                        </text>
+                      )
+                    }
+                  }}
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        ) : (
+          <CardDescription className="text-lg font-semibold text-muted-foreground">
+            No data
+          </CardDescription>
+        )}
       </CardContent>
     </Card>
   )
