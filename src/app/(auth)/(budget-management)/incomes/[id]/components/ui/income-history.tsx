@@ -24,6 +24,8 @@ export function IncomeHistory() {
     isLoading,
   } = useFetchIncomeHistories()
 
+  if (histories && histories?.length === 0) return
+
   return (
     <div className="space-y-2.5 px-4 py-4">
       <h4 className="text-xl font-semibold">History of incomes</h4>

@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { Provider as JotaiProvider } from 'jotai'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
@@ -36,21 +37,23 @@ export default function RootLayout({
         )}
         suppressHydrationWarning={true}
       >
-        <QueryWrapper>
-          <ThemeWrapper>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-              storageKey="finance-theme"
-            >
-              {children}
-              <ThemeSwitcher />
-              <Toaster richColors closeButton />
-            </ThemeProvider>
-          </ThemeWrapper>
-        </QueryWrapper>
+        <JotaiProvider>
+          <QueryWrapper>
+            <ThemeWrapper>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+                storageKey="finance-theme"
+              >
+                {children}
+                <ThemeSwitcher />
+                <Toaster richColors closeButton />
+              </ThemeProvider>
+            </ThemeWrapper>
+          </QueryWrapper>
+        </JotaiProvider>
       </body>
     </html>
   )

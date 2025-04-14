@@ -25,9 +25,9 @@ export function Value() {
               <NumericFormat
                 id="value"
                 value={value}
-                onChange={(e) =>
+                onChange={(e) => {
                   onChange(e.target.value.replace(/[^0-9]/g, ''))
-                }
+                }}
                 thousandSeparator=","
                 decimalSeparator="."
                 prefix="$ "

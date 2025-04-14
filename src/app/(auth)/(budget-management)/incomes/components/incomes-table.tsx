@@ -33,7 +33,7 @@ export function IncomesTable() {
   } = useFetchIncomes()
 
   const totalIncome = incomes?.results.reduce<number>(
-    (acc, income) => acc + income.value,
+    (acc, income) => Number(acc) + Number(income.value),
     0,
   )
 

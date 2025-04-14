@@ -33,9 +33,11 @@ export function ExpensesTable() {
   } = useFetchExpenses()
 
   const totalExpense = expenses?.results.reduce<number>(
-    (acc, expense) => acc + expense.value,
+    (acc, expense) => Number(acc) + Number(expense.value),
     0,
   )
+
+  console.log({ totalExpense })
 
   const pagination = {
     currentPage: expenses?.page ?? 0,

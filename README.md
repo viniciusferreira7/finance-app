@@ -1,5 +1,12 @@
 # Finance App
 
+🔗 [Live App](https://finance-app-gtcf.vercel.app/)
+
+## 🎬 Demo Video
+
+👉 [Click here to watch the demo on Loom](https://www.loom.com/share/a853c44b1b3f40648c06886b32a9a21c?sid=db348c42-d1b1-4286-beef-78cc041340a1)
+
+
 ## **Main Features:**
 
 - [x] Secure authentication for user registration and login.
