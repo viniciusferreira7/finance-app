@@ -9,15 +9,17 @@ export function getQueryKeys<T extends object>(
 
       if (value) {
         if (typeof value === 'object') {
-          const subQuery = Object.entries(value).map((item) => {
-            const [fieldItem, itemValue] = item
+          const subQuery = Object.entries(value)
+            .map((item) => {
+              const [fieldItem, itemValue] = item
 
-            if (itemValue) {
-              return [`${fieldName}-${fieldItem}` ,itemValue ]
-            }
+              if (itemValue) {
+                return [`${fieldName}-${fieldItem}`, itemValue]
+              }
 
-            return []
-          }).flatMap(item => item)
+              return []
+            })
+            .flatMap((item) => item)
 
           return subQuery
         }
