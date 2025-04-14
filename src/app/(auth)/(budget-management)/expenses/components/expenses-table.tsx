@@ -33,7 +33,7 @@ export function ExpensesTable() {
   } = useFetchExpenses()
 
   const totalExpense = expenses?.results.reduce<number>(
-    (acc, expense) => acc + expense.value / 100,
+    (acc, expense) => acc + expense.value,
     0,
   )
 
@@ -137,7 +137,7 @@ export function ExpensesTable() {
                 {isLoading ? (
                   <Skeleton className="h-5 w-40" />
                 ) : (
-                  formatCurrency(totalExpense, { isToConvertToCurrency: false })
+                  formatCurrency(totalExpense)
                 )}
               </TableCell>
             </TableRow>

@@ -76,8 +76,8 @@ export function FiltersRoot({ children }: FiltersRootProps) {
   >({
     resolver: zodResolver(filtersRootFormSchema),
     values: {
-      name,
-      value,
+      name: name ?? null,
+      value: value ?? null,
       createdAt: {
         from: createdAtFrom ? dayjs(createdAtFrom).toDate() : undefined,
         to: createdAtTo ? dayjs(createdAtTo).toDate() : undefined,

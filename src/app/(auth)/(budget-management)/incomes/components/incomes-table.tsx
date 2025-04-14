@@ -33,7 +33,7 @@ export function IncomesTable() {
   } = useFetchIncomes()
 
   const totalIncome = incomes?.results.reduce<number>(
-    (acc, income) => acc + income.value / 100,
+    (acc, income) => acc + income.value,
     0,
   )
 
@@ -135,7 +135,7 @@ export function IncomesTable() {
                 {isLoading ? (
                   <Skeleton className="h-5 w-40" />
                 ) : (
-                  formatCurrency(totalIncome, { isToConvertToCurrency: false })
+                  formatCurrency(totalIncome)
                 )}
               </TableCell>
             </TableRow>
