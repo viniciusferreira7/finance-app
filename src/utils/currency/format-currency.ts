@@ -15,9 +15,10 @@ export function formatCurrency(
   const storedRates = localStorage.getItem('finance-exchange-rates')
   const exchangeRates = storedRates ? JSON.parse(storedRates) : {}
 
-  const [[currency, currencyValue]] = Object.entries(
-    exchangeRates ?? [['USD', 1]],
-  )
+  const entries = Object.entries(exchangeRates ?? {})
+
+  const [[currency, currencyValue]] =
+    entries.length > 0 ? entries : [['USD', 1]]
 
   if (isToConvertToCurrency) {
     const currency = convertToCurrency(value * Number(currencyValue))
