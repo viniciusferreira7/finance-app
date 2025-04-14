@@ -46,8 +46,8 @@ export function SelectCategory() {
       control={control}
       render={({ field: { value, onChange } }) => {
         const selectedValue = value
-          ? categories?.results?.find((category) => category.id === value)
-              ?.name ?? 'Select a category'
+          ? (categories?.results?.find((category) => category.id === value)
+              ?.name ?? 'Select a category')
           : 'Select a category'
 
         return (

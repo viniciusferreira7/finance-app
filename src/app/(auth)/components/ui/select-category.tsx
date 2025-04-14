@@ -50,7 +50,7 @@ export function SelectCategory() {
           (category) => category.id === value,
         )?.name
 
-        const selectedValue = value ? categoryName ?? '...' : '...'
+        const selectedValue = value ? (categoryName ?? '...') : '...'
 
         return (
           <Popover open={open} onOpenChange={setOpen}>
