@@ -12,11 +12,12 @@ export function formatCurrency(
   { isToConvertToCurrency = true, IsOnlyNumber = false }: FormatCurrency = {},
 ) {
   let numValue = parseFloat(value.toString())
-  const exchangeRates = JSON.parse(
-    localStorage.getItem('finance-exchange-rates') ?? '',
-  )
+  const storedRates = localStorage.getItem('finance-exchange-rates')
+  const exchangeRates = storedRates ? JSON.parse(storedRates) : {}
 
-  const [[currency, currencyValue]] = Object.entries(exchangeRates ?? {})
+  const [[currency, currencyValue]] = Object.entries(
+    exchangeRates ?? [['USD', 1]],
+  )
 
   if (isToConvertToCurrency) {
     const currency = convertToCurrency(value * Number(currencyValue))
